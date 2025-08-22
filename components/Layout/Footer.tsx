@@ -11,8 +11,11 @@ const Footer: React.FC = () => {
         <div className="row">
           <div className="col-lg-4 col-md-6 mb-4">
             <div className="d-flex align-items-center mb-3">
-              <i className="fas fa-credit-card text-primary me-2 fs-4"></i>
-              <h5 className="mb-0 fw-bold text-white">CityWitty</h5>
+              <img
+                src="/cw.png" // <-- replace with your logo path (e.g., /images/logo.png or from public folder)
+                alt="CityWitty Logo"
+                style={{ height: "60px", objectFit: "contain" }}
+              />
             </div>
             <p
               className="mb-3"
