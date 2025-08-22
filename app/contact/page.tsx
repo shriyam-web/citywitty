@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useApp } from '@/context/AppContext';
+import React, { useState } from "react";
+import { useApp } from "@/context/AppContext";
 
 const ContactPage: React.FC = () => {
   const { submitContactForm, state } = useApp();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [success, setSuccess] = useState(false);
 
@@ -17,14 +17,16 @@ const ContactPage: React.FC = () => {
     const result = await submitContactForm(formData);
     if (result) {
       setSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: "", email: "", message: "" });
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -33,7 +35,8 @@ const ContactPage: React.FC = () => {
       <div className="text-center mb-5">
         <h1 className="section-title">Contact Us</h1>
         <p className="section-subtitle">
-          Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          Have questions? We'd love to hear from you. Send us a message and
+          we'll respond as soon as possible.
         </p>
       </div>
 
@@ -46,7 +49,8 @@ const ContactPage: React.FC = () => {
                   <i className="fas fa-check-circle text-success fs-1 mb-3"></i>
                   <h3 className="text-success mb-3">Message Sent!</h3>
                   <p className="text-muted mb-4">
-                    Thank you for contacting us. We'll get back to you within 24 hours.
+                    Thank you for contacting us. We'll get back to you within 24
+                    hours.
                   </p>
                   <button
                     className="btn btn-primary"
@@ -141,8 +145,12 @@ const ContactPage: React.FC = () => {
             <div className="card-body">
               <i className="fas fa-phone text-primary fs-1 mb-3"></i>
               <h5>Call Us</h5>
-              <p className="text-muted">+91 9876 543 210</p>
-              <a href="tel:+919876543210" className="btn btn-outline-primary">
+              <p className="text-muted">+91 6389202030</p>
+              <a
+                href="tel:+916389202030
+"
+                className="btn btn-outline-primary"
+              >
                 <i className="fas fa-phone me-2"></i>
                 Call Now
               </a>
@@ -155,8 +163,12 @@ const ContactPage: React.FC = () => {
             <div className="card-body">
               <i className="fas fa-envelope text-primary fs-1 mb-3"></i>
               <h5>Email Us</h5>
-              <p className="text-muted">support@citywitty.com</p>
-              <a href="mailto:support@citywitty.com" className="btn btn-outline-primary">
+              <p className="text-muted">contact@citywitty.com</p>
+              <a
+                href="mailto:contact@citywitty.com
+"
+                className="btn btn-outline-primary"
+              >
                 <i className="fas fa-envelope me-2"></i>
                 Send Email
               </a>
@@ -171,7 +183,8 @@ const ContactPage: React.FC = () => {
               <h5>WhatsApp</h5>
               <p className="text-muted">Quick support via WhatsApp</p>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/916389202030
+"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline-success"

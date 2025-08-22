@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 const WhatsAppWidget: React.FC = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = '+919876543210'; // Replace with actual WhatsApp business number
-    const message = 'Hi! I need help with CityWitty card.';
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    const phoneNumber = "+916389202030"; // Replace with actual WhatsApp business number
+    const message = "Hi! I need help with CityWitty card.";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(url, "_blank");
   };
 
   return (

@@ -3,7 +3,7 @@
 import React from 'react';
 
 const CallWidget: React.FC = () => {
-  const phoneNumber = '+919876543210'; // Replace with actual phone number
+  const phoneNumber = '+916389202030'; // Replace with actual phone number
 
   return (
     <div className="call-widget">
