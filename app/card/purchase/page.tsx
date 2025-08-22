@@ -1,68 +1,83 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useApp } from '@/context/AppContext';
-import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import { useApp } from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 const CardPurchasePage: React.FC = () => {
   const { purchaseCard, state } = useApp();
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    userId: state.currentUser?.id || '',
-    plan: 'Premium Annual',
-    city: 'Mumbai',
+    userId: state.currentUser?.id || "",
+    plan: "Premium Annual",
+    city: "Mumbai",
     price: 1999,
-    status: 'pending' as const,
-    expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+    status: "pending" as const,
+    expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
   });
   const [paymentData, setPaymentData] = useState({
-    cardNumber: '',
-    expiryMonth: '',
-    expiryYear: '',
-    cvv: '',
-    cardholderName: ''
+    cardNumber: "",
+    expiryMonth: "",
+    expiryYear: "",
+    cvv: "",
+    cardholderName: "",
   });
-  const [serviceNumber, setServiceNumber] = useState('');
-  const [error, setError] = useState('');
+  const [serviceNumber, setServiceNumber] = useState("");
+  const [error, setError] = useState("");
 
   const plans = [
     {
-      name: 'Basic Annual',
+      name: "Basic Annual",
       price: 999,
-      duration: '12 months',
-      features: ['Access to 100+ merchants', 'Basic discounts', 'Email support']
+      duration: "12 months",
+      features: [
+        "Access to 100+ merchants",
+        "Basic discounts",
+        "Email support",
+      ],
     },
     {
-      name: 'Premium Annual',
+      name: "Premium Annual",
       price: 1999,
-      duration: '12 months',
-      features: ['Access to 500+ merchants', 'Premium discounts up to 50%', 'Priority support', 'Exclusive offers']
+      duration: "12 months",
+      features: [
+        "Access to 500+ merchants",
+        "Premium discounts up to 50%",
+        "Priority support",
+        "Exclusive offers",
+      ],
     },
     {
-      name: 'VIP Annual',
+      name: "VIP Annual",
       price: 2999,
-      duration: '12 months',
-      features: ['Access to all merchants', 'VIP discounts up to 70%', '24/7 support', 'Exclusive VIP events', 'Free home delivery']
-    }
+      duration: "12 months",
+      features: [
+        "Access to all merchants",
+        "VIP discounts up to 70%",
+        "24/7 support",
+        "Exclusive VIP events",
+        "Free home delivery",
+      ],
+    },
   ];
 
-  const cities = ['Mumbai', 'Delhi', 'Bangalore'];
+  const cities = ["Mumbai", "Delhi", "Bangalore"];
 
-  const handlePlanSelect = (plan: typeof plans[0]) => {
+  const handlePlanSelect = (plan: (typeof plans)[0]) => {
     setFormData({
       ...formData,
       plan: plan.name,
-      price: plan.price
+      price: plan.price,
     });
   };
 
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!state.isAuthenticated) {
-      setError('Please login to purchase a card');
+      setError("Please login to purchase a card");
       return;
     }
 
@@ -71,52 +86,54 @@ const CardPurchasePage: React.FC = () => {
       setServiceNumber(serviceNum);
       setStep(3);
     } catch (error) {
-      setError('Payment failed. Please try again.');
+      setError("Payment failed. Please try again.");
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     if (name in paymentData) {
       setPaymentData({
         ...paymentData,
-        [name]: value
+        [name]: value,
       });
     } else {
       setFormData({
         ...formData,
-        [name]: value
+        [name]: value,
       });
     }
   };
 
-  if (!state.isAuthenticated) {
-    return (
-      <div className="container py-5">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card shadow-premium">
-              <div className="card-body text-center p-5">
-                <i className="fas fa-lock text-warning fs-1 mb-3"></i>
-                <h3>Login Required</h3>
-                <p className="text-muted mb-4">
-                  Please login to your account to purchase a CityWitty Card
-                </p>
-                <a href="/auth/login" className="btn btn-primary me-3">
-                  <i className="fas fa-sign-in-alt me-2"></i>
-                  Login
-                </a>
-                <a href="/auth/signup" className="btn btn-outline-primary">
-                  <i className="fas fa-user-plus me-2"></i>
-                  Sign Up
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (!state.isAuthenticated) {
+  //   return (
+  //     <div className="container py-5">
+  //       <div className="row justify-content-center">
+  //         <div className="col-md-6">
+  //           <div className="card shadow-premium">
+  //             <div className="card-body text-center p-5">
+  //               <i className="fas fa-lock text-warning fs-1 mb-3"></i>
+  //               <h3>Login Required</h3>
+  //               <p className="text-muted mb-4">
+  //                 Please login to your account to purchase a CityWitty Card
+  //               </p>
+  //               <a href="/auth/login" className="btn btn-primary me-3">
+  //                 <i className="fas fa-sign-in-alt me-2"></i>
+  //                 Login
+  //               </a>
+  //               <a href="/auth/signup" className="btn btn-outline-primary">
+  //                 <i className="fas fa-user-plus me-2"></i>
+  //                 Sign Up
+  //               </a>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container py-5">
@@ -128,7 +145,7 @@ const CardPurchasePage: React.FC = () => {
                 <i className="fas fa-credit-card me-2"></i>
                 Purchase CityWitty Card
               </h3>
-              <div className="progress mt-3" style={{ height: '4px' }}>
+              <div className="progress mt-3" style={{ height: "4px" }}>
                 <div
                   className="progress-bar bg-warning"
                   style={{ width: `${(step / 3) * 100}%` }}
@@ -144,10 +161,10 @@ const CardPurchasePage: React.FC = () => {
                       <div key={plan.name} className="col-md-4 mb-4">
                         <div
                           className={`card h-100 cursor-pointer ${
-                            formData.plan === plan.name ? 'border-primary' : ''
+                            formData.plan === plan.name ? "border-primary" : ""
                           }`}
                           onClick={() => handlePlanSelect(plan)}
-                          style={{ cursor: 'pointer' }}
+                          style={{ cursor: "pointer" }}
                         >
                           <div className="card-body text-center">
                             <h5 className="card-title">{plan.name}</h5>
@@ -198,14 +215,16 @@ const CardPurchasePage: React.FC = () => {
               {step === 2 && (
                 <div>
                   <h4 className="mb-4">Payment Details</h4>
-                  
+
                   <div className="row mb-4">
                     <div className="col-md-8">
                       <div className="card bg-light">
                         <div className="card-body">
                           <h6>Order Summary</h6>
                           <div className="d-flex justify-content-between">
-                            <span>{formData.plan} - {formData.city}</span>
+                            <span>
+                              {formData.plan} - {formData.city}
+                            </span>
                             <span className="fw-bold">₹{formData.price}</span>
                           </div>
                         </div>
@@ -223,7 +242,9 @@ const CardPurchasePage: React.FC = () => {
                   <form onSubmit={handlePaymentSubmit}>
                     <div className="row">
                       <div className="col-md-6 mb-3">
-                        <label className="form-label fw-bold">Card Number</label>
+                        <label className="form-label fw-bold">
+                          Card Number
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -235,7 +256,9 @@ const CardPurchasePage: React.FC = () => {
                         />
                       </div>
                       <div className="col-md-6 mb-3">
-                        <label className="form-label fw-bold">Cardholder Name</label>
+                        <label className="form-label fw-bold">
+                          Cardholder Name
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -250,7 +273,9 @@ const CardPurchasePage: React.FC = () => {
 
                     <div className="row">
                       <div className="col-md-4 mb-3">
-                        <label className="form-label fw-bold">Expiry Month</label>
+                        <label className="form-label fw-bold">
+                          Expiry Month
+                        </label>
                         <select
                           className="form-select"
                           name="expiryMonth"
@@ -261,13 +286,15 @@ const CardPurchasePage: React.FC = () => {
                           <option value="">Month</option>
                           {Array.from({ length: 12 }, (_, i) => (
                             <option key={i + 1} value={i + 1}>
-                              {String(i + 1).padStart(2, '0')}
+                              {String(i + 1).padStart(2, "0")}
                             </option>
                           ))}
                         </select>
                       </div>
                       <div className="col-md-4 mb-3">
-                        <label className="form-label fw-bold">Expiry Year</label>
+                        <label className="form-label fw-bold">
+                          Expiry Year
+                        </label>
                         <select
                           className="form-select"
                           name="expiryYear"
@@ -336,13 +363,14 @@ const CardPurchasePage: React.FC = () => {
                   <p className="text-muted mb-4">
                     Your CityWitty Card has been purchased successfully.
                   </p>
-                  
+
                   <div className="card bg-light mb-4">
                     <div className="card-body">
                       <h5>Your Service Number</h5>
                       <h3 className="text-primary">{serviceNumber}</h3>
                       <p className="text-muted mb-0">
-                        Save this number to track your card status and request activation
+                        Save this number to track your card status and request
+                        activation
                       </p>
                     </div>
                   </div>
@@ -350,14 +378,14 @@ const CardPurchasePage: React.FC = () => {
                   <div className="d-flex justify-content-center gap-3">
                     <button
                       className="btn btn-primary"
-                      onClick={() => router.push('/card/activate')}
+                      onClick={() => router.push("/card/activate")}
                     >
                       <i className="fas fa-play me-2"></i>
                       Request Activation
                     </button>
                     <button
                       className="btn btn-outline-primary"
-                      onClick={() => router.push('/track-status')}
+                      onClick={() => router.push("/track-status")}
                     >
                       <i className="fas fa-search me-2"></i>
                       Track Status

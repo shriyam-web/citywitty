@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { useApp } from '@/context/AppContext';
+import React from "react";
+import Link from "next/link";
+import { useApp } from "@/context/AppContext";
 
 const MerchantsCarousel: React.FC = () => {
   const { getFilteredMerchants } = useApp();
@@ -11,9 +11,11 @@ const MerchantsCarousel: React.FC = () => {
   if (merchants.length === 0) {
     return (
       <section className="mb-5">
-        <div className="text-center mb-4">
+        <div className="text-center mb-4 mt-2">
           <h3>Featured Merchants</h3>
-          <p className="text-muted">Our merchants will be live soon! Get ready for amazing offers</p>
+          <p className="text-muted">
+            Our merchants will be live soon! Get ready for amazing offers
+          </p>
         </div>
         <div className="empty-state">
           <i className="fas fa-rocket text-primary fs-1 mb-3"></i>
@@ -33,14 +35,19 @@ const MerchantsCarousel: React.FC = () => {
     <section className="mb-5">
       <div className="text-center mb-4">
         <h3>Featured Merchants</h3>
-        <p className="text-muted">Discover amazing offers from our partner merchants</p>
+        <p className="text-muted">
+          Discover amazing offers from our partner merchants
+        </p>
       </div>
-      
+
       <div className="merchant-grid">
         {merchants.slice(0, 6).map((merchant) => (
           <div key={merchant.id} className="card h-100">
             <img
-              src={merchant.images[0] || 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg'}
+              src={
+                merchant.images[0] ||
+                "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg"
+              }
               className="card-img-top"
               alt={merchant.storeName}
             />
@@ -52,22 +59,31 @@ const MerchantsCarousel: React.FC = () => {
                     {[...Array(Math.floor(merchant.rating))].map((_, i) => (
                       <i key={i} className="fas fa-star"></i>
                     ))}
-                    {merchant.rating % 1 !== 0 && <i className="fas fa-star-half-alt"></i>}
+                    {merchant.rating % 1 !== 0 && (
+                      <i className="fas fa-star-half-alt"></i>
+                    )}
                   </div>
                   <small className="text-muted">{merchant.rating}/5</small>
                 </div>
               </div>
-              
+
               <div className="mb-3">
                 <span className="badge bg-primary me-2">
-                  <i className={`fas ${
-                    merchant.category === 'Gym' ? 'fa-dumbbell' :
-                    merchant.category === 'Fashion' ? 'fa-tshirt' :
-                    merchant.category === 'Electronics' ? 'fa-mobile-alt' :
-                    merchant.category === 'Salon' ? 'fa-cut' :
-                    merchant.category === 'Restaurant' ? 'fa-utensils' :
-                    'fa-store'
-                  } me-1`}></i>
+                  <i
+                    className={`fas ${
+                      merchant.category === "Gym"
+                        ? "fa-dumbbell"
+                        : merchant.category === "Fashion"
+                        ? "fa-tshirt"
+                        : merchant.category === "Electronics"
+                        ? "fa-mobile-alt"
+                        : merchant.category === "Salon"
+                        ? "fa-cut"
+                        : merchant.category === "Restaurant"
+                        ? "fa-utensils"
+                        : "fa-store"
+                    } me-1`}
+                  ></i>
                   {merchant.category}
                 </span>
                 <span className="badge bg-secondary">
@@ -75,15 +91,18 @@ const MerchantsCarousel: React.FC = () => {
                   {merchant.city}
                 </span>
               </div>
-              
+
               <p className="card-text text-muted mb-3">
                 {merchant.offerDetails.length > 80
                   ? `${merchant.offerDetails.substring(0, 80)}...`
                   : merchant.offerDetails}
               </p>
-              
+
               <div className="text-center">
-                <Link href={`/merchants/${merchant.id}`} className="btn btn-primary">
+                <Link
+                  href={`/merchants/${merchant.id}`}
+                  className="btn btn-primary"
+                >
                   <i className="fas fa-eye me-2"></i>
                   View Offer
                 </Link>
