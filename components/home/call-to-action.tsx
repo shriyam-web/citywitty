@@ -9,7 +9,7 @@ export function CallToActionSection() {
       <div className="absolute inset-0 bg-black/20" />
       <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse" />
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse delay-1000" />
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center space-y-8">
           <div className="space-y-4">
@@ -17,7 +17,7 @@ export function CallToActionSection() {
               Ready to Start Saving?
             </h2>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Join thousands of smart shoppers who are already enjoying exclusive discounts 
+              Join thousands of smart shoppers who are already enjoying exclusive discounts
               across India with CityWitty premium card.
             </p>
           </div>
@@ -38,8 +38,8 @@ export function CallToActionSection() {
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-4 text-lg"
               asChild
             >
@@ -48,10 +48,10 @@ export function CallToActionSection() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 text-lg"
+              className="border-white text-dark hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 text-lg"
               asChild
             >
               <Link href="/merchants">

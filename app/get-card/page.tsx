@@ -201,9 +201,8 @@ export default function GetCardPage() {
             {plans.map((plan) => (
               <Card
                 key={plan.name}
-                className={`relative border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                  plan.popular ? "ring-2 ring-blue-500" : ""
-                }`}
+                className={`relative border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${plan.popular ? "ring-2 ring-blue-500" : ""
+                  }`}
               >
                 {plan.popular && (
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -244,9 +243,8 @@ export default function GetCardPage() {
                   </ul>
 
                   <Button
-                    className={`w-full ${
-                      plan.popular ? "bg-blue-600 hover:bg-blue-700" : ""
-                    }`}
+                    className={`w-full ${plan.popular ? "bg-blue-600 hover:bg-blue-700" : ""
+                      }`}
                     onClick={openWhatsApp}
                   >
                     Get {plan.name} Card
@@ -297,7 +295,7 @@ export default function GetCardPage() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-dark">
             Ready to Start Saving?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">

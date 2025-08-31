@@ -110,11 +110,10 @@ export function HeroSection() {
                   </span>
                 </div>
                 <div
-                  className={`transition-all duration-300 ${
-                    isVisible
-                      ? "opacity-100 transform translate-y-0"
-                      : "opacity-0 transform translate-y-2"
-                  }`}
+                  className={`transition-all duration-300 ${isVisible
+                    ? "opacity-100 transform translate-y-0"
+                    : "opacity-0 transform translate-y-2"
+                    }`}
                 >
                   <p className="text-2xl font-bold text-white">
                     {rotatingOffers[currentOffer].discount}
@@ -144,10 +143,10 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white/30 text-white hover:bg-white hover:text-blue-900 font-semibold px-8 py-4 text-lg backdrop-blur-sm"
+                className="border-2 border-white/30 text-white hover:bg-white hover:text-blue-900 font-semibold px-8 py-4 text-lg backdrop-blur-sm text-dark"
                 asChild
               >
-                <Link href="/merchants" className="text-black">
+                <Link href="/merchants" className=" text-green-900">
                   Explore Merchants
                 </Link>
               </Button>
