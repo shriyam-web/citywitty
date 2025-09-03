@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { 
-  Users, 
-  Building2, 
-  CreditCard, 
+import {
+  Users,
+  Building2,
+  CreditCard,
   MessageSquare,
   TrendingUp,
   AlertTriangle,
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!user || user.role !== 'admin') {
-      router.push('/login/admin');
+      router.push('/login');
     }
   }, [user, router]);
 

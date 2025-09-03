@@ -18,38 +18,34 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
+  const [error, setError] = useState('');
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    const success = await login(email, password, role);
-    
-    if (success) {
-      // Redirect based on role
-      switch (role) {
-        case 'admin':
-          router.push('/dashboard/admin');
-          break;
-        case 'merchant':
-          router.push('/dashboard/merchant');
-          break;
-        case 'franchise':
-          router.push('/dashboard/franchise');
-          break;
-        case 'it':
-          router.push('/dashboard/it');
-          break;
-        default:
-          router.push('/dashboard/user');
+    setError('');
+
+    try {
+      // ✅ use login() from auth-context
+      const success = await login(email, password, role);
+
+      if (success) {
+        router.push(`/dashboard/${role}`);
+      } else {
+        setError('Invalid email, password, or account type.');
       }
-    } else {
-      alert('Login failed. Please try again.');
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong. Please try again.');
     }
-    
+
     setIsLoading(false);
   };
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
@@ -63,7 +59,12 @@ export default function LoginPage() {
             Sign in to your CityWitty account
           </CardDescription>
         </CardHeader>
-        
+        {error && (
+          <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 text-center font-medium">
+            {error}
+          </div>
+        )}
+
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">

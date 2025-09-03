@@ -1,3 +1,88 @@
+// 'use client';
+
+// import React, { createContext, useContext, useState, useEffect } from 'react';
+
+// interface User {
+//   id: string;
+//   email: string;
+//   name: string;
+//   role: 'admin' | 'merchant' | 'franchise' | 'it' | 'user';
+// }
+
+// interface AuthContextType {
+//   user: User | null;
+//   login: (email: string, password: string, role?: string) => Promise<boolean>;
+//   logout: () => void;
+//   register: (email: string, password: string, name: string, role?: string) => Promise<boolean>;
+//   isLoading: boolean;
+// }
+
+// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// export function AuthProvider({ children }: { children: React.ReactNode }) {
+//   const [user, setUser] = useState<User | null>(null);
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem('citywitty_user');
+//     if (storedUser) setUser(JSON.parse(storedUser));
+//     setIsLoading(false);
+//   }, []);
+
+//   // 🔹 login function inside AuthProvider
+//   const login = async (email: string, password: string, role: string = 'user'): Promise<boolean> => {
+//     try {
+//       setIsLoading(true);
+
+//       let res: Response;
+
+//       switch (role) {
+//         case 'admin':
+//           res = await fetch('/api/admin/login', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ email, password })
+//           });
+//           break;
+//         default:
+//           // Other roles can be added later
+//           return false;
+//       }
+
+//       const data = await res.json();
+//       if (!res.ok) return false;
+
+//       const loggedInUser: User = { ...data, name: data.username, role: role as User['role'] };
+//       setUser(loggedInUser);
+//       localStorage.setItem('citywitty_user', JSON.stringify(loggedInUser));
+//       return true;
+
+//     } catch (err) {
+//       console.error('Login error:', err);
+//       return false;
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   const logout = () => {
+//     setUser(null);
+//     localStorage.removeItem('citywitty_user');
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, login, logout, register: async () => false, isLoading }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// }
+
+// export function useAuth() {
+//   const context = useContext(AuthContext);
+//   if (!context) throw new Error('useAuth must be used within an AuthProvider');
+//   return context;
+// }
+
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
@@ -24,80 +109,85 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored user data
     const storedUser = localStorage.getItem('citywitty_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    if (storedUser) setUser(JSON.parse(storedUser));
     setIsLoading(false);
   }, []);
 
+  // 🔹 login function (admin logic untouched)
   const login = async (email: string, password: string, role: string = 'user'): Promise<boolean> => {
     try {
       setIsLoading(true);
-      
-      // Demo credentials validation
-      const demoCredentials = {
-        'user@demo.com': { password: 'password123', role: 'user', name: 'John Doe' },
-        'admin@citywitty.com': { password: 'admin123', role: 'admin', name: 'Admin User' },
-        'merchant@business.com': { password: 'merchant123', role: 'merchant', name: 'Business Owner' },
-        'franchise@citywitty.com': { password: 'franchise123', role: 'franchise', name: 'Franchise Manager' },
-        'it@citywitty.com': { password: 'it123', role: 'it', name: 'IT Support' }
-      };
-      
-      const credential = demoCredentials[email as keyof typeof demoCredentials];
-      if (!credential || credential.password !== password) {
-        return false;
+
+      let res: Response;
+
+      switch (role) {
+        case 'admin':
+          res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          break;
+
+        case 'user':
+          res = await fetch('/api/user-login/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, role })
+          });
+          break;
+        default:
+          return false;
       }
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockUser: User = {
-        id: Math.random().toString(36).substr(2, 9),
-        email,
-        name: credential.name,
-        role: credential.role as User['role'],
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('citywitty_user', JSON.stringify(mockUser));
+
+      const data = await res.json();
+      if (!res.ok) return false;
+
+      const loggedInUser: User = { ...data, name: data.username, role: role as User['role'] };
+      setUser(loggedInUser);
+      localStorage.setItem('citywitty_user', JSON.stringify(loggedInUser));
       return true;
-    } catch (error) {
-      console.error('Login error:', error);
+
+    } catch (err) {
+      console.error('Login error:', err);
       return false;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const register = async (email: string, password: string, name: string, role: string = 'user'): Promise<boolean> => {
-    try {
-      setIsLoading(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockUser: User = {
-        id: Math.random().toString(36).substr(2, 9),
-        email,
-        name,
-        role: role as User['role'],
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('citywitty_user', JSON.stringify(mockUser));
-      return true;
-    } catch (error) {
-      console.error('Registration error:', error);
-      return false;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // 🔹 logout function
   const logout = () => {
     setUser(null);
     localStorage.removeItem('citywitty_user');
+  };
+
+  // 🔹 user registration logic added
+  const register = async (email: string, password: string, name: string, role: string = 'user'): Promise<boolean> => {
+    try {
+      setIsLoading(true);
+
+      const res = await fetch('/api/user-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name, role })
+      });
+
+      const data = await res.json();
+      if (!res.ok) return false;
+
+      const newUser: User = { id: data._id || '', email, name, role: role as User['role'] };
+      setUser(newUser);
+      localStorage.setItem('citywitty_user', JSON.stringify(newUser));
+
+      return true;
+    } catch (err) {
+      console.error('Register error:', err);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -109,8 +199,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 }

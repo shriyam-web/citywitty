@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -16,49 +15,65 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  const [role, setRole] = useState('user');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const { register } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    // ✅ Password strength check
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character."
+      );
+      return;
+    }
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     setIsLoading(true);
 
-    const success = await register(email, password, name, role);
+    const success = await register(email, password, name, 'user'); // role hardcoded as 'user'
 
     if (success) {
-      // Redirect based on role
-      switch (role) {
-        case 'admin':
-          router.push('/dashboard/admin');
-          break;
-        case 'merchant':
-          router.push('/dashboard/merchant');
-          break;
-        case 'franchise':
-          router.push('/dashboard/franchise');
-          break;
-        case 'it':
-          router.push('/dashboard/it');
-          break;
-        default:
-          router.push('/dashboard/user');
-      }
+      router.push('/dashboard/user'); // Only user dashboard
     } else {
-      alert('Registration failed. Please try again.');
+      setError('Registration failed. Please check your credentials and try again.');
     }
 
     setIsLoading(false);
   };
+  const validatePassword = (pwd: string) => {
+    return {
+      length: pwd.length >= 8,
+      uppercase: /[A-Z]/.test(pwd),
+      number: /\d/.test(pwd),
+      special: /[@$!%*?&]/.test(pwd),
+    };
+  };
+  const [passwordChecks, setPasswordChecks] = useState({
+    length: false,
+    uppercase: false,
+    number: false,
+    special: false,
+  });
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setPasswordChecks(validatePassword(newPassword));
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
@@ -74,6 +89,12 @@ export default function RegisterPage() {
         </CardHeader>
 
         <CardContent>
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 text-center font-medium">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
@@ -100,27 +121,13 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="role">Account Type</Label>
-              <Select value={role} onValueChange={setRole}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="user">User</SelectItem>
-                  <SelectItem value="merchant">Merchant</SelectItem>
-                  <SelectItem value="franchise">Franchise</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                   placeholder="Enter your password"
                   required
                 />
@@ -138,8 +145,23 @@ export default function RegisterPage() {
                   )}
                 </Button>
               </div>
-            </div>
 
+              {/* ✅ Live validation checks */}
+              <ul className="text-sm mt-2 space-y-1">
+                <li className={passwordChecks.length ? "text-green-600" : "text-red-600"}>
+                  {passwordChecks.length ? "✔" : "✘"} At least 8 characters
+                </li>
+                <li className={passwordChecks.uppercase ? "text-green-600" : "text-red-600"}>
+                  {passwordChecks.uppercase ? "✔" : "✘"} At least one uppercase letter
+                </li>
+                <li className={passwordChecks.number ? "text-green-600" : "text-red-600"}>
+                  {passwordChecks.number ? "✔" : "✘"} At least one number
+                </li>
+                <li className={passwordChecks.special ? "text-green-600" : "text-red-600"}>
+                  {passwordChecks.special ? "✔" : "✘"} At least one special character
+                </li>
+              </ul>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
@@ -158,32 +180,19 @@ export default function RegisterPage() {
                   className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
                 </Button>
               </div>
             </div>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                'Creating account...'
-              ) : (
-                <>
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Create Account
-                </>
-              )}
+              {isLoading ? 'Creating account...' : (<><UserPlus className="mr-2 h-4 w-4" /> Create Account</>)}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
             <span className="text-gray-600">Already have an account? </span>
-            <Link href="/login" className="text-blue-600 hover:underline font-medium">
-              Sign in
-            </Link>
+            <Link href="/login" className="text-blue-600 hover:underline font-medium">Sign in</Link>
           </div>
         </CardContent>
       </Card>
