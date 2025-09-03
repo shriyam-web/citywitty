@@ -25,16 +25,16 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     const success = await register(email, password, name, role);
-    
+
     if (success) {
       // Redirect based on role
       switch (role) {
@@ -56,7 +56,7 @@ export default function RegisterPage() {
     } else {
       alert('Registration failed. Please try again.');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -72,7 +72,7 @@ export default function RegisterPage() {
             Join CityWitty and start saving today
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
