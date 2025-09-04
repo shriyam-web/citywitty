@@ -5,6 +5,21 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: { unoptimized: true },
+
+ async rewrites() {
+  return [
+    {
+      source: '/:path*',
+      has: [
+        {
+          type: 'host',
+          value: 'partner.citywitty.com',
+        },
+      ],
+      destination: '/partner/:path*',
+    },
+  ];
+}
 };
 
 module.exports = nextConfig;
