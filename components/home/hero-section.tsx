@@ -250,17 +250,15 @@ export function HeroSection() {
         >
           {/* Badge */}
           <motion.div
-            className="inline-flex items-center space-x-2 sm:space-x-3 bg-gradient-to-r from-orange-100 to-blue-100 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold border border-gray-200 shadow-sm"
+            className="inline-flex items-center space-x-2 sm:space-x-3 bg-gradient-to-r from-orange-100 to-blue-100 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold border border-gray-200 shadow-sm mt-3 sm:mt-0"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="flex items-center space-x-2 mt-2 md:mt-0">
-              <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              <span className="text-gray-700">India's #1 Premium Discount Platform</span>
-            </div>
-
+            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+            <span className="text-gray-700">India's #1 Premium Discount Platform</span>
           </motion.div>
+
 
           {/* Headings */}
           <div className="space-y-2 sm:space-y-4 max-w-2xl mx-auto md:mx-0">
