@@ -1,286 +1,374 @@
-"use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import {
-  ArrowRight,
-  Star,
-  CreditCard,
-  Sparkles,
-  Zap,
-  Gift,
-} from "lucide-react";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion } from "framer-motion";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Star, CreditCard, Sparkles, Zap, Gift, Play, CheckCircle, TrendingUp } from 'lucide-react';
+// import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+// import { Button } from "@/components/ui/button";
+// import PremiumCard from "@/components/PremiumCard";
+
+
+const cityIcons = [
+  "/icons/lotus.png",
+  "/icons/gateway.png",
+  "/icons/imambara.png",
+  "/icons/hawa-mahal.png",
+  "/icons/charminar.png",
+  "/icons/victoria.png",
+  // "/icons/india-gate.png",
+  // "/icons/mysore-palace.png",
+  // "/icons/statue-unity.png",
+  // "/icons/marina.png",
+];
+// Rotating live offers
+
 
 const rotatingOffers = [
-  { merchant: "Royal Palace Hotel", discount: "30% OFF", category: "Hotels" },
-  { merchant: "Style Studio Salon", discount: "25% OFF", category: "Beauty" },
-  { merchant: "Gadget Galaxy", discount: "20% OFF", category: "Electronics" },
-  { merchant: "Fashion Forward", discount: "35% OFF", category: "Fashion" },
+  { merchant: 'Royal Palace Hotel', discount: '30% OFF', category: 'Hotels', color: 'from-blue-500 to-cyan-400' },
+  { merchant: 'Style Studio Salon', discount: '25% OFF', category: 'Beauty', color: 'from-pink-500 to-rose-400' },
+  { merchant: 'Gadget Galaxy', discount: '20% OFF', category: 'Electronics', color: 'from-purple-500 to-indigo-400' },
+  { merchant: 'Fashion Forward', discount: '35% OFF', category: 'Fashion', color: 'from-orange-500 to-yellow-400' }
 ];
 
+// Floating background icons
+const floatingElements = [
+  { icon: Gift, delay: '0s', position: 'top-40 left-[30%]' },
+  { icon: Zap, delay: '1s', position: 'top-32 right-[15%]' },
+  { icon: Sparkles, delay: '2s', position: 'bottom-32 left-[20%]' },
+  { icon: Star, delay: '3s', position: 'bottom-20 right-[10%]' }
+];
+
+export default function PremiumCard() {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
+
+  // --- Desktop Mouse Drag ---
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setLastPos({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastPos.x;
+    const dy = e.clientY - lastPos.y;
+    setLastPos({ x: e.clientX, y: e.clientY });
+
+    setRotation((prev) => ({
+      x: prev.x + dy * 0.6,
+      y: prev.y + dx * 0.6,
+    }));
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  // --- Mobile Touch Drag ---
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    setIsDragging(true);
+    setLastPos({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - lastPos.x;
+    const dy = touch.clientY - lastPos.y;
+    setLastPos({ x: touch.clientX, y: touch.clientY });
+
+    setRotation((prev) => ({
+      x: prev.x + dy * 0.6,
+      y: prev.y + dx * 0.6,
+    }));
+  };
+
+  const handleTouchEnd = () => setIsDragging(false);
+
+  return (
+    <>
+      <div
+        className="flex justify-center items-center p-6 select-none"
+        style={{ perspective: "1200px" }}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <motion.div
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          className="relative w-[90vw] max-w-[640px] aspect-[16/9] 
+    rounded-3xl shadow-2xl border border-gray-700 cursor-grab active:cursor-grabbing"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateX: rotation.x, rotateY: rotation.y }}
+          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+        >
+
+          {/* FRONT */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden 
+          bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700 border border-gray-600
+          [backface-visibility:hidden]">
+
+            {/* Metallic Texture */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')] opacity-15 mix-blend-overlay" />
+
+            {/* Watermark */}
+            <div className="absolute inset-0 flex items-center justify-center text-[5rem] sm:text-[7rem] font-extrabold text-gray-700/10 tracking-widest rotate-[-20deg]">
+              SAVINGS
+            </div>
+
+            {/* Content */}
+            <div className="relative p-6 flex flex-col justify-between h-full text-white">
+              <div className="flex justify-between items-center">
+                <div className="text-2xl sm:text-3xl font-extrabold tracking-wide">
+                  City<span className="text-orange-400">Witty</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  </span>
+                  <span className="text-sm font-semibold text-green-400">Active</span>
+                </div>
+              </div>
+
+              <div className="font-mono text-xl sm:text-2xl md:text-3xl tracking-widest">
+                **** **** **** 1234
+              </div>
+
+              <div className="flex justify-between items-end text-sm sm:text-base">
+                <div>
+                  <div className="font-semibold">John Doe</div>
+                  <div className="text-xs text-gray-400">Premium Member</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-gray-400">Valid Upto</div>
+                  <div className="font-semibold">12/2030</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* BACK */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden 
+          bg-gradient-to-br from-gray-900 via-black to-gray-800 border border-gray-600 
+          [transform:rotateY(180deg)] [backface-visibility:hidden]">
+
+            {/* Metallic Texture */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/metallic-fabric.png')] opacity-10 mix-blend-overlay" />
+
+            {/* Content */}
+            <div className="relative p-6 flex flex-col justify-between h-full text-white">
+              {/* Chip */}
+              <div className="w-16 h-12 bg-gradient-to-br from-yellow-300 via-yellow-500 to-yellow-600 
+              rounded-md mx-auto shadow-md border border-yellow-400" />
+
+              {/* Branding */}
+              <div className="flex flex-col items-center space-y-2">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide 
+                bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">
+                  City<span className="text-orange-500">Witty</span> Privilege Card
+                </h2>
+                <p className="text-xs sm:text-sm md:text-base text-gray-300 italic">
+                  Enjoy Unlimited Savings
+                </p>
+              </div>
+
+              {/* Strip */}
+              <div className="w-full h-2 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600 rounded-full opacity-80" />
+            </div>
+          </div>
+
+
+
+        </motion.div >
+
+      </div >
+      {/* Controls under the card */}
+      <div className="mt-4 flex justify-center gap-3">
+        <Button
+          size="sm"
+          onClick={() => setRotation({ x: 0, y: rotation.y + 180 })}
+          className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 py-2 rounded-lg shadow-sm border border-gray-300"
+        >
+          👁 View in 360°
+        </Button>
+
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setRotation({ x: 0, y: 0 })}
+          className="bg-gray-50 hover:bg-gray-100 text-gray-600 text-xs px-3 py-2 rounded-lg border border-gray-300"
+        >
+          Reset View
+        </Button>
+      </div>
+
+    </>
+  );
+}
+
+
+// Hero Section Page
+
+
+
 export function HeroSection() {
-  const [currentOffer, setCurrentOffer] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [currentCity, setCurrentCity] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentOffer((prev) => (prev + 1) % rotatingOffers.length);
-        setIsVisible(true);
-      }, 300);
+      setCurrentCity((prev) => (prev + 1) % cityIcons.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-      </div>
+    <section className="relative w-full py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden px-4 sm:px-10 lg:px-20">
+      {/* Background Glow */}
+      <div className="absolute top-20 left-5 w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-gradient-to-tr from-orange-300/40 to-blue-200/30 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-16 right-0 w-28 h-28 sm:w-44 sm:h-44 md:w-52 md:h-52 bg-gradient-to-tr from-blue-300/40 to-orange-200/20 rounded-full blur-3xl animate-pulse delay-1000" />
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-blue-400/20 rounded-full blur-xl animate-pulse" />
-      <div className="absolute top-40 right-20 w-24 h-24 bg-purple-400/20 rounded-full blur-xl animate-pulse delay-1000" />
-      <div className="absolute bottom-32 left-20 w-40 h-40 bg-indigo-400/20 rounded-full blur-xl animate-pulse delay-2000" />
-      <div className="absolute bottom-20 right-10 w-28 h-28 bg-pink-400/20 rounded-full blur-xl animate-pulse delay-3000" />
+      {/* ✅ Adjusted grid for tablets */}
+      <div className="container mx-auto relative z-10 grid grid-cols-1 md:grid-cols-[1fr_minmax(340px,520px)] gap-8 sm:gap-12 lg:gap-20 items-start">
 
-      {/* Floating Icons */}
-      <div className="absolute top-32 left-1/4 animate-bounce delay-1000">
-        <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-          <Gift className="h-8 w-8 text-white/70" />
-        </div>
-      </div>
-      <div className="absolute top-48 right-1/4 animate-bounce delay-2000">
-        <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-          <Zap className="h-6 w-6 text-white/70" />
-        </div>
-      </div>
-      <div className="absolute bottom-48 left-1/3 animate-bounce delay-3000">
-        <div className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-          <Sparkles className="h-7 w-7 text-white/70" />
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <br />
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8 text-white">
-            {/* <br /> */}
-            <div className="space-y-6">
-              <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full text-sm font-medium border border-white/30">
-                {" "}
-                <Star className="h-4 w-4 text-yellow-400 mt-4 pt-4" />
-                <span>India's #1 Premium Discount Platform</span>
-                <Sparkles className="h-4 w-4 text-yellow-400" />
-              </div>
 
-              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                Unlock
-                <span className="block bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-                  Exclusive
-                </span>
-                <span className="block">Savings</span>
-              </h1>
 
-              <p className="text-xl lg:text-2xl text-blue-100 max-w-2xl leading-relaxed">
-                Experience premium lifestyle at unbeatable prices. Get instant
-                access to
-                <span className="text-yellow-400 font-semibold">
-                  {" "}
-                  1000+ verified merchants{" "}
-                </span>
-                across India with your CityWitty card.
-              </p>
 
-              {/* Live Rotating Offers */}
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                <div className="flex items-center space-x-2 mb-3">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-sm text-green-300 font-medium">
-                    LIVE OFFER
-                  </span>
-                </div>
-                <div
-                  className={`transition-all duration-300 ${isVisible
-                    ? "opacity-100 transform translate-y-0"
-                    : "opacity-0 transform translate-y-2"
-                    }`}
-                >
-                  <p className="text-2xl font-bold text-white">
-                    {rotatingOffers[currentOffer].discount}
-                  </p>
-                  <p className="text-blue-200">
-                    at {rotatingOffers[currentOffer].merchant}
-                  </p>
-                  <p className="text-sm text-blue-300">
-                    {rotatingOffers[currentOffer].category}
-                  </p>
-                </div>
-              </div>
-            </div>
+        {/* LEFT CONTENT */}
+        <motion.div
+          className="space-y-5 sm:space-y-7 md:space-y-8 text-center md:text-left"
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          {/* Badge */}
+          <motion.div
+            className="inline-flex items-center space-x-2 sm:space-x-3 bg-gradient-to-r from-orange-100 to-blue-100 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold border border-gray-200 shadow-sm"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+            <span className="text-gray-700">India's #1 Premium Discount Platform</span>
+          </motion.div>
 
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold px-8 py-4 text-lg shadow-2xl transform hover:scale-105 transition-all duration-300"
-                asChild
-              >
-                <Link href="/get-card">
-                  <CreditCard className="mr-2 h-5 w-5" />
-                  Get Your Card Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white/30 text-white hover:bg-white hover:text-blue-900 font-semibold px-8 py-4 text-lg backdrop-blur-sm text-dark"
-                asChild
-              >
-                <Link href="/merchants" className=" text-green-900">
-                  Explore Merchants
-                </Link>
-              </Button>
-            </div>
+          {/* Headings */}
+          <div className="space-y-2 sm:space-y-4 max-w-2xl mx-auto md:mx-0">
+            <motion.h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <span className="bg-gradient-to-r from-orange-500 via-blue-600 to-orange-500 bg-[length:300%_300%] bg-clip-text text-transparent animate-gradient">
+                Your City,
+              </span>
+              <span className="block text-gray-900 dark:text-white">
+                Your Lifestyle.
+              </span>
+            </motion.h1>
 
-            {/* Enhanced Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8">
-              <div className="text-center group">
-                <div className="text-3xl lg:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors">
-                  1000+
-                </div>
-                <div className="text-blue-200 text-sm">Premium Partners</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-3xl lg:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors">
-                  20+
-                </div>
-                <div className="text-blue-200 text-sm">Major Cities</div>
-              </div>
-              <div className="text-center group">
-                <div className="text-3xl lg:text-4xl font-bold text-white group-hover:text-yellow-400 transition-colors">
-                  50K+
-                </div>
-                <div className="text-blue-200 text-sm">Happy Members</div>
-              </div>
-              <br />
-            </div>
+            <motion.h2
+              className="text-base sm:text-lg md:text-xl lg:text-3xl font-semibold text-gray-700 dark:text-gray-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Unlock <span className="text-orange-500">exclusive deals</span> with every swipe.
+            </motion.h2>
+
+            <motion.p
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              A <span className="font-semibold text-blue-600">premium advantage</span> that makes
+              living smarter, simpler & more rewarding.
+            </motion.p>
           </div>
 
-          {/* Interactive 3D Card */}
-          <div className="relative">
-            <div className="relative group">
-              {/* Holographic Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
+          {/* Trust Line */}
+          <motion.p
+            className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-500 font-medium text-center md:text-left"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3 }}
+          >
+            Trusted by <span className="text-orange-500 font-semibold">25,000+ members</span> across India – saving on food, fashion & travel every day.
+          </motion.p>
 
-              {/* Main Card */}
-              <div className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 rounded-3xl p-8 transform rotate-6 group-hover:rotate-3 transition-all duration-500 shadow-2xl border border-white/20">
-                <div className="bg-gradient-to-br from-white via-blue-50 to-purple-50 rounded-2xl p-8 space-y-6 transform group-hover:scale-105 transition-transform duration-300">
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                        <CreditCard className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                          CityWitty
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          Premium Card
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-500">Valid Till</div>
-                      <div className="font-bold text-gray-900">12/2025</div>
-                    </div>
-                  </div>
 
-                  {/* Card Details */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">Status</span>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                        <span className="text-green-600 font-bold">ACTIVE</span>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">
-                        Available Offers
-                      </span>
-                      <span className="text-emerald-600 font-bold">
-                        UNLIMITED
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg">
-                      <span className="text-gray-700 font-medium">
-                        Max Discount
-                      </span>
-                      <span className="text-orange-600 font-bold">
-                        UP TO 50%
-                      </span>
-                    </div>
-                  </div>
+          {/* ✅ CTA Buttons center aligned on md */}
+          <motion.div
+            className="flex flex-col sm:flex-row justify-center md:justify-center lg:justify-start gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1 }}
+          >
+            <Button className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg shadow-xl rounded-xl transition-transform hover:scale-105">
+              🚀 Get Your Card Now
+            </Button>
+            <Button
+              variant="outline"
+              className="border-2 border-gray-300 text-gray-800 hover:bg-gray-100 hover:text-gray-900 font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg rounded-xl transition-transform hover:scale-105"
+            >
+              🔍 Explore Merchants
+            </Button>
+          </motion.div>
+        </motion.div>
 
-                  {/* Holographic Discount Badge */}
-                  <div className="relative">
-                    <div className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 rounded-xl p-4 text-white text-center transform group-hover:scale-105 transition-transform duration-300">
-                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                      <div className="relative">
-                        <div className="text-3xl font-bold">SAVE BIG</div>
-                        <div className="text-sm opacity-90">
-                          with every purchase
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        {/* RIGHT CONTENT - Premium Card */}
+        {/* RIGHT CONTENT - Premium Card */}
+        {/* RIGHT CONTENT - Premium Card */}
+        <motion.div
+          className="flex justify-center md:justify-end"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, delay: 0.6 }}
+        >
+          <motion.div
+            className="w-full max-w-[520px]"  // ⬅️ increased size
+            whileHover={{ rotate: -2, scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            <PremiumCard />
+          </motion.div>
+        </motion.div>
 
-                  {/* Chip Effect */}
-                  <div className="flex justify-between items-center">
-                    <div className="w-12 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-md flex items-center justify-center">
-                      <div className="w-8 h-6 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-sm" />
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-lg font-bold text-gray-900">
-                        **** **** **** 1234
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        PREMIUM MEMBER
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Floating Benefits */}
-              <div className="absolute -top-6 -right-4 bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold animate-bounce p-4">
-                ✨ INSTANT ACTIVATION
-              </div>
-              <div className="absolute -bottom-4 -left-4 bg-green-400 text-green-900 px-4 py-2 rounded-full text-sm font-bold animate-bounce delay-1000">
-                🎯 LIFETIME VALIDITY
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
-          </div>
-        </div>
+      {/* ✅ Rotating City Skyline - adjusted heights */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <motion.div
+          className="flex w-max"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
+        >
+          {[...Array(20)].map((_, i) => (
+            <img
+              key={i}
+              src="/cities1.png"
+              alt="City Skyline"
+              className="h-12 sm:h-16 md:h-20 lg:h-24 object-cover flex-shrink-0"
+
+            />
+          ))}
+        </motion.div>
       </div>
     </section>
   );
 }
+
+
+
+
+

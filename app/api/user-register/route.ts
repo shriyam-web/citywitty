@@ -38,21 +38,32 @@ import bcrypt from "bcryptjs"; // ✅ import bcrypt
 
 export async function POST(req: Request) {
   try {
-    await dbConnect(); 
+    await dbConnect();
 
     const data = await req.json();
 
-    // Default role as 'user'
-    data.role = "user";
+    // Agar frontend se provider aata hai to use karo, warna "credentials"
+    const provider = data.provider || "credentials";
+    data.role = data.role || "user";
 
-    // 🔹 Hash password
-    const saltRounds = 10;
-    data.password = await bcrypt.hash(data.password, saltRounds);
+    if (provider === "credentials") {
+      if (!data.password) {
+        return NextResponse.json(
+          { error: "Password is required for credentials signup" },
+          { status: 400 }
+        );
+      }
+      const saltRounds = 10;
+      data.password = await bcrypt.hash(data.password, saltRounds);
+    } else {
+      // Google ya koi aur provider → password mat store karo
+      data.password = undefined;
+    }
 
     const newUser = new User(data);
     await newUser.save();
 
-    return NextResponse.json({ message: "User registered successfully" });
+    return NextResponse.json({ message: "User registered successfully", user: newUser });
   } catch (err: any) {
     console.error("User Register API Error:", err);
     return NextResponse.json(
@@ -61,3 +72,5 @@ export async function POST(req: Request) {
     );
   }
 }
+
+

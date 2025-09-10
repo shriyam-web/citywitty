@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signIn } from "next-auth/react"; // 👈 add this import at top
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
 
@@ -189,6 +190,28 @@ export default function RegisterPage() {
               {isLoading ? 'Creating account...' : (<><UserPlus className="mr-2 h-4 w-4" /> Create Account</>)}
             </Button>
           </form>
+
+          {/* ✅ OR separator */}
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="px-3 text-gray-500 text-sm">OR</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+
+          {/* ✅ Google Signup button */}
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full flex items-center justify-center gap-2"
+            onClick={() => signIn("google", { callbackUrl: "/dashboard/user" })}
+          >
+            <img
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              alt="Google"
+              className="h-5 w-5"
+            />
+            Sign up with Google
+          </Button>
 
           <div className="mt-6 text-center text-sm">
             <span className="text-gray-600">Already have an account? </span>

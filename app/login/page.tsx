@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
+import { signIn } from "next-auth/react";
+import Image from "next/image";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -51,8 +53,14 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md border-0 shadow-xl">
         <CardHeader className="text-center space-y-2">
-          <div className="mx-auto h-12 w-12 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-4">
-            <span className="text-white font-bold text-lg">CW</span>
+          <div className="mx-auto h-16 w-16 mb-4 relative">
+            <Image
+              src="/citywittynew.jpg"
+              alt="CityWitty Logo"
+              fill
+              className="object-contain rounded-lg"
+              priority
+            />
           </div>
           <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
           <CardDescription>
@@ -69,19 +77,16 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="role">Account Type</Label>
-              <Select value={role} onValueChange={setRole}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select account type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="user">User</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
-                  <SelectItem value="merchant">Merchant</SelectItem>
-                  <SelectItem value="franchise">Franchise</SelectItem>
-                  <SelectItem value="it">IT Department</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                id="role"
+                value="User (Default)"
+                disabled
+                className="bg-gray-100 cursor-not-allowed"
+              />
+              <p className="text-xs text-gray-500">User role is default and cannot be changed here.</p>
             </div>
+
+
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -140,7 +145,27 @@ export default function LoginPage() {
               Sign up
             </Link>
           </div>
+
         </CardContent>
+
+        <div className="flex justify-center mt-4">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full max-w-xs flex items-center justify-center gap-2"
+            onClick={() => signIn("google", { callbackUrl: "/dashboard/user" })}
+          >
+            <img
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              alt="Google"
+              className="h-5 w-5"
+            />
+            Continue with Google
+          </Button>
+        </div>
+
+        <br />
+
       </Card>
     </div>
   );
