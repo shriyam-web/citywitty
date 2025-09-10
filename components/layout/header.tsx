@@ -321,7 +321,8 @@ export function Header() {
                 {/* CTA Button */}
                 <Button
                   asChild
-                  className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white font-semibold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                  className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white font-semibold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+
                 >
                   <Link href="/register">Get Your Card</Link>
                 </Button>
@@ -367,26 +368,24 @@ export function Header() {
                     <>
                       <hr className="my-4 border-gray-300" />
                       <div className="flex flex-col space-y-3">
-                        {pathname !== '/login' && (
-                          <Link
-                            href="/login"
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center text-gray-700 hover:text-blue-600 font-medium text-lg px-4 py-2 rounded-lg hover:bg-blue-50"
-                          >
-                            <LogIn className="h-5 w-5 mr-2" />
-                            Login
-                          </Link>
-                        )}
-                        {pathname !== '/register' && (
-                          <Link
-                            href="/register"
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center text-gray-700 hover:text-blue-600 font-medium text-lg px-4 py-2 rounded-lg hover:bg-blue-50"
-                          >
-                            <Crown className="h-5 w-5 mr-2" />
-                            Register
-                          </Link>
-                        )}
+                        <div className="font-medium text-black transition">
+                          {pathname !== '/login' && (
+                            <Link href="/login" className="hover:underline mr-2">
+                              Login
+                            </Link>
+                          )}
+
+                          {pathname !== '/login' && pathname !== '/register' && <span>/</span>}
+
+                          {pathname !== '/register' && (
+                            <Link href="/register" className="hover:underline ml-2">
+                              Register
+                            </Link>
+                          )}
+                        </div>
+
+
+
                       </div>
                     </>
                   )}
