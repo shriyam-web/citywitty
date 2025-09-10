@@ -255,8 +255,11 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            <span className="text-gray-700">India's #1 Premium Discount Platform</span>
+            <div className="flex items-center space-x-2 mt-2 md:mt-0">
+              <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              <span className="text-gray-700">India's #1 Premium Discount Platform</span>
+            </div>
+
           </motion.div>
 
           {/* Headings */}
