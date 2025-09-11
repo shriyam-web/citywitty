@@ -42,7 +42,7 @@ const testimonials = [
 ];
 
 export function TestimonialsCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'start',
     slidesToScroll: 1
@@ -81,19 +81,19 @@ export function TestimonialsCarousel() {
                           <p className="text-gray-700 text-lg leading-relaxed">
                             "{testimonial.text}"
                           </p>
-                          
+
                           <div className="flex items-center space-x-1">
                             {[...Array(testimonial.rating)].map((_, i) => (
                               <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                             ))}
                           </div>
-                          
+
                           <div className="flex items-center space-x-3 pt-4 border-t border-gray-100">
-                            <img
+                            {/* <img
                               src={testimonial.avatar}
                               alt={testimonial.name}
                               className="w-12 h-12 rounded-full object-cover"
-                            />
+                            /> */}
                             <div>
                               <div className="font-semibold text-gray-900">{testimonial.name}</div>
                               <div className="text-sm text-gray-600">{testimonial.city}</div>

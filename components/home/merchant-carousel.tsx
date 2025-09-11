@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from "next/link";
+
 
 const merchants = [
   {
@@ -55,7 +57,7 @@ const merchants = [
 ];
 
 export function MerchantCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'start',
     slidesToScroll: 1,
@@ -118,7 +120,7 @@ export function MerchantCarousel() {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div className="p-6 space-y-3">
                       <div className="flex justify-between items-start">
                         <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
@@ -129,12 +131,20 @@ export function MerchantCarousel() {
                           <span className="text-sm text-gray-600">{merchant.rating}</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600 text-sm">{merchant.city}</span>
-                        <Button size="sm" variant="outline" className="group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors">
-                          View Details
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          asChild
+                          className="group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors"
+                        >
+                          <Link href={`/merchants/${merchant.id}`}>
+                            View Details
+                          </Link>
                         </Button>
+
                       </div>
                     </div>
                   </CardContent>

@@ -173,7 +173,7 @@ export function CallToActionSection() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button
+            {/* <Button
               size="lg"
               variant="outline"
               className="border-2 border-white/30 text-white hover:bg-white hover:text-blue-900 font-semibold px-10 py-4 text-lg backdrop-blur-sm rounded-xl hover:scale-105 transition-all duration-300"
@@ -183,7 +183,7 @@ export function CallToActionSection() {
                 <Gift className="mr-2 h-5 w-5" />
                 Explore Merchants
               </Link>
-            </Button>
+            </Button> */}
           </div>
 
           {/* Stats Section */}
