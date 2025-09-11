@@ -98,7 +98,7 @@ export default function RegisterPage() {
       <Header />
       {/* <br /> <br /> */}
 
-      <div className="pt-20 pb-10 min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50 flex items-center justify-center px-4 pt-7">
+      <div className="pt-20  min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50 flex items-center justify-center px-4">
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
