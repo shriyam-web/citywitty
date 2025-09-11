@@ -136,7 +136,7 @@ export default function MerchantDetailPage({ params }: { params: { id: string } 
 
     return (
         <>
-            <Header />
+            <Header /> <br /><br />
             <div className="container mx-auto py-12 px-4">
                 <Card className="overflow-hidden shadow-lg">
                     <img src={merchant.image} alt={merchant.name} className="w-full h-80 object-cover" />
