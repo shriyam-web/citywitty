@@ -100,7 +100,7 @@ export function CitiesPresence() {
                     : 'bg-blue-100 text-blue-700'
                 }
               >
-                {city.merchants || 'Coming soon'}
+                {/* {city.merchants || 'Coming soon'} */}
               </Badge>
             </div>
           ))}
@@ -137,7 +137,7 @@ export function CitiesPresence() {
                   {city.name}
                 </div>
                 <div className="text-xs text-gray-500">
-                  {city.merchants || 'Coming soon'}
+                  {/* {city.merchants || 'Coming soon'} */}
                 </div>
               </div>
             ))}
