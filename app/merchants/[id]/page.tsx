@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Phone, Clock, ShieldCheck } from "lucide-react";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 
 type RatingBreakdown = Record<1 | 2 | 3 | 4 | 5, number>;
 
@@ -133,109 +135,113 @@ export default function MerchantDetailPage({ params }: { params: { id: string } 
     const totalReviews = merchant.reviews.length;
 
     return (
-        <div className="container mx-auto py-12 px-4">
-            <Card className="overflow-hidden shadow-lg">
-                <img src={merchant.image} alt={merchant.name} className="w-full h-80 object-cover" />
-                <CardContent className="p-6 space-y-8">
-                    {/* Header section */}
-                    <div className="flex justify-between items-center">
+        <>
+            <Header />
+            <div className="container mx-auto py-12 px-4">
+                <Card className="overflow-hidden shadow-lg">
+                    <img src={merchant.image} alt={merchant.name} className="w-full h-80 object-cover" />
+                    <CardContent className="p-6 space-y-8">
+                        {/* Header section */}
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h1 className="text-3xl font-bold flex items-center gap-2">
+                                    {merchant.name}
+                                    {merchant.assured && (
+                                        <span className="ml-2 inline-flex items-center bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                            <ShieldCheck className="h-4 w-4 mr-1" />
+                                            CityWitty Assured
+                                        </span>
+                                    )}
+                                </h1>
+                                <p className="text-gray-600">{merchant.category} • {merchant.city}</p>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                                <Star className="h-5 w-5 text-yellow-400 fill-current" />
+                                <span className="font-medium">{merchant.rating.toFixed(1)}</span>
+                            </div>
+                        </div>
+
+                        {/* Discount & Description */}
                         <div>
-                            <h1 className="text-3xl font-bold flex items-center gap-2">
-                                {merchant.name}
-                                {merchant.assured && (
-                                    <span className="ml-2 inline-flex items-center bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
-                                        <ShieldCheck className="h-4 w-4 mr-1" />
-                                        CityWitty Assured
-                                    </span>
-                                )}
-                            </h1>
-                            <p className="text-gray-600">{merchant.category} • {merchant.city}</p>
+                            <p className="text-lg font-medium text-green-600">{merchant.discount}</p>
+                            <p className="text-gray-700 leading-relaxed mt-2">{merchant.description}</p>
                         </div>
-                        <div className="flex items-center space-x-1">
-                            <Star className="h-5 w-5 text-yellow-400 fill-current" />
-                            <span className="font-medium">{merchant.rating.toFixed(1)}</span>
-                        </div>
-                    </div>
 
-                    {/* Discount & Description */}
-                    <div>
-                        <p className="text-lg font-medium text-green-600">{merchant.discount}</p>
-                        <p className="text-gray-700 leading-relaxed mt-2">{merchant.description}</p>
-                    </div>
-
-                    {/* Facilities */}
-                    <div>
-                        <h2 className="text-xl font-semibold mb-3">Facilities & Services</h2>
-                        <ul className="list-disc list-inside text-gray-700 space-y-1">
-                            {merchant.facilities.map((f, i) => (
-                                <li key={i}>{f}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Contact & Address */}
-                    <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="flex items-center space-x-3">
-                            <Phone className="h-5 w-5 text-blue-600" />
-                            <span className="text-gray-700">{merchant.contact}</span>
+                        {/* Facilities */}
+                        <div>
+                            <h2 className="text-xl font-semibold mb-3">Facilities & Services</h2>
+                            <ul className="list-disc list-inside text-gray-700 space-y-1">
+                                {merchant.facilities.map((f, i) => (
+                                    <li key={i}>{f}</li>
+                                ))}
+                            </ul>
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <Clock className="h-5 w-5 text-blue-600" />
-                            <span className="text-gray-700">{merchant.openingHours}</span>
-                        </div>
-                        <div className="flex items-center space-x-3 sm:col-span-2">
-                            <MapPin className="h-5 w-5 text-blue-600" />
-                            <span className="text-gray-700">{merchant.address}</span>
-                        </div>
-                    </div>
 
-                    {/* Rating Breakdown */}
-                    <div>
-                        <h2 className="text-xl font-semibold mb-4">Customer Ratings</h2>
-                        <div className="space-y-2">
-                            {[5, 4, 3, 2, 1].map((star) => {
-                                const count = breakdown[star as 1 | 2 | 3 | 4 | 5];
-                                const percent = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
-                                return (
-                                    <div key={star} className="flex items-center space-x-3">
-                                        <span className="w-6 text-sm font-medium">{star}★</span>
-                                        <div className="flex-1 bg-gray-200 rounded-full h-3">
-                                            <div
-                                                className="bg-yellow-400 h-3 rounded-full"
-                                                style={{ width: `${percent}%` }}
-                                            ></div>
+                        {/* Contact & Address */}
+                        <div className="grid sm:grid-cols-2 gap-6">
+                            <div className="flex items-center space-x-3">
+                                <Phone className="h-5 w-5 text-blue-600" />
+                                <span className="text-gray-700">{merchant.contact}</span>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                                <Clock className="h-5 w-5 text-blue-600" />
+                                <span className="text-gray-700">{merchant.openingHours}</span>
+                            </div>
+                            <div className="flex items-center space-x-3 sm:col-span-2">
+                                <MapPin className="h-5 w-5 text-blue-600" />
+                                <span className="text-gray-700">{merchant.address}</span>
+                            </div>
+                        </div>
+
+                        {/* Rating Breakdown */}
+                        <div>
+                            <h2 className="text-xl font-semibold mb-4">Customer Ratings</h2>
+                            <div className="space-y-2">
+                                {[5, 4, 3, 2, 1].map((star) => {
+                                    const count = breakdown[star as 1 | 2 | 3 | 4 | 5];
+                                    const percent = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+                                    return (
+                                        <div key={star} className="flex items-center space-x-3">
+                                            <span className="w-6 text-sm font-medium">{star}★</span>
+                                            <div className="flex-1 bg-gray-200 rounded-full h-3">
+                                                <div
+                                                    className="bg-yellow-400 h-3 rounded-full"
+                                                    style={{ width: `${percent}%` }}
+                                                ></div>
+                                            </div>
+                                            <span className="text-sm text-gray-600">{count}</span>
                                         </div>
-                                        <span className="text-sm text-gray-600">{count}</span>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Customer Reviews */}
-                    <div>
-                        <h2 className="text-xl font-semibold mb-4">Customer Reviews</h2>
-                        <div className="space-y-4">
-                            {merchant.reviews.map((review, i) => (
-                                <div key={i} className="border-b pb-4">
-                                    <div className="flex justify-between items-center">
-                                        <span className="font-medium text-gray-900">{review.user}</span>
-                                        <div className="flex items-center space-x-1">
-                                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                                            <span className="text-sm">{review.rating.toFixed(1)}</span>
+                        {/* Customer Reviews */}
+                        <div>
+                            <h2 className="text-xl font-semibold mb-4">Customer Reviews</h2>
+                            <div className="space-y-4">
+                                {merchant.reviews.map((review, i) => (
+                                    <div key={i} className="border-b pb-4">
+                                        <div className="flex justify-between items-center">
+                                            <span className="font-medium text-gray-900">{review.user}</span>
+                                            <div className="flex items-center space-x-1">
+                                                <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                                                <span className="text-sm">{review.rating.toFixed(1)}</span>
+                                            </div>
                                         </div>
+                                        <p className="text-gray-700 mt-1">{review.comment}</p>
                                     </div>
-                                    <p className="text-gray-700 mt-1">{review.comment}</p>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Call-to-action */}
-                    <Button className="w-full py-3 text-lg">Book / Claim Offer</Button>
-                </CardContent>
+                        {/* Call-to-action */}
+                        <Button className="w-full py-3 text-lg">Book / Claim Offer</Button>
+                    </CardContent>
 
-            </Card>
-        </div>
+                </Card>
+            </div>
+            <Footer />
+        </>
     );
 }
