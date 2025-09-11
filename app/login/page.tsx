@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -53,7 +54,7 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 pt-20 pt-3 flex items-center justify-center p-4">
         <Card className="w-full max-w-md border-0 shadow-xl">
           <CardHeader className="text-center space-y-2">
             <div className="mx-auto h-16 w-16 mb-4 relative">
@@ -171,6 +172,7 @@ export default function LoginPage() {
 
         </Card>
       </div>
+      <Footer />
     </>
   );
 }

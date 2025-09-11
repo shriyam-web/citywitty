@@ -13,6 +13,8 @@ import { Eye, EyeOff, UserPlus } from 'lucide-react';
 import { Header } from '@/components/layout/header';
 import { motion, AnimatePresence } from "framer-motion";
 import { Footer } from '@/components/layout/footer';
+import { useMemo } from 'react';
+
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -79,41 +81,101 @@ export default function RegisterPage() {
     setIsLoading(false);
   };
 
+  const floatingEmojis = useMemo(() => {
+    const emojis = ["💸", "🎉", "😍", "❤️", "🛍️", "✨", "😁", "💖"];
+    return Array.from({ length: 12 }).map((_, i) => ({
+      id: i,
+      emoji: emojis[Math.floor(Math.random() * emojis.length)],
+      left: Math.random() * 90, // random horizontal %
+      delay: Math.random() * 5, // random delay
+      duration: 4 + Math.random() * 4, // 4–8s
+      size: 24 + Math.random() * 20, // 24–44px
+    }));
+  }, []);
+
   return (
     <>
       <Header />
-      <br /> <br /> <br />
+      {/* <br /> <br /> */}
 
-      <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50 flex items-center justify-center px-4 pt-4">
+      <div className="pt-20 pb-10 min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50 flex items-center justify-center px-4 pt-7">
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex w-full max-w-6xl bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200"
+          className="flex w-full max-w-6xl bg-white  rounded-2xl overflow-hidden border border-gray-200"
         >
           {/* LEFT - Benefits */}
           <motion.div
             initial={{ x: -30, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="hidden md:flex w-1/2 flex-col justify-center bg-gradient-to-br from-blue-700 to-purple-800 text-white p-10 space-y-6"
+            className="hidden md:flex relative w-1/2 flex-col justify-between
+             bg-gradient-to-br from-blue-700 via-purple-700 to-pink-600 
+             text-white p-10 rounded-r-3xl overflow-hidden"
+            style={{ fontFamily: "'Poppins', sans-serif" }}
           >
-            <h1 className="text-3xl font-bold leading-snug">
-              Unlock Premium Benefits with <span className="text-yellow-300">CityWitty</span>
-            </h1>
-            <ul className="space-y-3 text-sm">
-              <li>✨ Get exclusive discounts from premium merchants</li>
-              <li>⚡ Fast & secure checkout for a smooth experience</li>
-              <li>🎁 Access early-bird offers & loyalty rewards</li>
-              <li>📊 Track your savings & manage your profile easily</li>
-            </ul>
-            <motion.img
-              whileHover={{ scale: 1.05 }}
-              src="https://illustrations.popsy.co/blue/shopping.svg"
-              alt="Benefits"
-              className="w-64 mx-auto mt-6 drop-shadow-lg"
-            />
+            {/* Random Floating Emojis */}
+            {floatingEmojis.map((item) => (
+              <motion.span
+                key={item.id}
+                initial={{ y: 100, opacity: 0 }}
+                animate={{
+                  y: -250,
+                  opacity: [0, 1, 0],
+                  scale: [0.8, 1, 1.2],
+                }}
+                transition={{
+                  duration: item.duration,
+                  repeat: Infinity,
+                  delay: item.delay,
+                }}
+                className="absolute"
+                style={{
+                  left: `${item.left}%`,
+                  bottom: "-40px",
+                  fontSize: `${item.size}px`,
+                }}
+              >
+                {item.emoji}
+              </motion.span>
+            ))}
+
+            {/* TOP content */}
+            <div className="relative z-10 space-y-6">
+              <h1 className="text-4xl font-extrabold leading-snug">
+                Feel the <span className="text-yellow-300">Joy of Savings</span> with CityWitty 🎊
+              </h1>
+
+              <p className="text-lg text-gray-100">
+                Your <span className="font-semibold text-yellow-300">premium lifestyle card </span>
+                that makes shopping happier, smarter & full of rewards! 💃✨
+              </p>
+
+              <ul className="space-y-3 text-base font-medium">
+                <li>💎 Unlock <span className="text-yellow-300">exclusive deals</span> from top merchants</li>
+                <li>⚡ Enjoy <span className="text-yellow-300">super-fast checkout</span> hassle-free</li>
+                <li>🎁 Grab <span className="text-yellow-300">early-bird offers</span> & loyalty rewards</li>
+                <li>📊 Track <span className="text-yellow-300">your savings</span> like never before</li>
+              </ul>
+            </div>
+
+            {/* BOTTOM illustration */}
+            <div className="flex justify-center mt-8">
+              <motion.img
+                // whileHover={{ scale: 1.05 }}
+                src="/register.png"
+                alt="Happy Savings"
+                className="w-[80%] h-auto  bottom-0"
+                style={{ maxHeight: "350px" }}
+              />
+            </div>
           </motion.div>
+
+
+
+
 
           {/* RIGHT - Registration Form */}
           <div className="w-full md:w-1/2 p-8">
@@ -349,12 +411,19 @@ export default function RegisterPage() {
                   <Link href="/login" className="text-blue-600 hover:underline font-medium">
                     Sign in
                   </Link>
+
                 </div>
+
               </CardContent>
+
             </Card>
+
           </div>
+
         </motion.div>
+
       </div>
+
       <Footer />
     </>
   );
