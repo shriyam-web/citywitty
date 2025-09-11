@@ -28,7 +28,7 @@ const navigation = [
   { name: 'Activate Card', href: '/activate-track' },
   { name: 'Merchants', href: '/merchants' },
   { name: 'Contact', href: '/contact' },
-  { name: 'Merchant Portal', href: '/partner' },
+  { name: 'Merchant Portal', href: 'https://partner.citywitty.com/' },
 ];
 
 export function Header() {
