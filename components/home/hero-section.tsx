@@ -125,8 +125,24 @@ export default function PremiumCard() {
             {/* Content */}
             <div className="relative p-6 flex flex-col justify-between h-full text-white">
               <div className="flex justify-between items-center">
-                <div className="text-2xl sm:text-3xl font-extrabold tracking-wide">
+                {/* <div className="text-2xl sm:text-3xl font-extrabold tracking-wide">
                   City<span className="text-orange-400">Witty</span>
+                </div> */}
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+
+                    <img
+                      src="/logo.png"
+                      alt="CityWitty Logo"
+                      className="h-12 w-auto"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
+                      CityWitty
+                    </span>
+                    <div className="text-xs text-gray-400">Privilage Cards</div>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="relative flex h-3 w-3">
@@ -143,7 +159,7 @@ export default function PremiumCard() {
 
               <div className="flex justify-between items-end text-sm sm:text-base">
                 <div>
-                  <div className="font-semibold">John Doe</div>
+                  <div className="font-semibold">Your Name Here</div>
                   <div className="text-xs text-gray-400">Premium Member</div>
                 </div>
                 <div className="text-right">
@@ -170,10 +186,26 @@ export default function PremiumCard() {
 
               {/* Branding */}
               <div className="flex flex-col items-center space-y-2">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide 
+                {/* <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide 
                 bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">
                   City<span className="text-orange-500">Witty</span> Privilege Card
-                </h2>
+                </h2> */}
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+
+                    <img
+                      src="/logo.png"
+                      alt="CityWitty Logo"
+                      className="h-12 w-auto"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
+                      CityWitty
+                    </span>
+                    <div className="text-xs text-gray-400">Privilage Cards</div>
+                  </div>
+                </div>
                 <p className="text-xs sm:text-sm md:text-base text-gray-300 italic">
                   Enjoy Unlimited Savings
                 </p>
@@ -282,7 +314,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Unlock <span className="text-orange-500">exclusive deals</span> with every swipe.
+              Unlock <span className="text-orange-500">exclusive deals</span> with every transaction.
             </motion.h2>
 
             <motion.p

@@ -24,7 +24,7 @@
 //             <p className="text-gray-400 text-sm">
 //               Premium discount card platform offering exclusive deals from
 //               partnered merchants across India.
-//             </p>
+//             </p>a
 //             {/* <div className="flex space-x-4">
 //               <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
 //               <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
@@ -177,6 +177,27 @@
 
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin, Crown, Heart, Shield, Zap } from 'lucide-react';
+import { Youtube } from "lucide-react";
+
+const WhatsappIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    role="img"
+  >
+    <path
+      fill="#25D366"
+      d="M16 .4C7.2.4.1 7.6.1 16.5c0 2.9.8 5.7 2.3 8.2L0 32l7.5-2.4c2.3 1.2 4.9 1.8 7.5 1.8h.1c8.9 0 16.1-7.2 16.1-16.1S24.9.4 16 .4z"
+    />
+    <path
+      fill="#FFF"
+      d="M24.2 21.7c-.4-1-2.2-2-2.2-2s-1.2-.6-1.6-.8-.9-.1-1.2.4c-.4.5-.7 1-1.1 1.1-.4.1-.7 0-1.1-.2-.3-.2-1.9-.7-3.6-2.4-1.3-1.3-2.2-2.9-2.5-3.4-.3-.5 0-.8.2-1 .2-.2.5-.6.7-.9.2-.3.3-.5.5-.8.2-.3.1-.6 0-.8s-1.2-2.9-1.7-3.9c-.4-1-1-1-1.3-1s-.7 0-1 .1c-.3.1-.9.3-1.3.9-.5.6-1.7 1.6-1.7 4s1.8 4.6 2.1 5c.3.4 3.6 5.5 8.6 7.6 1.2.5 2.1.8 2.8 1 .9.3 1.7.3 2.3.2.7-.1 2.2-.9 2.5-1.7.3-.8.3-1.5.2-1.8z"
+    />
+  </svg>
+);
+
+
 
 export function Footer() {
   return (
@@ -195,16 +216,18 @@ export function Footer() {
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-orange-500 rounded-2xl blur-lg opacity-75"></div>
-                <div className="relative h-12 w-12 rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-orange-500 flex items-center justify-center">
-                  <Crown className="h-7 w-7 text-white" />
-                </div>
+
+                <img
+                  src="/logo.png"
+                  alt="CityWitty Logo"
+                  className="h-12 w-auto"
+                />
               </div>
               <div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
                   CityWitty
                 </span>
-                <div className="text-xs text-gray-400">Premium Discounts</div>
+                <div className="text-xs text-gray-400">Privilage Cards</div>
               </div>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -229,15 +252,39 @@ export function Footer() {
             </div>
 
             {/* Social Media */}
+            {/* Social Media */}
+
+
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
-                <div key={index} className="group cursor-pointer">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600/20 to-orange-600/20 flex items-center justify-center border border-white/10 group-hover:border-blue-400 transition-all duration-300 group-hover:scale-110">
-                    <Icon className="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
-                  </div>
-                </div>
-              ))}
+              {[
+                { icon: Facebook, href: "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr" },
+                { icon: Twitter, href: "https://twitter.com/citywitty" },
+                { icon: Instagram, href: "https://www.instagram.com/citywitty.in?igsh=YXBub3Nwam5hcjR0" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/citywitty" },
+                { icon: Youtube, href: "https://youtube.com/@citywitty3546?si=IfcAhXmKq9vmIfA8" }, // 👈 YouTube
+                {
+                  icon: WhatsappIcon, href: "https://wa.me/916389202030"
+                }, // WhatsApp (replace with actual number)
+                { icon: MapPin, href: "https://share.google/BYU7k1Knf0p4WshcS" }, // 👈 Location (Google Maps link)
+              ].map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <a
+                    key={index}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600/20 to-orange-600/20 flex items-center justify-center border border-white/10 group-hover:border-blue-400 transition-all duration-300 group-hover:scale-110">
+                      <IconComponent className="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                    </div>
+                  </a>
+                );
+              })}
             </div>
+
+
           </div>
 
           {/* Quick Links */}
@@ -301,8 +348,10 @@ export function Footer() {
             </h3>
             <div className="space-y-4">
               {[
-                { icon: Phone, text: '+91 9876543210', href: 'tel:+919876543210' },
-                { icon: Mail, text: 'support@citywitty.com', href: 'mailto:support@citywitty.com' }
+                {
+                  icon: Phone, text: '+91 6389202030', href: 'tel:+916389202030'
+                },
+                { icon: Mail, text: 'contact@citywitty.com', href: 'mailto:contact@citywitty.com' }
               ].map((contact, index) => {
                 const IconComponent = contact.icon;
                 return (
@@ -325,7 +374,7 @@ export function Footer() {
                 </div>
                 <div className="text-sm">
                   <div className="font-medium text-white mb-1">Head Office</div>
-                  <div>123 Business District<br />Mumbai, Maharashtra 400001</div>
+                  <div>Unit 316 & 317, P-3, 3rd Floor, Paramount Golf Foreste <br />Greater Noida, 201311</div>
                 </div>
               </div>
             </div>

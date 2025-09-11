@@ -244,11 +244,27 @@ export function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <img
+            {/* <img
               src="/citywittynew.png"
               alt="CityWitty Logo"
-              className="h-12 w-auto max-w-[160px] flex-shrink-0"
-            />
+              className="h-12 w-auto max-w-[220px] flex-shrink-0"
+            /> */}
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+
+                <img
+                  src="/logo.png"
+                  alt="CityWitty Logo"
+                  className="h-12 w-auto"
+                />
+              </div>
+              <div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
+                  CityWitty
+                </span>
+                <div className="text-xs text-gray-400">Privilage Cards</div>
+              </div>
+            </div>
           </Link>
 
           {/* Right Side */}
