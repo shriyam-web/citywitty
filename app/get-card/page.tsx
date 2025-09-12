@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Header } from "@/components/layout/header";

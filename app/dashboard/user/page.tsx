@@ -18,14 +18,14 @@ import {
   TrendingUp,
   LogOut
 } from 'lucide-react';
-export const metadata: Metadata = {
-  title: "User Dashboard - CityWitty",
-  description: "Access your CityWitty card details, offers, and usage history in your personal dashboard.",
-  robots: {
-    index: false,   // ❌ no indexing
-    follow: false,  // ❌ no following
-  },
-};
+// export const metadata: Metadata = {
+//   title: "User Dashboard - CityWitty",
+//   description: "Access your CityWitty card details, offers, and usage history in your personal dashboard.",
+//   robots: {
+//     index: false,   // ❌ no indexing
+//     follow: false,  // ❌ no following
+//   },
+// };
 const cardInfo = {
   cardNumber: '****-****-****-1234',
   status: 'Active',
