@@ -1,5 +1,6 @@
 "use client";
-
+import type { Metadata } from "next";
+import Script from "next/script";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,41 @@ import {
   Gift,
 } from "lucide-react";
 
+export const metadata: Metadata = {
+  title: "Get CityWitty Card - Unlock Exclusive Discounts & Premium Offers",
+  description:
+    "Purchase your CityWitty Discount Card today. Choose from Basic, Premium, or Lifetime plans and enjoy exclusive offers on 1000+ merchants across restaurants, shopping, hotels, salons, and entertainment.",
+  keywords:
+    "buy discount card, CityWitty card, premium offers, exclusive deals, merchant discounts, restaurant offers, shopping deals, hotel discounts, lifetime discount card",
+  openGraph: {
+    title: "Get CityWitty Card - Unlock Exclusive Discounts & Premium Offers",
+    description:
+      "Choose from Basic, Premium, or Lifetime CityWitty Cards and enjoy unmatched discounts across 1000+ premium merchants.",
+    url: "https://citywitty.com/get-card",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CityWitty Card - Unlock Exclusive Discounts",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@citywitty",
+    title: "Get CityWitty Card - Unlock Exclusive Discounts & Premium Offers",
+    description:
+      "Buy your CityWitty Discount Card today. Enjoy exclusive offers across restaurants, hotels, shopping, salons, and entertainment.",
+    images: ["https://citywitty.com/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://citywitty.com/get-card",
+  },
+};
 const features = [
   {
     icon: Gift,
@@ -118,6 +154,85 @@ export default function GetCardPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {/* ✅ JSON-LD Structured Data */}
+      <Script
+        id="jsonld-getcard"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "url": "https://citywitty.com",
+                "name": "CityWitty",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://citywitty.com/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string",
+                },
+              },
+              {
+                "@type": "Organization",
+                "name": "CityWitty",
+                "url": "https://citywitty.com",
+                "logo": "https://citywitty.com/logo.png",
+                "sameAs": [
+                  "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr",
+                  "https://twitter.com/citywitty",
+                  "https://www.instagram.com/citywitty.in",
+                  "https://www.linkedin.com/company/citywitty",
+                  "https://youtube.com/@citywitty3546"
+                ],
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+91-6389202030",
+                  "contactType": "customer service",
+                  "areaServed": "IN",
+                  "availableLanguage": "en"
+                }
+              },
+              {
+                "@type": "Product",
+                "name": "CityWitty Discount Card",
+                "image": "https://citywitty.com/og-image.png",
+                "description": "Unlock exclusive discounts at 1000+ premium merchants with CityWitty Discount Card. Available in Basic, Premium, and Lifetime plans.",
+                "brand": {
+                  "@type": "Brand",
+                  "name": "CityWitty"
+                },
+                "offers": [
+                  {
+                    "@type": "Offer",
+                    "url": "https://citywitty.com/get-card",
+                    "priceCurrency": "INR",
+                    "price": "999",
+                    "priceValidUntil": "2025-12-31",
+                    "availability": "https://schema.org/InStock"
+                  },
+                  {
+                    "@type": "Offer",
+                    "url": "https://citywitty.com/get-card",
+                    "priceCurrency": "INR",
+                    "price": "1999",
+                    "priceValidUntil": "2025-12-31",
+                    "availability": "https://schema.org/InStock"
+                  },
+                  {
+                    "@type": "Offer",
+                    "url": "https://citywitty.com/get-card",
+                    "priceCurrency": "INR",
+                    "price": "4999",
+                    "priceValidUntil": "2025-12-31",
+                    "availability": "https://schema.org/InStock"
+                  }
+                ]
+              }
+            ]
+          }),
+        }}
+      />
       <Header />
 
       {/* Hero Section */}

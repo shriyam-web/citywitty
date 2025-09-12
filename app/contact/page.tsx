@@ -1,5 +1,6 @@
 "use client";
-
+import Script from "next/script";
+import type { Metadata } from "next";
 import { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -30,6 +31,43 @@ import {
   Send,
   CheckCircle,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contact CityWitty - Support, Inquiries & Assistance",
+  description:
+    "Get in touch with CityWitty for customer support, business inquiries, or partnership opportunities. Reach us via phone, WhatsApp, email, or our contact form.",
+  keywords:
+    "CityWitty contact, customer support, business inquiry, CityWitty phone, CityWitty email, partnership CityWitty, discount card support",
+  openGraph: {
+    title: "Contact CityWitty - Support, Inquiries & Assistance",
+    description:
+      "We’re here to help! Contact CityWitty for support, partnership inquiries, or any questions. Reach us by phone, WhatsApp, email, or our contact form.",
+    url: "https://citywitty.com/contact",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CityWitty Contact Page",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@citywitty",
+    title: "Contact CityWitty - Support, Inquiries & Assistance",
+    description:
+      "Need help or have a question? Reach out to CityWitty’s support team by phone, WhatsApp, email, or contact form.",
+    images: ["https://citywitty.com/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://citywitty.com/contact",
+  },
+  category: "Customer Support",
+};
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -107,6 +145,67 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
+      <Script
+        id="contact-page-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebPage",
+                "@id": "https://citywitty.com/contact",
+                url: "https://citywitty.com/contact",
+                name: "Contact CityWitty - Support, Inquiries & Assistance",
+                description:
+                  "Get in touch with CityWitty for customer support, business inquiries, or partnership opportunities. Reach us via phone, WhatsApp, email, or our contact form.",
+                isPartOf: {
+                  "@id": "https://citywitty.com/#website",
+                },
+                about: {
+                  "@id": "https://citywitty.com/#organization",
+                },
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://citywitty.com/#website",
+                url: "https://citywitty.com",
+                name: "CityWitty",
+                publisher: {
+                  "@id": "https://citywitty.com/#organization",
+                },
+              },
+              {
+                "@type": "Organization",
+                "@id": "https://citywitty.com/#organization",
+                name: "CityWitty",
+                url: "https://citywitty.com",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://citywitty.com/og-image.png",
+                },
+                contactPoint: [
+                  {
+                    "@type": "ContactPoint",
+                    telephone: "+91-6389202030",
+                    contactType: "customer support",
+                    areaServed: "IN",
+                    availableLanguage: ["English", "Hindi"],
+                  },
+                ],
+                sameAs: [
+                  "https://www.facebook.com/CityWitty.in",
+                  "https://twitter.com/citywitty",
+                  "https://www.instagram.com/citywitty.in",
+                  "https://www.linkedin.com/company/citywitty",
+                  "https://youtube.com/@citywitty3546",
+                ],
+              },
+            ],
+          }),
+        }}
+      />
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white relative overflow-hidden">

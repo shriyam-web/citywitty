@@ -201,6 +201,7 @@ const WhatsappIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export function Footer() {
   return (
+
     <footer className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

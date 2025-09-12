@@ -8,6 +8,54 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, MapPin, Star, Filter } from 'lucide-react';
+import type { Metadata } from 'next';
+import Script from "next/script";
+export const metadata: Metadata = {
+  title: "Partner Merchants - CityWitty | Hotels, Restaurants, Salons & More",
+  description:
+    "Explore verified partner merchants on CityWitty across hotels, restaurants, salons, fashion, electronics, and more. Discover amazing deals and discounts in top cities of India.",
+  keywords: [
+    "CityWitty merchants",
+    "partner stores",
+    "hotel deals",
+    "restaurant discounts",
+    "salon offers",
+    "fashion shopping",
+    "electronics discounts",
+    "Mumbai merchants",
+    "Delhi merchants",
+    "Bangalore merchants",
+    "Chennai merchants",
+    "Pune merchants"
+  ],
+  alternates: {
+    canonical: "https://citywitty.com/merchants",
+  },
+  openGraph: {
+    title: "Partner Merchants - CityWitty",
+    description:
+      "Browse trusted partner merchants on CityWitty and grab exclusive offers across India.",
+    url: "https://citywitty.com/merchants",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CityWitty Partner Merchants",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Partner Merchants - CityWitty",
+    description:
+      "Discover verified partner merchants on CityWitty and save big on hotels, restaurants, fashion, and more.",
+    images: ["https://citywitty.com/og-image.png"],
+  },
+};
 
 const merchants = [
   {
@@ -88,17 +136,85 @@ export default function MerchantsPage() {
 
   const filteredMerchants = merchants.filter(merchant => {
     const matchesSearch = merchant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         merchant.description.toLowerCase().includes(searchQuery.toLowerCase());
+      merchant.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCity = selectedCity === 'All Cities' || merchant.city === selectedCity;
     const matchesCategory = selectedCategory === 'All Categories' || merchant.category === selectedCategory;
-    
+
     return matchesSearch && matchesCity && matchesCategory;
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "CityWitty Partner Merchants",
+    description:
+      "Discover verified partner merchants across multiple categories like hotels, restaurants, fashion, salons, and electronics on CityWitty.",
+    url: "https://citywitty.com/merchants",
+    publisher: {
+      "@type": "Organization",
+      name: "CityWitty",
+      url: "https://citywitty.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://citywitty.com/logo.png"
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: "support@citywitty.com",
+        telephone: "+91-9876543210"
+      }
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          url: "https://citywitty.com/merchants/1",
+          name: "Royal Palace Hotel - Mumbai"
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          url: "https://citywitty.com/merchants/2",
+          name: "Style Studio Salon - Delhi"
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          url: "https://citywitty.com/merchants/3",
+          name: "Gadget Galaxy - Bangalore"
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          url: "https://citywitty.com/merchants/4",
+          name: "Fashion Forward - Chennai"
+        },
+        {
+          "@type": "ListItem",
+          position: 5,
+          url: "https://citywitty.com/merchants/5",
+          name: "Gourmet Delights - Pune"
+        },
+        {
+          "@type": "ListItem",
+          position: 6,
+          url: "https://citywitty.com/merchants/6",
+          name: "Wellness Spa Resort - Mumbai"
+        }
+      ]
+    }
+  };
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />
-      
+      {/* JSON-LD Script */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Page Header */}
         <div className="text-center mb-12">
@@ -122,7 +238,7 @@ export default function MerchantsPage() {
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={selectedCity} onValueChange={setSelectedCity}>
               <SelectTrigger>
                 <SelectValue placeholder="Select city" />

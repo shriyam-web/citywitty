@@ -6,6 +6,47 @@ import { Button } from "@/components/ui/button";
 import { Star, MapPin, Phone, Clock, ShieldCheck } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import Script from "next/script";
+// app/merchants/[id]/page.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Luxe Hotels & Resorts - Mumbai | 25% OFF | CityWitty",
+    description:
+        "Enjoy a luxurious stay at Luxe Hotels & Resorts, Mumbai. Get 25% OFF with CityWitty Discount Card. Fine dining, spa, swimming pool & world-class services.",
+    keywords:
+        "Luxe Hotels Mumbai, Hotels discount Mumbai, CityWitty hotel offers, Mumbai luxury stay, Luxe Resorts deal",
+    openGraph: {
+        title: "Luxe Hotels & Resorts - Mumbai | 25% OFF | CityWitty",
+        description:
+            "Book Luxe Hotels & Resorts in Mumbai with 25% OFF via CityWitty. Premium luxury stay, spa & fine dining included.",
+        url: "https://citywitty.com/merchants/1",
+        siteName: "CityWitty",
+        images: [
+            {
+                url: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                width: 1200,
+                height: 630,
+                alt: "Luxe Hotels & Resorts - Mumbai",
+            },
+        ],
+        locale: "en_IN",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: "@citywitty",
+        title: "Luxe Hotels & Resorts - Mumbai | 25% OFF | CityWitty",
+        description:
+            "Book Luxe Hotels & Resorts in Mumbai with CityWitty and get 25% OFF. Luxury, spa & fine dining included.",
+        images: [
+            "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        ],
+    },
+    alternates: {
+        canonical: "https://citywitty.com/merchants/1",
+    },
+};
 
 type RatingBreakdown = Record<1 | 2 | 3 | 4 | 5, number>;
 
@@ -136,7 +177,78 @@ export default function MerchantDetailPage({ params }: { params: { id: string } 
 
     return (
         <>
-            <Header /> <br /><br />
+            <Header /><Script
+                id="jsonld-merchant"
+                type="application/ld+json"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@graph": [
+                            {
+                                "@type": "LocalBusiness",
+                                "name": "Luxe Hotels & Resorts",
+                                "image": "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800",
+                                "@id": "https://citywitty.com/merchants/1",
+                                "url": "https://citywitty.com/merchants/1",
+                                "telephone": "+91 98765 43210",
+                                "address": {
+                                    "@type": "PostalAddress",
+                                    "streetAddress": "Marine Drive",
+                                    "addressLocality": "Mumbai",
+                                    "addressRegion": "Maharashtra",
+                                    "addressCountry": "IN"
+                                },
+                                "priceRange": "$$",
+                                "servesCuisine": "Multi-cuisine",
+                                "openingHours": "Mo-Su 00:00-23:59",
+                                "aggregateRating": {
+                                    "@type": "AggregateRating",
+                                    "ratingValue": "4.8",
+                                    "reviewCount": "4"
+                                },
+                                "review": [
+                                    {
+                                        "@type": "Review",
+                                        "author": { "@type": "Person", "name": "Rohit Sharma" },
+                                        "reviewBody": "Amazing stay! Rooms were spotless and service was exceptional.",
+                                        "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+                                    },
+                                    {
+                                        "@type": "Review",
+                                        "author": { "@type": "Person", "name": "Neha Verma" },
+                                        "reviewBody": "Loved the food and ambiance. Definitely worth the price.",
+                                        "reviewRating": { "@type": "Rating", "ratingValue": "4.5" }
+                                    }
+                                ]
+                            },
+                            {
+                                "@type": "BreadcrumbList",
+                                "itemListElement": [
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 1,
+                                        "name": "Home",
+                                        "item": "https://citywitty.com"
+                                    },
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 2,
+                                        "name": "Merchants",
+                                        "item": "https://citywitty.com/merchants"
+                                    },
+                                    {
+                                        "@type": "ListItem",
+                                        "position": 3,
+                                        "name": "Luxe Hotels & Resorts",
+                                        "item": "https://citywitty.com/merchants/1"
+                                    }
+                                ]
+                            }
+                        ]
+                    }),
+                }}
+            /> <br /><br />
             <div className="container mx-auto py-12 px-4">
                 <Card className="overflow-hidden shadow-lg">
                     <img src={merchant.image} alt={merchant.name} className="w-full h-80 object-cover" />

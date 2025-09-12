@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,46 @@ import { Header } from '@/components/layout/header';
 import { motion, AnimatePresence } from "framer-motion";
 import { Footer } from '@/components/layout/footer';
 import { useMemo } from 'react';
+import Script from "next/script";
+export const metadata: Metadata = {
+  title: "Register | Create Your CityWitty Privilege Card Account",
+  description:
+    "Sign up for CityWitty Privilege Card to unlock exclusive lifestyle discounts, premium merchant offers, and smarter shopping rewards.",
+  keywords: [
+    "CityWitty Register",
+    "CityWitty Sign Up",
+    "Privilege Card Registration",
+    "Exclusive Lifestyle Deals",
+    "Discount Card Membership"
+  ],
+  openGraph: {
+    title: "Register | CityWitty Privilege Card",
+    description:
+      "Create your CityWitty account today and access premium lifestyle offers, discounts, and loyalty rewards.",
+    url: "https://citywitty.com/register",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CityWitty Register Page"
+      }
+    ],
+    locale: "en_US",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Register | CityWitty Privilege Card",
+    description: "Join CityWitty and unlock premium lifestyle discounts and merchant deals.",
+    images: ["https://citywitty.com/og-image.png"]
+  },
+  alternates: {
+    canonical: "https://citywitty.com/register"
+  }
+};
+
 
 
 export default function RegisterPage() {
@@ -96,6 +137,62 @@ export default function RegisterPage() {
   return (
     <>
       <Header />
+      <Script id="org-schema" type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "CityWitty",
+            url: "https://citywitty.com",
+            logo: "https://citywitty.com/logo.png",
+            description:
+              "India's premier discount card platform offering exclusive deals from verified merchants across the nation. Experience luxury for less.",
+            contactPoint: [
+              {
+                "@type": "ContactPoint",
+                telephone: "+91-6389202030",
+                contactType: "customer support",
+                email: "contact@citywitty.com",
+                areaServed: "IN",
+                availableLanguage: ["English", "Hindi"]
+              }
+            ],
+            address: {
+              "@type": "PostalAddress",
+              streetAddress:
+                "Unit 316 & 317, P-3, 3rd Floor, Paramount Golf Foreste",
+              addressLocality: "Greater Noida",
+              postalCode: "201311",
+              addressCountry: "IN"
+            },
+            sameAs: [
+              "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr",
+              "https://twitter.com/citywitty",
+              "https://www.instagram.com/citywitty.in?igsh=YXBub3Nwam5hcjR0",
+              "https://www.linkedin.com/company/citywitty",
+              "https://youtube.com/@citywitty3546?si=IfcAhXmKq9vmIfA8",
+              "https://wa.me/916389202030",
+              "https://share.google/BYU7k1Knf0p4WshcS"
+            ]
+          })
+        }}
+      />
+
+      <Script id="website-schema" type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "CityWitty",
+            url: "https://citywitty.com",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://citywitty.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
       {/* <br /> <br /> */}
 
       <div className="pt-20  min-h-screen bg-gradient-to-r from-blue-50 via-white to-purple-50 flex items-center justify-center px-4">

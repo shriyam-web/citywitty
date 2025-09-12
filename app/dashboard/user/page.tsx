@@ -1,5 +1,5 @@
 'use client';
-
+import type { Metadata } from "next";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
@@ -7,18 +7,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  CreditCard, 
-  Gift, 
-  History, 
-  User, 
+import {
+  CreditCard,
+  Gift,
+  History,
+  User,
   Star,
   MapPin,
   Calendar,
   TrendingUp,
   LogOut
 } from 'lucide-react';
-
+export const metadata: Metadata = {
+  title: "User Dashboard - CityWitty",
+  description: "Access your CityWitty card details, offers, and usage history in your personal dashboard.",
+  robots: {
+    index: false,   // ❌ no indexing
+    follow: false,  // ❌ no following
+  },
+};
 const cardInfo = {
   cardNumber: '****-****-****-1234',
   status: 'Active',
@@ -257,7 +264,7 @@ export default function UserDashboard() {
                         {offer.discount}
                       </Badge>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2 mb-4">
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <span className="text-sm text-gray-600">{offer.city}</span>

@@ -1,5 +1,5 @@
 "use client";
-
+import Script from "next/script";
 import { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -25,6 +25,44 @@ import {
   Truck,
   MapPin,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Activate & Track Your CityWitty Card | CityWitty",
+  description:
+    "Easily activate your CityWitty discount card online or track your card delivery status in real-time. Quick, secure, and hassle-free process to start enjoying exclusive offers.",
+  keywords:
+    "CityWitty card activation, track CityWitty order, discount card tracking, activate discount card, CityWitty delivery status",
+  openGraph: {
+    title: "Activate & Track Your CityWitty Card | CityWitty",
+    description:
+      "Activate your CityWitty discount card instantly or track your card delivery with real-time updates. Get started today and unlock premium offers.",
+    url: "https://citywitty.com/activate-track",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Activate & Track CityWitty Card",
+      },
+    ],
+    type: "website",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@citywitty",
+    title: "Activate & Track Your CityWitty Card | CityWitty",
+    description:
+      "Easily activate your CityWitty discount card or track your card delivery status in real-time.",
+    images: ["https://citywitty.com/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://citywitty.com/activate-track",
+  },
+};
+
 
 export default function ActivateTrackPage() {
   const [cardNumber, setCardNumber] = useState("");
@@ -69,63 +107,230 @@ export default function ActivateTrackPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <Header />
+    <>
+      <Script
+        id="activate-track-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Activate & Track Your CityWitty Card",
+            url: "https://citywitty.com/activate-track",
+            description:
+              "Activate your CityWitty discount card or track your order delivery in real-time.",
+            publisher: {
+              "@type": "Organization",
+              name: "CityWitty",
+              url: "https://citywitty.com",
+              logo: "https://citywitty.com/logo.png",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+91-6389202030",
+                contactType: "customer service",
+                email: "contact@citywitty.com",
+                areaServed: "IN",
+                availableLanguage: "English",
+              },
+            },
+          }),
+        }}
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Activate & Track Your Card
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Activate your CityWitty card or track your order status in real-time
-          </p>
-        </div>
+      <Script
+        id="activate-track-faq"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "How do I activate my CityWitty discount card?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Simply enter your 16-digit card number, email, and phone number on the activation form and click 'Activate Card'.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "How can I track my CityWitty order?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Enter your order ID and email address in the tracking form to see the real-time delivery status of your card.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "How long does it take to deliver a CityWitty card?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "CityWitty cards are usually delivered within 5-7 business days depending on your location.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Header />
 
-        <div className="max-w-4xl mx-auto">
-          <Tabs defaultValue="activate" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="activate" className="text-lg py-3">
-                <CreditCard className="mr-2 h-5 w-5" />
-                Activate Card
-              </TabsTrigger>
-              <TabsTrigger value="track" className="text-lg py-3">
-                <Search className="mr-2 h-5 w-5" />
-                Track Order
-              </TabsTrigger>
-            </TabsList>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Page Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Activate & Track Your Card
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Activate your CityWitty card or track your order status in real-time
+            </p>
+          </div>
 
-            {/* Activate Card Tab */}
-            <TabsContent value="activate">
-              <div className="grid lg:grid-cols-2 gap-8">
-                <Card className="border-0 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <CreditCard className="h-6 w-6 text-blue-600" />
-                      <span>Card Activation</span>
-                    </CardTitle>
-                    <CardDescription>
-                      Enter your card details to activate your CityWitty
-                      discount card
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleActivation} className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="cardNumber">Card Number</Label>
-                        <Input
-                          id="cardNumber"
-                          type="text"
-                          value={cardNumber}
-                          onChange={(e) => setCardNumber(e.target.value)}
-                          placeholder="Enter your 16-digit card number"
-                          maxLength={16}
-                          required
-                        />
-                      </div>
+          <div className="max-w-4xl mx-auto">
+            <Tabs defaultValue="activate" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="activate" className="text-lg py-3">
+                  <CreditCard className="mr-2 h-5 w-5" />
+                  Activate Card
+                </TabsTrigger>
+                <TabsTrigger value="track" className="text-lg py-3">
+                  <Search className="mr-2 h-5 w-5" />
+                  Track Order
+                </TabsTrigger>
+              </TabsList>
 
-                      <div className="grid grid-cols-2 gap-4">
+              {/* Activate Card Tab */}
+              <TabsContent value="activate">
+                <div className="grid lg:grid-cols-2 gap-8">
+                  <Card className="border-0 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <CreditCard className="h-6 w-6 text-blue-600" />
+                        <span>Card Activation</span>
+                      </CardTitle>
+                      <CardDescription>
+                        Enter your card details to activate your CityWitty
+                        discount card
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <form onSubmit={handleActivation} className="space-y-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="cardNumber">Card Number</Label>
+                          <Input
+                            id="cardNumber"
+                            type="text"
+                            value={cardNumber}
+                            onChange={(e) => setCardNumber(e.target.value)}
+                            placeholder="Enter your 16-digit card number"
+                            maxLength={16}
+                            required
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="email">Email Address</Label>
+                            <Input
+                              id="email"
+                              type="email"
+                              placeholder="your@email.com"
+                              required
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="phone">Phone Number</Label>
+                            <Input
+                              id="phone"
+                              type="tel"
+                              placeholder="+91 6389202030"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <Button
+                          type="submit"
+                          className="w-full bg-blue-600 hover:bg-blue-700"
+                        >
+                          Activate Card
+                        </Button>
+                      </form>
+                    </CardContent>
+                  </Card>
+
+                  {/* Activation Result */}
+                  {activationResult && (
+                    <Card className="border-0 shadow-lg bg-green-50 border-green-200">
+                      <CardHeader>
+                        <CardTitle className="flex items-center space-x-2 text-green-700">
+                          <CheckCircle className="h-6 w-6" />
+                          <span>Card Activated Successfully!</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label className="text-green-700">Card Number</Label>
+                            <p className="font-mono text-sm">
+                              {activationResult.cardNumber}
+                            </p>
+                          </div>
+                          <div>
+                            <Label className="text-green-700">Status</Label>
+                            <Badge className="bg-green-100 text-green-700">
+                              {activationResult.status}
+                            </Badge>
+                          </div>
+                          <div>
+                            <Label className="text-green-700">Activated On</Label>
+                            <p className="text-sm">
+                              {activationResult.activatedAt}
+                            </p>
+                          </div>
+                          <div>
+                            <Label className="text-green-700">Valid Till</Label>
+                            <p className="text-sm">
+                              {activationResult.validTill}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </TabsContent>
+
+              {/* Track Order Tab */}
+              <TabsContent value="track">
+                <div className="grid lg:grid-cols-2 gap-8">
+                  <Card className="border-0 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2">
+                        <Search className="h-6 w-6 text-blue-600" />
+                        <span>Order Tracking</span>
+                      </CardTitle>
+                      <CardDescription>
+                        Enter your order ID to track your card delivery status
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <form onSubmit={handleTracking} className="space-y-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="trackingId">
+                            Order ID / Tracking Number
+                          </Label>
+                          <Input
+                            id="trackingId"
+                            type="text"
+                            value={trackingId}
+                            onChange={(e) => setTrackingId(e.target.value)}
+                            placeholder="Enter your order ID"
+                            required
+                          />
+                        </div>
+
                         <div className="space-y-2">
                           <Label htmlFor="email">Email Address</Label>
                           <Input
@@ -135,207 +340,105 @@ export default function ActivateTrackPage() {
                             required
                           />
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Phone Number</Label>
-                          <Input
-                            id="phone"
-                            type="tel"
-                            placeholder="+91 6389202030"
-                            required
-                          />
-                        </div>
-                      </div>
 
-                      <Button
-                        type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700"
-                      >
-                        Activate Card
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
+                        <Button
+                          type="submit"
+                          className="w-full bg-blue-600 hover:bg-blue-700"
+                        >
+                          Track Order
+                        </Button>
+                      </form>
+                    </CardContent>
+                  </Card>
 
-                {/* Activation Result */}
-                {activationResult && (
-                  <Card className="border-0 shadow-lg bg-green-50 border-green-200">
-                    <CardHeader>
-                      <CardTitle className="flex items-center space-x-2 text-green-700">
-                        <CheckCircle className="h-6 w-6" />
-                        <span>Card Activated Successfully!</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <Label className="text-green-700">Card Number</Label>
-                          <p className="font-mono text-sm">
-                            {activationResult.cardNumber}
-                          </p>
-                        </div>
-                        <div>
-                          <Label className="text-green-700">Status</Label>
-                          <Badge className="bg-green-100 text-green-700">
-                            {activationResult.status}
+                  {/* Tracking Result */}
+                  {trackingResult && (
+                    <Card className="border-0 shadow-lg">
+                      <CardHeader>
+                        <CardTitle className="flex items-center space-x-2">
+                          <Package className="h-6 w-6 text-blue-600" />
+                          <span>Order Status</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                          <div>
+                            <p className="font-semibold text-blue-900">
+                              Order ID: {trackingResult.orderId}
+                            </p>
+                            <p className="text-blue-700">
+                              Status: {trackingResult.status}
+                            </p>
+                          </div>
+                          <Badge className="bg-blue-100 text-blue-700">
+                            <Truck className="mr-1 h-3 w-3" />
+                            {trackingResult.status}
                           </Badge>
                         </div>
-                        <div>
-                          <Label className="text-green-700">Activated On</Label>
-                          <p className="text-sm">
-                            {activationResult.activatedAt}
-                          </p>
+
+                        <div className="space-y-4">
+                          <div className="flex items-center space-x-2">
+                            <MapPin className="h-4 w-4 text-gray-500" />
+                            <span className="text-sm text-gray-600">
+                              Current Location: {trackingResult.currentLocation}
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Clock className="h-4 w-4 text-gray-500" />
+                            <span className="text-sm text-gray-600">
+                              Estimated Delivery:{" "}
+                              {trackingResult.estimatedDelivery}
+                            </span>
+                          </div>
                         </div>
-                        <div>
-                          <Label className="text-green-700">Valid Till</Label>
-                          <p className="text-sm">
-                            {activationResult.validTill}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </TabsContent>
 
-            {/* Track Order Tab */}
-            <TabsContent value="track">
-              <div className="grid lg:grid-cols-2 gap-8">
-                <Card className="border-0 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Search className="h-6 w-6 text-blue-600" />
-                      <span>Order Tracking</span>
-                    </CardTitle>
-                    <CardDescription>
-                      Enter your order ID to track your card delivery status
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleTracking} className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="trackingId">
-                          Order ID / Tracking Number
-                        </Label>
-                        <Input
-                          id="trackingId"
-                          type="text"
-                          value={trackingId}
-                          onChange={(e) => setTrackingId(e.target.value)}
-                          placeholder="Enter your order ID"
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="your@email.com"
-                          required
-                        />
-                      </div>
-
-                      <Button
-                        type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700"
-                      >
-                        Track Order
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-
-                {/* Tracking Result */}
-                {trackingResult && (
-                  <Card className="border-0 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center space-x-2">
-                        <Package className="h-6 w-6 text-blue-600" />
-                        <span>Order Status</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                        <div>
-                          <p className="font-semibold text-blue-900">
-                            Order ID: {trackingResult.orderId}
-                          </p>
-                          <p className="text-blue-700">
-                            Status: {trackingResult.status}
-                          </p>
-                        </div>
-                        <Badge className="bg-blue-100 text-blue-700">
-                          <Truck className="mr-1 h-3 w-3" />
-                          {trackingResult.status}
-                        </Badge>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="h-4 w-4 text-gray-500" />
-                          <span className="text-sm text-gray-600">
-                            Current Location: {trackingResult.currentLocation}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Clock className="h-4 w-4 text-gray-500" />
-                          <span className="text-sm text-gray-600">
-                            Estimated Delivery:{" "}
-                            {trackingResult.estimatedDelivery}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <h4 className="font-semibold text-gray-900">
-                          Tracking Timeline
-                        </h4>
-                        {trackingResult.timeline.map(
-                          (item: any, index: number) => (
-                            <div
-                              key={index}
-                              className="flex items-center space-x-3"
-                            >
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-gray-900">
+                            Tracking Timeline
+                          </h4>
+                          {trackingResult.timeline.map(
+                            (item: any, index: number) => (
                               <div
-                                className={`w-3 h-3 rounded-full ${
-                                  item.completed
+                                key={index}
+                                className="flex items-center space-x-3"
+                              >
+                                <div
+                                  className={`w-3 h-3 rounded-full ${item.completed
                                     ? "bg-green-500"
                                     : "bg-gray-300"
-                                }`}
-                              />
-                              <div className="flex-1">
-                                <p
-                                  className={`text-sm font-medium ${
-                                    item.completed
+                                    }`}
+                                />
+                                <div className="flex-1">
+                                  <p
+                                    className={`text-sm font-medium ${item.completed
                                       ? "text-gray-900"
                                       : "text-gray-500"
-                                  }`}
-                                >
-                                  {item.status}
-                                </p>
-                                <p className="text-xs text-gray-500">
-                                  {item.date}
-                                </p>
+                                      }`}
+                                  >
+                                    {item.status}
+                                  </p>
+                                  <p className="text-xs text-gray-500">
+                                    {item.date}
+                                  </p>
+                                </div>
+                                {item.completed && (
+                                  <CheckCircle className="h-4 w-4 text-green-500" />
+                                )}
                               </div>
-                              {item.completed && (
-                                <CheckCircle className="h-4 w-4 text-green-500" />
-                              )}
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </TabsContent>
-          </Tabs>
+                            )
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
-      </div>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </>
   );
 }

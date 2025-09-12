@@ -1,11 +1,11 @@
-"use client";
+// "use client";
 
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
+import Script from "next/script";
 import {
   Target,
   Eye,
@@ -17,6 +17,52 @@ import {
   Zap,
   Globe,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us | CityWitty - India's Leading Premium Discount Platform",
+  description:
+    "Learn about CityWitty's mission, vision, and journey. Meet our passionate team and discover how we are revolutionizing discounts across India with 1,000+ merchants and 50,000+ happy customers.",
+  keywords: [
+    "About CityWitty",
+    "CityWitty team",
+    "discount platform India",
+    "premium merchant offers",
+    "CityWitty mission vision",
+    "CityWitty journey",
+    "CityWitty founders",
+    "India best discount card",
+    "exclusive deals India",
+  ],
+  openGraph: {
+    title: "About Us | CityWitty",
+    description:
+      "Discover CityWitty's story, core values, leadership team, and our mission to make premium discounts accessible across India.",
+    url: "https://citywitty.com/about",
+    siteName: "CityWitty",
+    images: [
+      {
+        url: "https://citywitty.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "About CityWitty - India's Leading Discount Platform",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | CityWitty",
+    description:
+      "Meet the team and learn about CityWitty's mission to revolutionize premium discounts in India.",
+    images: ["https://citywitty.com/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://citywitty.com/about",
+  },
+};
+
 
 const values = [
   {
@@ -127,6 +173,46 @@ const stats = [
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white">
+      {/* ✅ JSON-LD Schema */}
+      <Script id="about-schema" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "CityWitty",
+            "url": "https://citywitty.com",
+            "logo": "https://citywitty.com/logo.png",
+            "foundingDate": "2020",
+            "founders": [
+              {
+                "@type": "Person",
+                "name": "Arjun Patel",
+                "jobTitle": "Founder & CEO"
+              },
+              {
+                "@type": "Person",
+                "name": "Priya Sharma",
+                "jobTitle": "Chief Technology Officer"
+              }
+            ],
+            "numberOfEmployees": "50+",
+            "sameAs": [
+              "https://www.facebook.com/citywitty",
+              "https://www.instagram.com/citywitty",
+              "https://www.linkedin.com/company/citywitty"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9876543210",
+              "contactType": "customer support",
+              "email": "support@citywitty.com",
+              "areaServed": "IN",
+              "availableLanguage": ["English", "Hindi"]
+            }
+          }
+        })}
+      </Script>
       <Header />
 
       {/* Hero Section */}
@@ -275,14 +361,12 @@ export default function AboutPage() {
               {timeline.map((item, index) => (
                 <div
                   key={item.year}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? "justify-start" : "justify-end"
-                  } mb-12`}
+                  className={`relative flex items-center ${index % 2 === 0 ? "justify-start" : "justify-end"
+                    } mb-12`}
                 >
                   <div
-                    className={`w-full max-w-md ${
-                      index % 2 === 0 ? "pr-8" : "pl-8"
-                    }`}
+                    className={`w-full max-w-md ${index % 2 === 0 ? "pr-8" : "pl-8"
+                      }`}
                   >
                     <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
                       <CardContent className="p-6">

@@ -5,6 +5,7 @@ import { SupportWidget } from '@/components/support-widget';
 import { Providers } from './providers'; // 👈 yahan import
 import toast from "react-hot-toast";  // ✅ import
 import { Toaster } from "react-hot-toast";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +27,42 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" />
+        {/* ✅ JSON-LD Structured Data */}
+        <Script id="structured-data" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "CityWitty",
+            url: "https://citywitty.com",
+            logo: "https://citywitty.com/logo.png",
+            sameAs: [
+              "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr",
+              "https://twitter.com/citywitty",
+              "https://www.instagram.com/citywitty.in?igsh=YXBub3Nwam5hcjR0",
+              "https://www.linkedin.com/company/citywitty",
+              "https://youtube.com/@citywitty3546",
+              "https://wa.me/916389202030"
+            ],
+            contactPoint: [
+              {
+                "@type": "ContactPoint",
+                telephone: "+91-6389202030",
+                contactType: "customer support",
+                email: "contact@citywitty.com",
+                areaServed: "IN",
+                availableLanguage: ["English", "Hindi"]
+              }
+            ],
+            address: {
+              "@type": "PostalAddress",
+              streetAddress:
+                "Unit 316 & 317, P-3, 3rd Floor, Paramount Golf Foreste",
+              addressLocality: "Greater Noida",
+              postalCode: "201311",
+              addressCountry: "IN"
+            }
+          })}
+        </Script>
       </head>
       <body className={inter.className}>
         <Providers>
