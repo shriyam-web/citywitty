@@ -243,8 +243,8 @@ const UserSchema = new Schema(
       notifications: { type: Boolean, default: true },
       language: { type: String, default: "en" },
     },
-    referralCode: { type: String, unique: true, sparse: true, default: null }, 
-
+    // referralCode: { type: String, unique: true, sparse: true, default: null }, 
+referralCode: { type: String, unique: true, sparse: true},
     // Wallet & Savings
     walletBalance: { type: Number, default: 0 },
     totalPurchases: { type: Number, default: 0 },
