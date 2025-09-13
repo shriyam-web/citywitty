@@ -322,7 +322,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Unlock <span className="text-orange-500">exclusive deals</span> with every transaction.
+              Unlock <span className="text-orange-500">exclusive deals</span> with every purchase.
             </motion.h2>
 
             <motion.p

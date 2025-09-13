@@ -44,7 +44,6 @@ export function Header() {
   }, []);
   const [manualLocation, setManualLocation] = useState<string | null>(null);
 
-
   const getDashboardUrl = (role: string) => {
     switch (role) {
       case 'admin': return '/dashboard/admin';
