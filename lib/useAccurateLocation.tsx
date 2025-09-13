@@ -127,7 +127,7 @@ export default function useAccurateLocation() {
                     // ✅ Hit Next.js API route (Google Reverse Geocode)
                     const res = await fetch(`/api/geocode?lat=${latitude}&lng=${longitude}`);
                     const data = await res.json();
-
+                    console.log("🔍 Full Google API response:", data);   // 👈 Yeh line add karo
                     let city = "Unknown",
                         state = "",
                         country = "";
@@ -135,7 +135,11 @@ export default function useAccurateLocation() {
                     if (data.results && data.results[0]) {
                         const components = data.results[0].address_components;
 
+                        // 👇 yeh line add karo
+                        console.log("Google Maps Response:", components);
+
                         // ✅ Extended city chain (Sector > Locality > City > Fallback)
+                        // ✅ Extended city chain
                         city =
                             components.find((c: any) => c.types.includes("sublocality_level_1"))?.long_name ||
                             components.find((c: any) => c.types.includes("sublocality"))?.long_name ||
