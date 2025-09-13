@@ -42,6 +42,8 @@ export function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  const [manualLocation, setManualLocation] = useState<string | null>(null);
+
 
   const getDashboardUrl = (role: string) => {
     switch (role) {
@@ -82,32 +84,38 @@ export function Header() {
           {/* Right Side */}
           <div className="flex items-center space-x-3">
 
-            {/* Location dropdown (only if available) */}
-            {location && !loading && !error && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-2 border-gray-300 hover:border-blue-500 hover:text-blue-600"
-                  >
-                    <MapPin className="h-4 w-4 text-blue-500" />
-                    <span className="hidden sm:inline">
-                      {location.city || "Your Location"}
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-56 bg-white/95 backdrop-blur-xl border-0 shadow-xl p-2"
+            {/* Location dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-2 border-gray-300 hover:border-blue-500 hover:text-blue-600"
                 >
-                  <div className="text-sm text-gray-700">
-                    <p><strong>City:</strong> {location.city || "Unknown"}</p>
-                    <p><strong>Latitude:</strong> {location.lat?.toFixed(5)}</p>
-                    <p><strong>Longitude:</strong> {location.lng?.toFixed(5)}</p>
+                  <MapPin className="h-4 w-4 text-blue-500" />
+                  <span className="hidden sm:inline">
+                    {loading ? "Detecting..." : manualLocation || location?.city || "Choose City"}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-56 bg-white/95 backdrop-blur-xl border-0 shadow-xl p-2"
+              >
+                {location && (
+                  <div className="text-sm text-gray-700 mb-2">
+                    <p><strong>City:</strong> {manualLocation || location.city}</p>
+                    <p><strong>Lat:</strong> {location.lat?.toFixed(5)}</p>
+                    <p><strong>Lng:</strong> {location.lng?.toFixed(5)}</p>
+                    <p className="text-xs text-gray-400">Source: {location.source}</p>
                   </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
+                )}
+                <DropdownMenuItem onClick={() => setManualLocation("Delhi")}>Delhi</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setManualLocation("Mumbai")}>Mumbai</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setManualLocation("Bengaluru")}>Bengaluru</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setManualLocation("Gurugram")}>Gurugram</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
 
             {loading && (
               <Button variant="outline" disabled className="flex items-center gap-2">
