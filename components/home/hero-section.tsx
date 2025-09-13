@@ -123,27 +123,31 @@ export default function PremiumCard() {
             </div>
 
             {/* Content */}
-            <div className="relative p-6 flex flex-col justify-between h-full text-white">
+            {/* <div className="relative p-6 flex flex-col justify-between h-full text-white"> change 1 */}
+            <div className="relative p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between h-full text-white">
+
               <div className="flex justify-between items-center">
                 {/* <div className="text-2xl sm:text-3xl font-extrabold tracking-wide">
                   City<span className="text-orange-400">Witty</span>
                 </div> */}
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <div className="relative">
-
                     <img
                       src="/logo.png"
                       alt="CityWitty Logo"
-                      className="h-12 w-auto"
+                      className="h-8 sm:h-10 md:h-12 w-auto"
                     />
                   </div>
                   <div>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
+                    <span className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
                       CityWitty
                     </span>
-                    <div className="text-xs text-gray-400">Privilage Cards</div>
+                    <div className="text-[0.65rem] sm:text-xs md:text-sm text-gray-400">
+                      Privilege Cards
+                    </div>
                   </div>
                 </div>
+
                 <div className="flex items-center space-x-2">
                   <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -153,11 +157,15 @@ export default function PremiumCard() {
                 </div>
               </div>
 
-              <div className="font-mono text-xl sm:text-2xl md:text-3xl tracking-widest">
+              {/* <div className="font-mono text-xl sm:text-2xl md:text-3xl tracking-widest">
                 **** **** **** 1234
               </div>
 
-              <div className="flex justify-between items-end text-sm sm:text-base">
+              <div className="flex justify-between items-end text-sm sm:text-base"> change 2 */}
+              <div className="font-mono text-base sm:text-xl md:text-2xl tracking-widest">
+                **** **** **** 1234
+              </div>
+              <div className="flex justify-between items-end text-[0.6rem] sm:text-sm md:text-base">
                 <div>
                   <div className="font-semibold">Your Name Here</div>
                   <div className="text-xs text-gray-400">Premium Member</div>
