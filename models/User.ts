@@ -213,7 +213,9 @@ const UserSchema = new Schema(
     // Card Information
     isCardExist: { type: Boolean, default: false },
     cardVariantName: { type: String, default: "" },
-    cardNumber: { type: String, unique: true, sparse: true, default: null },
+    // cardNumber: { type: String, unique: true, sparse: true, default: null },
+    cardNumber: { type: String, unique: true, sparse: true},
+    
     purchasedOn: { type: Date, default: null },
     validUpto: { type: Date, default: null },
     renewed: { type: [RenewalSchema], default: [] },

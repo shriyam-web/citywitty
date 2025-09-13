@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "CityWitty - Premium Discount Card Platform",
   description:
-    "Discover exclusive discounts with CityWitty. Unlock premium offers across restaurants, shopping, hotels, salons, and entertainment in multiple cities. Get your CityWitty card today and save more on every purchase.",
+    "Discover exclusive discounts with CityWitty Card. Save on dining, shopping, hotels, salons & entertainment across India.",
   keywords:
     "discount card, exclusive deals, city discounts, restaurant offers, hotel discounts, shopping deals, salon discounts, entertainment offers, premium card, CityWitty",
   authors: [{ name: "CityWitty Team", url: "https://citywitty.com" }],
