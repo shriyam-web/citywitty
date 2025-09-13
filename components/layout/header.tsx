@@ -6,13 +6,15 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogIn, UserPlus, Menu, User, LogOut, ChevronDown, Sparkles } from "lucide-react";
+import { LogIn, UserPlus, Menu, User, LogOut, ChevronDown, Sparkles, MapPin } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
+import useAccurateLocation from '@/lib/useAccurateLocation';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -29,6 +31,10 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // ✅ Use our custom hook
+  const { location, loading, error } = useAccurateLocation();
+
+  // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -75,6 +81,41 @@ export function Header() {
 
           {/* Right Side */}
           <div className="flex items-center space-x-3">
+
+            {/* Location dropdown (only if available) */}
+            {location && !loading && !error && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="flex items-center gap-2 border-gray-300 hover:border-blue-500 hover:text-blue-600"
+                  >
+                    <MapPin className="h-4 w-4 text-blue-500" />
+                    <span className="hidden sm:inline">
+                      {location.city || "Your Location"}
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 bg-white/95 backdrop-blur-xl border-0 shadow-xl p-2"
+                >
+                  <div className="text-sm text-gray-700">
+                    <p><strong>City:</strong> {location.city || "Unknown"}</p>
+                    <p><strong>Latitude:</strong> {location.lat?.toFixed(5)}</p>
+                    <p><strong>Longitude:</strong> {location.lng?.toFixed(5)}</p>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            {loading && (
+              <Button variant="outline" disabled className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-gray-400" />
+                Detecting...
+              </Button>
+            )}
+
             {/* Desktop: Login + Register */}
             {!user && (
               <div className="hidden md:flex items-center space-x-3">
@@ -147,7 +188,7 @@ export function Header() {
               </DropdownMenu>
             )}
 
-            {/* Get Your Card (only for not logged in users, desktop + mobile) */}
+            {/* Get Your Card (only for not logged in users) */}
             {!user && (
               <Button
                 asChild
@@ -159,7 +200,7 @@ export function Header() {
               </Button>
             )}
 
-            {/* Burger Menu (always visible) */}
+            {/* Burger Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -178,7 +219,6 @@ export function Header() {
                 className="w-[300px] bg-white/95 backdrop-blur-xl border-0 shadow-2xl animate-slide-in"
               >
                 <div className="flex flex-col space-y-4 mt-10">
-                  {/* Navigation */}
                   {navigation.map((item, idx) => (
                     <Link
                       key={item.name}
@@ -196,7 +236,6 @@ export function Header() {
 
                   <hr className="my-4 border-gray-300" />
 
-                  {/* Auth Links in Burger */}
                   {!user ? (
                     <div className="flex flex-col space-y-3">
                       {pathname !== "/login" && (
@@ -218,7 +257,6 @@ export function Header() {
                     </div>
                   ) : (
                     <div className="flex flex-col space-y-3">
-                      {/* Get Your Card inside burger for logged-in user */}
                       <Button
                         asChild
                         className="bg-gradient-to-r from-blue-600 to-orange-500 text-white font-semibold px-4 py-2 rounded-lg shadow-lg"
