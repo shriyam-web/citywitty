@@ -35,12 +35,13 @@ export default function useAccurateLocation() {
                     if (data.results && data.results[0]) {
                         const components = data.results[0].address_components;
                         city =
-                            components.find((c: any) =>
-                                c.types.includes("locality")
-                            )?.long_name ||
-                            components.find((c: any) =>
-                                c.types.includes("sublocality")
-                            )?.long_name;
+                            components.find((c: any) => c.types.includes("locality"))?.long_name ||
+                            components.find((c: any) => c.types.includes("sublocality"))?.long_name ||
+                            components.find((c: any) => c.types.includes("administrative_area_level_2"))?.long_name ||
+                            components.find((c: any) => c.types.includes("postal_town"))?.long_name ||
+                            components.find((c: any) => c.types.includes("administrative_area_level_3"))?.long_name ||
+                            "Unknown";
+
                         state = components.find((c: any) =>
                             c.types.includes("administrative_area_level_1")
                         )?.long_name;
