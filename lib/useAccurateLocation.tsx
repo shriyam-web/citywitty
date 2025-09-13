@@ -106,9 +106,9 @@ export default function useAccurateLocation() {
             lat: 0,
             lng: 0,
             city,
-            state: '',
-            country: '',
-            source: 'manual',
+            state: "",
+            country: "",
+            source: "manual",
         });
     };
 
@@ -124,20 +124,28 @@ export default function useAccurateLocation() {
                 const { latitude, longitude } = pos.coords;
 
                 try {
-                    // ✅ Hit Next.js API route
+                    // ✅ Hit Next.js API route (Google Reverse Geocode)
                     const res = await fetch(`/api/geocode?lat=${latitude}&lng=${longitude}`);
                     const data = await res.json();
 
-                    let city, state, country;
+                    let city = "Unknown",
+                        state = "",
+                        country = "";
+
                     if (data.results && data.results[0]) {
                         const components = data.results[0].address_components;
+
+                        // ✅ Extended city chain (Sector > Locality > City > Fallback)
                         city =
-                            components.find((c: any) => c.types.includes("locality"))?.long_name ||
+                            components.find((c: any) => c.types.includes("sublocality_level_1"))?.long_name ||
                             components.find((c: any) => c.types.includes("sublocality"))?.long_name ||
+                            components.find((c: any) => c.types.includes("neighborhood"))?.long_name ||
+                            components.find((c: any) => c.types.includes("locality"))?.long_name ||
                             components.find((c: any) => c.types.includes("postal_town"))?.long_name ||
                             components.find((c: any) => c.types.includes("administrative_area_level_3"))?.long_name ||
                             components.find((c: any) => c.types.includes("administrative_area_level_2"))?.long_name ||
-                            components.find((c: any) => c.types.includes("administrative_area_level_1"))?.long_name;
+                            components.find((c: any) => c.types.includes("administrative_area_level_1"))?.long_name ||
+                            "Unknown";
 
                         state = components.find((c: any) =>
                             c.types.includes("administrative_area_level_1")
@@ -148,41 +156,32 @@ export default function useAccurateLocation() {
                         )?.long_name;
                     }
 
-                    if (city) {
-                        setLocation({ lat: latitude, lng: longitude, city, state, country, source: 'gps' });
-                    } else {
-                        // ❌ No city? fallback to IP API
-                        const ipRes = await fetch("https://ipapi.co/json/");
-                        const ipData = await ipRes.json();
-                        setLocation({
-                            lat: ipData.latitude,
-                            lng: ipData.longitude,
-                            city: ipData.city,
-                            state: ipData.region,
-                            country: ipData.country_name,
-                            source: 'ip',
-                        });
-                    }
+                    setLocation({
+                        lat: latitude,
+                        lng: longitude,
+                        city,
+                        state,
+                        country,
+                        source: "gps",
+                    });
                 } catch (err) {
                     setError("Failed to fetch geocode, using IP fallback.");
-                    // 🌍 IP fallback
-                    const ipRes = await fetch("https://ipapi.co/json/");
-                    const ipData = await ipRes.json();
-                    setLocation({
-                        lat: ipData.latitude,
-                        lng: ipData.longitude,
-                        city: ipData.city,
-                        state: ipData.region,
-                        country: ipData.country_name,
-                        source: 'ip',
-                    });
+                    await fetchIPFallback();
                 } finally {
                     setLoading(false);
                 }
             },
             async (err) => {
-                setError(err.message);
-                // 🌍 IP fallback if GPS denied
+                setError(err.message || "GPS denied. Using IP fallback.");
+                await fetchIPFallback();
+                setLoading(false);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 } // ⏳ 15s GPS timeout
+        );
+
+        // 🌍 IP fallback function
+        const fetchIPFallback = async () => {
+            try {
                 const ipRes = await fetch("https://ipapi.co/json/");
                 const ipData = await ipRes.json();
                 setLocation({
@@ -191,12 +190,12 @@ export default function useAccurateLocation() {
                     city: ipData.city,
                     state: ipData.region,
                     country: ipData.country_name,
-                    source: 'ip',
+                    source: "ip",
                 });
-                setLoading(false);
-            },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
+            } catch {
+                setError("IP lookup failed.");
+            }
+        };
     }, []);
 
     return { location, loading, error, setManualLocation };
