@@ -6,15 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogIn, UserPlus } from "lucide-react";
-
-import {
-  Menu,
-  User,
-  LogOut,
-  ChevronDown,
-  Sparkles,
-} from 'lucide-react';
+import { LogIn, UserPlus, Menu, User, LogOut, ChevronDown, Sparkles } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,16 +39,11 @@ export function Header() {
 
   const getDashboardUrl = (role: string) => {
     switch (role) {
-      case 'admin':
-        return '/dashboard/admin';
-      case 'merchant':
-        return '/dashboard/merchant';
-      case 'franchise':
-        return '/dashboard/franchise';
-      case 'it':
-        return '/dashboard/it';
-      default:
-        return '/dashboard/user';
+      case 'admin': return '/dashboard/admin';
+      case 'merchant': return '/dashboard/merchant';
+      case 'franchise': return '/dashboard/franchise';
+      case 'it': return '/dashboard/it';
+      default: return '/dashboard/user';
     }
   };
 
@@ -74,13 +61,15 @@ export function Header() {
             <img
               src="/logo.png"
               alt="CityWitty Logo"
-              className="h-12 w-auto"
+              className="h-10 sm:h-12 w-auto"
             />
             <div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
                 CityWitty
               </span>
-              <div className="text-xs text-gray-400">Privilege Cards</div>
+              <div className="text-[0.65rem] sm:text-xs text-gray-400">
+                Privilege Cards
+              </div>
             </div>
           </Link>
 
@@ -115,7 +104,6 @@ export function Header() {
                 )}
               </div>
             )}
-
 
             {/* Logged In User Dropdown */}
             {user && (
@@ -159,16 +147,19 @@ export function Header() {
               </DropdownMenu>
             )}
 
+            {/* Get Your Card (only for not logged in users, desktop + mobile) */}
+            {!user && (
+              <Button
+                asChild
+                className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 
+                           text-white font-semibold px-3 sm:px-5 py-2 rounded-lg sm:rounded-xl shadow-lg 
+                           hover:shadow-xl transform hover:scale-105 transition-all text-sm sm:text-base"
+              >
+                <Link href="/register">Get Your Card</Link>
+              </Button>
+            )}
 
-            {/* Get Your Card (Always visible) */}
-            <Button
-              asChild
-              className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white font-semibold px-5 py-2 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-            >
-              <Link href="/register">Get Your Card</Link>
-            </Button>
-
-            {/* Burger Menu */}
+            {/* Burger Menu (always visible) */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -180,7 +171,6 @@ export function Header() {
                     }`}
                 >
                   <Menu className="h-6 w-6" />
-                  {/* &nbsp; Menu */}
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -204,30 +194,38 @@ export function Header() {
                     </Link>
                   ))}
 
-                  {/* Mobile Auth Links */}
-                  {/* Mobile Auth Links */}
-                  {!user && (
-                    <>
-                      <hr className="my-4 border-gray-300" />
-                      <div className="flex flex-col space-y-3">
-                        {pathname !== "/login" && (
-                          <Button asChild variant="outline" className="flex items-center gap-2">
-                            <Link href="/login">
-                              <LogIn className="h-4 w-4" />
-                              Login
-                            </Link>
-                          </Button>
-                        )}
-                        {pathname !== "/register" && (
-                          <Button asChild variant="outline" className="flex items-center gap-2">
-                            <Link href="/register">
-                              <UserPlus className="h-4 w-4" />
-                              Register
-                            </Link>
-                          </Button>
-                        )}
-                      </div>
-                    </>
+                  <hr className="my-4 border-gray-300" />
+
+                  {/* Auth Links in Burger */}
+                  {!user ? (
+                    <div className="flex flex-col space-y-3">
+                      {pathname !== "/login" && (
+                        <Button asChild variant="outline" className="flex items-center gap-2">
+                          <Link href="/login">
+                            <LogIn className="h-4 w-4" />
+                            Login
+                          </Link>
+                        </Button>
+                      )}
+                      {pathname !== "/register" && (
+                        <Button asChild variant="outline" className="flex items-center gap-2">
+                          <Link href="/register">
+                            <UserPlus className="h-4 w-4" />
+                            Register
+                          </Link>
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col space-y-3">
+                      {/* Get Your Card inside burger for logged-in user */}
+                      <Button
+                        asChild
+                        className="bg-gradient-to-r from-blue-600 to-orange-500 text-white font-semibold px-4 py-2 rounded-lg shadow-lg"
+                      >
+                        <Link href="/register">Get Your Card</Link>
+                      </Button>
+                    </div>
                   )}
                 </div>
               </SheetContent>
