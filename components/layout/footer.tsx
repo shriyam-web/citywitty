@@ -391,12 +391,46 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="border-t border-white/10 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
-              {/* © 2025 CityWitty. All rights reserved. Made with ❤️ in India. */}
-              © 2025 CityWitty Digital Ventures Private Limited. All rights reserved. <br></br>
+            <div className="text-gray-400 text-sm leading-relaxed">
+              © 2025 <b>CityWitty Digital Ventures Private Limited</b>. All rights reserved.
+              <br />
 
-              Made with ❤️ in India | Launch Version 1.01
+              <div className="text-xs text-gray-500 mt-3 space-y-2">
+                <p>
+                  <b>The CityWitty (CW) Digital Ecosystem</b> brings together three official platforms,
+                  built to connect users, merchants, and franchise partners seamlessly:
+                </p>
+
+
+                <ul className="list-disc list-inside space-y-1">
+                  <li>
+                    <a href="https://www.citywitty.com/" className="hover:text-gray-700">
+                      <b>CityWitty.com</b>
+                    </a> – Consumer Platform (for Users)
+                  </li>
+                  <li>
+                    <a href="https://partner.citywitty.com/" className="hover:text-gray-700">
+                      <b>Partner.CityWitty.com</b>
+                    </a> – Merchant Hub (for Businesses & Service Providers)
+                  </li>
+                  <li>
+                    <a href="https://franchise.citywitty.com/" className="hover:text-gray-700">
+                      <b>Franchise.CityWitty.com</b>
+                    </a> – Franchise Partner Network
+                  </li>
+                </ul>
+
+                <p className="mt-3">
+                  Unauthorized use, reproduction, or distribution of these platforms or their
+                  intellectual property is strictly prohibited and may lead to legal consequences.
+                </p>
+              </div>
+
+              <p className="mt-4 text-gray-400 text-xs">
+                Made with ❤️ in India | <b>Launch Version 1.01</b>
+              </p>
             </div>
+
             <div className="flex items-center space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
                 Privacy
