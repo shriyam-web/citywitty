@@ -261,7 +261,7 @@ export function Footer() {
                 { icon: Facebook, href: "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr" },
                 { icon: Twitter, href: "https://twitter.com/citywitty" },
                 { icon: Instagram, href: "https://www.instagram.com/citywitty.in?igsh=YXBub3Nwam5hcjR0" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/citywitty" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/citywitty-digital-ventures-pvt-ltd/" },
                 { icon: Youtube, href: "https://youtube.com/@citywitty3546?si=IfcAhXmKq9vmIfA8" }, // 👈 YouTube
                 {
                   icon: WhatsappIcon, href: "https://wa.me/916389202030"

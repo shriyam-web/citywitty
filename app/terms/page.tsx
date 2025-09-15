@@ -46,7 +46,7 @@ export default function TermsPage() {
     return (
         <main className="min-h-screen bg-gray-50">
             <Header />
-
+            <br />
             <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <h1 className="text-4xl font-bold mb-8">Terms & Conditions – Merchant Registration</h1>
 
