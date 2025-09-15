@@ -65,19 +65,26 @@ export function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <img
+            {/* <img
               src="/logo.png"
               alt="CityWitty Logo"
               className="h-10 sm:h-12 w-auto"
+            /> */}
+            {/* <div> */}
+            <img
+              src="/citywittynew.png"
+              alt="CityWitty Logo"
+              className="max-w-[160px] sm:max-w-[180px] md:max-w-[200px] h-auto mt-2"
             />
-            <div>
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-orange-400 bg-clip-text text-transparent">
-                CityWitty
-              </span>
-              <div className="text-[0.65rem] sm:text-xs text-gray-400">
-                Privilege Cards
-              </div>
-            </div>
+
+
+
+
+
+
+
+
+            {/* </div> */}
           </Link>
 
           {/* Right Side */}
@@ -278,6 +285,6 @@ export function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </header >
   );
 }
