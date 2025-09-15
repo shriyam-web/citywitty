@@ -220,6 +220,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center space-y-8">
+            <br />
             <h1 className="text-4xl lg:text-6xl font-bold">About CityWitty</h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
               Revolutionizing the way India shops with premium discount cards

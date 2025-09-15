@@ -1,6 +1,6 @@
 
 'use client';
-
+import { useAuth } from '@/lib/auth-context';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import Link from 'next/link';
@@ -26,6 +26,9 @@ const cityIcons = [
 ];
 // Rotating live offers
 
+// import Link from 'next/link';
+
+// const { user } = useAuth();
 
 const rotatingOffers = [
   { merchant: 'Royal Palace Hotel', discount: '30% OFF', category: 'Hotels', color: 'from-blue-500 to-cyan-400' },
@@ -86,7 +89,7 @@ export default function PremiumCard() {
       y: prev.y + dx * 0.6,
     }));
   };
-
+  const { user } = useAuth();
   const handleTouchEnd = () => setIsDragging(false);
 
   return (
@@ -260,7 +263,7 @@ export default function PremiumCard() {
 
 export function HeroSection() {
   const [currentCity, setCurrentCity] = useState(0);
-
+  const { user } = useAuth(); // <-- add this lin
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCity((prev) => (prev + 1) % cityIcons.length);
@@ -355,13 +358,14 @@ export function HeroSection() {
             transition={{ delay: 1.1 }}
           >
             <Button className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg shadow-xl rounded-xl transition-transform hover:scale-105">
-              🚀 Get Your Card Now
+              <Link href={user ? "/get-card" : "/register"}>🚀 Get Your Card Now</Link>
             </Button>
+
             <Button
               variant="outline"
               className="border-2 border-gray-300 text-gray-800 hover:bg-gray-100 hover:text-gray-900 font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg rounded-xl transition-transform hover:scale-105"
             >
-              🔍 Explore Merchants
+              <Link href="/merchants">🔍 Explore Merchants</Link>
             </Button>
           </motion.div>
         </motion.div>

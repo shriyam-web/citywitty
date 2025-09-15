@@ -74,7 +74,7 @@ export function Header() {
             <img
               src="/citywittynew.png"
               alt="CityWitty Logo"
-              className="max-w-[160px] sm:max-w-[180px] md:max-w-[200px] h-auto mt-2"
+              className="max-w-[160px] sm:max-w-[180px] md:max-w-[200px] h-auto mt-1"
             />
 
 
@@ -145,7 +145,7 @@ export function Header() {
                     </Link>
                   </Button>
                 )}
-                {pathname !== "/register" && (
+                {pathname !== "/get-card" && (
                   <Button
                     asChild
                     variant="outline"
@@ -275,8 +275,9 @@ export function Header() {
                         asChild
                         className="bg-gradient-to-r from-blue-600 to-orange-500 text-white font-semibold px-4 py-2 rounded-lg shadow-lg"
                       >
-                        <Link href="/register">Get Your Card</Link>
+                        <Link href={user ? "/get-card" : "/register"}>Get Your Card</Link>
                       </Button>
+
                     </div>
                   )}
                 </div>

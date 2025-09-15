@@ -44,11 +44,28 @@ export const metadata: Metadata = {
 };
 
 const features = [
-  { icon: Gift, title: "Exclusive Discounts", description: "Up to 50% off on premium merchants" },
-  { icon: Shield, title: "Lifetime Validity", description: "No expiry date, use whenever you want" },
-  { icon: Clock, title: "Instant Activation", description: "Start using within 24 hours" },
-  { icon: Star, title: "Premium Support", description: "24/7 customer support assistance" },
+  {
+    icon: Gift,
+    title: "Exclusive Discounts",
+    description: "Get up to 50% off on 1000+ restaurants, hotels, salons, and shopping outlets."
+  },
+  {
+    icon: Shield,
+    title: "Flexible Validity Plans",
+    description: "Choose from 1 Year, 2 Years, or 3 Years validity options as per your needs."
+  },
+  {
+    icon: Clock,
+    title: "Instant Activation",
+    description: "Your CityWitty card gets activated within 24 hours of purchase."
+  },
+  {
+    icon: Star,
+    title: "Premium Support",
+    description: "Enjoy priority customer support to resolve your queries quickly."
+  },
 ];
+
 
 const steps = [
   { step: 1, title: "Contact Us", description: "Click the WhatsApp button to initiate your purchase", icon: MessageCircle },
@@ -59,33 +76,41 @@ const steps = [
 
 const plans = [
   {
-    name: "Basic",
-    price: 999,
-    originalPrice: 1499,
-    features: ["Access to 500+ merchants", "Up to 30% discount", "6 months validity", "Basic customer support"],
-    popular: false,
-  },
-  {
-    name: "Premium",
+    name: "1 Year Plan",
+    duration: "1 Year",
     price: 1999,
     originalPrice: 2999,
     features: [
       "Access to 1000+ merchants",
-      "Up to 50% discount",
-      "1 year validity",
+      "Up to 40% discount",
+      "12 months validity",
+      "Standard customer support",
+    ],
+    popular: false,
+  },
+  {
+    name: "2 Year Plan",
+    duration: "2 Years",
+    price: 3499,
+    originalPrice: 5999,
+    features: [
+      "Access to 1500+ merchants",
+      "Up to 45% discount",
+      "24 months validity",
       "Priority customer support",
       "Exclusive merchant previews",
     ],
     popular: true,
   },
   {
-    name: "Lifetime",
+    name: "3 Year Plan",
+    duration: "3 Years",
     price: 4999,
-    originalPrice: 7499,
+    originalPrice: 8999,
     features: [
       "Access to all merchants",
       "Up to 50% discount",
-      "Lifetime validity",
+      "36 months validity",
       "24/7 premium support",
       "Early access to new merchants",
       "Family sharing (up to 4 members)",
@@ -93,6 +118,7 @@ const plans = [
     popular: false,
   },
 ];
+
 
 export default function GetCardPage() {
   const whatsAppMessage =
@@ -162,7 +188,7 @@ export default function GetCardPage() {
       <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center space-y-8">
+          <div className="text-center space-y-8"> <br />
             <h1 className="text-4xl lg:text-6xl font-bold">Get Your CityWitty Card</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
               Unlock exclusive discounts across 1000+ premium merchants and start saving money on every purchase
@@ -175,30 +201,82 @@ export default function GetCardPage() {
       {/* Features Section */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Features Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Why Choose CityWitty Card?</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Why Choose CityWitty Card?
+            </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Experience premium benefits and exclusive privileges with every purchase
             </p>
           </div>
+
+          {/* Features Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature) => {
               const IconComponent = feature.icon;
               return (
-                <Card key={feature.title} className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <Card
+                  key={feature.title}
+                  className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                >
                   <CardContent className="p-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600 mb-4">
                       <IconComponent className="h-8 w-8" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      {feature.title}
+                    </h3>
                     <p className="text-gray-600">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
             })}
           </div>
+
+          {/* FAQ Section */}
+          <div className="mt-20 max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              Frequently Asked Questions
+            </h3>
+            <div className="space-y-4">
+              <details className="p-4 border rounded-lg shadow-sm">
+                <summary className="font-semibold cursor-pointer">
+                  CityWitty Card ki validity kitni hoti hai?
+                </summary>
+                <p className="mt-2 text-gray-600">
+                  Aap apni zaroorat ke hisaab se 1 Year, 2 Years, ya 3 Years ka plan choose kar sakte hain.
+                </p>
+              </details>
+              <details className="p-4 border rounded-lg shadow-sm">
+                <summary className="font-semibold cursor-pointer">
+                  Card expire hone ke baad kya renewal option hai?
+                </summary>
+                <p className="mt-2 text-gray-600">
+                  Haan, validity ke khatam hone par aap apna card easily renew kar sakte hain aur naye benefits le sakte hain.
+                </p>
+              </details>
+              <details className="p-4 border rounded-lg shadow-sm">
+                <summary className="font-semibold cursor-pointer">
+                  CityWitty Card kaha use kar sakte hain?
+                </summary>
+                <p className="mt-2 text-gray-600">
+                  Yeh card 1000+ partner restaurants, hotels, salons, aur shopping outlets me accept kiya jata hai.
+                </p>
+              </details>
+              <details className="p-4 border rounded-lg shadow-sm">
+                <summary className="font-semibold cursor-pointer">
+                  Agar koi issue ho to support kaise milega?
+                </summary>
+                <p className="mt-2 text-gray-600">
+                  Aapko priority customer support provide kiya jata hai – call, email, aur WhatsApp ke through.
+                </p>
+              </details>
+            </div>
+          </div>
         </div>
       </section>
+
 
       {/* Pricing Plans */}
       <section className="py-16 bg-white">
@@ -261,8 +339,8 @@ export default function GetCardPage() {
               return (
                 <div key={step.step} className="text-center">
                   <div className="relative mb-6">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-600 text-white text-2xl font-bold mb-4">
-                      {step.step}
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white text-2xl font-bold mb-4">
+                      {/* {step.step} */}
                     </div>
                     <div className="absolute top-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       <IconComponent className="h-8 w-8 text-white" />

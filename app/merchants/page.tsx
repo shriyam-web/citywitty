@@ -210,6 +210,7 @@ export default function MerchantsPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />
+      <br /><br />
       {/* JSON-LD Script */}
       <script
         type="application/ld+json"

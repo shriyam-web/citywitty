@@ -145,6 +145,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Header />
+
       <Script
         id="contact-page-schema"
         type="application/ld+json"
@@ -212,6 +213,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center space-y-6">
+            <br />
             <h1 className="text-4xl lg:text-6xl font-bold">Get in Touch</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
               We're here to help you with any questions about CityWitty discount
