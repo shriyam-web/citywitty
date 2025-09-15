@@ -392,7 +392,10 @@ export function Footer() {
         <div className="border-t border-white/10 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © 2025 CityWitty. All rights reserved. Made with ❤️ in India.
+              {/* © 2025 CityWitty. All rights reserved. Made with ❤️ in India. */}
+              © 2025 CityWitty Digital Ventures Private Limited. All rights reserved. <br></br>
+
+              Made with ❤️ in India | Launch Version 1.01
             </div>
             <div className="flex items-center space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
