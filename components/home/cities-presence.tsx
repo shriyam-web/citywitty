@@ -92,16 +92,16 @@ export function CitiesPresence() {
                   {city.state}
                 </p>
               )}
-              <Badge
+              {/* <Badge
                 variant="secondary"
                 className={
                   index < 4
                     ? 'bg-white/20 text-white border-white/30'
                     : 'bg-blue-100 text-blue-700'
                 }
-              >
-                {/* {city.merchants || 'Coming soon'} */}
-              </Badge>
+              > */}
+              {/* {city.merchants || 'Coming soon'} */}
+              {/* </Badge> */}
             </div>
           ))}
         </div>
@@ -170,6 +170,6 @@ export function CitiesPresence() {
           </p>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

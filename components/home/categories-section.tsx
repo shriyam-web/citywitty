@@ -59,56 +59,56 @@ const categories = [
   {
     name: 'Automotive',
     icon: Car,
-    count: 0,
-    available: false,
+    count: 170,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Car services & accessories'
   },
   {
     name: 'Fitness & Gym',
     icon: Dumbbell,
-    count: 0,
-    available: false,
+    count: 862,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Health & fitness centers'
   },
   {
     name: 'Education',
     icon: GraduationCap,
-    count: 0,
-    available: false,
+    count: 1253,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Learning & skill development'
   },
   {
     name: 'Real Estate',
     icon: Building2,
-    count: 0,
-    available: false,
+    count: 147,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Property & rentals'
   },
   {
     name: 'Travel & Tourism',
     icon: Plane,
-    count: 0,
-    available: false,
+    count: 63,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Tours & travel packages'
   },
   {
     name: 'Gifts & Events',
     icon: Gift,
-    count: 0,
-    available: false,
+    count: 86,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Event planning & gifts'
   },
   {
     name: 'Healthcare',
     icon: Heart,
-    count: 0,
-    available: false,
+    count: 670,
+    available: true,
     color: 'bg-gray-100 text-gray-500',
     description: 'Medical & healthcare services'
   }
