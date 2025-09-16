@@ -216,22 +216,18 @@ export default function GetCardPage() {
             {features.map((feature) => {
               const IconComponent = feature.icon;
               return (
-                <Card
-                  key={feature.title}
-                  className="text-center border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <CardContent className="p-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600 mb-4">
-                      <IconComponent className="h-8 w-8" />
+                <Card key={feature.title} className="p-6 shadow-lg rounded-xl">
+                  <CardContent className="text-center">
+                    <div className="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white mx-auto">
+                      <IconComponent className="w-8 h-8" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {feature.title}
-                    </h3>
+                    <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                     <p className="text-gray-600">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
             })}
+
           </div>
 
           {/* FAQ Section */}
@@ -287,42 +283,88 @@ export default function GetCardPage() {
               Select the perfect plan that suits your lifestyle and saving goals
             </p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {plans.map((plan) => (
-              <Card
-                key={plan.name}
-                className={`relative border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${plan.popular ? "ring-2 ring-blue-500" : ""
-                  }`}
-              >
-                {plan.popular && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="bg-blue-500 text-white px-4 py-1">Most Popular</Badge>
-                  </div>
-                )}
-                <CardContent className="p-8 text-center">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{plan.name}</h3>
-                  <div className="mb-6">
-                    <div className="flex items-center justify-center space-x-2">
-                      <span className="text-4xl font-bold text-blue-600">₹{plan.price}</span>
-                      <div className="text-left">
-                        <div className="text-sm text-gray-500 line-through">₹{plan.originalPrice}</div>
-                        <div className="text-sm text-green-600">Save ₹{plan.originalPrice - plan.price}</div>
+            {plans.map((plan) => {
+              const isPopular = plan.duration === "2 Years"; // mark 2-year as popular
+              return (
+                <Card
+                  key={plan.name}
+                  className={`
+          relative shadow-lg transition-all duration-300 transform hover:-translate-y-1
+          ${isPopular ? "gradient-border scale-105 z-10" : "border border-gray-200 hover:border-blue-500"}
+        `}
+                >
+                  {isPopular && (
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                      <Badge className="bg-blue-500 text-white px-4 py-1">Most Popular</Badge>
+                    </div>
+                  )}
+
+                  <CardContent className="p-8 text-center relative z-10">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{plan.name}</h3>
+
+                    <div className="mb-6">
+                      <div className="flex items-center justify-center space-x-2">
+                        <span className="text-4xl font-bold text-blue-600">₹{plan.price}</span>
+                        <div className="text-left">
+                          <div className="text-sm text-gray-500 line-through">₹{plan.originalPrice}</div>
+                          <div className="text-sm text-green-600">Save ₹{plan.originalPrice - plan.price}</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <ul className="space-y-3 mb-8 text-left">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center space-x-2">
-                        <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <WhatsAppButton text={whatsAppMessage} label={`Get ${plan.name} Card`} fullWidth variant={plan.popular ? "primary" : "default"} />
-                </CardContent>
-              </Card>
-            ))}
+
+                    <ul className="space-y-3 mb-8 text-left">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-center space-x-2">
+                          <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                          <span className="text-gray-600">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <WhatsAppButton
+                      text={whatsAppMessage}
+                      label={`Get ${plan.name} Card`}
+                      fullWidth
+                      variant={isPopular ? "primary" : "default"}
+                    />
+
+                    {/* Decorative "Assured Gifts" */}
+                    {(plan.duration === "2 Years" || plan.duration === "3 Years") && (
+                      <div className="mt-4 flex justify-center">
+                        <div
+                          className="
+        relative flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-xl
+        cursor-default
+        group
+        text-gray-900 z-10
+        after:absolute after:inset-0 after:rounded-xl after:border-2 after:border-transparent
+        after:bg-[length:200%_200%] after:bg-gradient-to-r after:from-purple-700 after:via-pink-500 after:to-red-500
+        after:animate-gradientBorderAnim
+        after:z-0
+      "
+                        >
+                          <Gift className="w-5 h-5 text-yellow-400 z-10" />
+                          <span className="z-10 text-white">Get Assured Gifts!</span>
+
+                          {/* Tooltip */}
+                          <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-56 px-3 py-2 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                            CityWitty Privilege Card offers you some gifts on purchasing this card variant as Welcome Gift
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
+
+
+
+
         </div>
       </section>
 

@@ -219,7 +219,7 @@ export function Header() {
             {/* Get Your Card */}
             {!user && (
               <Button asChild className="bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-700 hover:to-orange-600 text-white font-semibold px-3 sm:px-5 py-2 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all text-sm sm:text-base">
-                <Link href="/register">Get Your Card</Link>
+                <Link href="/login">Get Your Card</Link>
               </Button>
             )}
 

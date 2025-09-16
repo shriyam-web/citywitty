@@ -36,6 +36,71 @@
   flex-shrink: 0;
   /* width: 50%; Half because we have 2 copies */
 }
+@keyframes shine {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  50% { transform: translateX(100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
+}
+
+@keyframes gradientBorderAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animated-border {
+  border: 4px solid transparent;
+  border-image: linear-gradient(90deg, #7e22ce, #ec4899, #ef4444) 1;
+  border-image-slice: 1;
+  animation: gradientBorderAnim 3s linear infinite;
+  border-radius: 1rem; /* match your button's rounding */
+}
+@keyframes gradientBorderAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-border {
+  border: 4px solid transparent;
+  border-radius: 1rem; /* match button rounding */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: 
+    linear-gradient(90deg, #7e22ce, #ec4899, #ef4444),
+    linear-gradient(90deg, #7e22ce, #ec4899, #ef4444);
+  animation: gradientBorderAnim 3s linear infinite;
+}
+/* Animated gradient for card border */
+@keyframes gradientBorderAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+  border: 4px solid transparent; /* border thickness */
+  border-radius: 1rem; /* match card rounding */
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: 
+    linear-gradient(white, white), /* card fill stays normal */
+    linear-gradient(270deg, #7e22ce, #ec4899, #f59e0b, #3b82f6); /* border gradient */
+  background-size: 400% 400%; /* large for smooth animation */
+  animation: gradient-border-anim 6s linear infinite;
+}
+
+@keyframes gradient-border-anim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}@keyframes gradientBorderAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
 
 @keyframes marquee {
   from {
