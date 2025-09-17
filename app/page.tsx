@@ -8,6 +8,7 @@ import { CategoriesSection } from '@/components/home/categories-section';
 import { CitiesPresence } from '@/components/home/cities-presence';
 import { CallToActionSection } from '@/components/home/call-to-action';
 import type { Metadata } from "next";
+import { BannerCarousel } from '@/components/home/BannerCarousel';
 
 export const metadata: Metadata = {
   title: "CityWitty - Premium Discount Card Platform",
@@ -75,6 +76,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Header />
       <HeroSection />
+      <BannerCarousel />
       <MerchantCarousel />
       {/* <FeaturedMerchants /> */}
       <TestimonialsCarousel />
