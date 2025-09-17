@@ -176,6 +176,8 @@
 // }
 
 import Link from 'next/link';
+import { FaWhatsapp } from "react-icons/fa";
+
 import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin, Crown, Heart, Shield, Zap } from 'lucide-react';
 import { Youtube } from "lucide-react";
 
@@ -204,7 +206,7 @@ export function Footer() {
 
     <footer className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
 
       {/* Floating Orbs */}
@@ -230,7 +232,14 @@ export function Footer() {
                 </span>
                 <div className="text-xs text-gray-400">Privilage Cards</div>
               </div>
+
+
             </div>
+
+
+
+
+
             <p className="text-gray-300 text-sm leading-relaxed">
               India's premier discount card platform offering exclusive deals from verified merchants across the nation. Experience luxury for less.
             </p>
@@ -257,36 +266,82 @@ export function Footer() {
 
 
             <div className="flex space-x-4">
-              {[
-                { icon: Facebook, href: "https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr" },
-                { icon: Twitter, href: "https://x.com/CityWitty_India" },
-                { icon: Instagram, href: "https://www.instagram.com/citywitty.in?igsh=YXBub3Nwam5hcjR0" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/citywitty-digital-ventures-pvt-ltd/" },
-                { icon: Youtube, href: "https://youtube.com/@citywitty3546?si=IfcAhXmKq9vmIfA8" }, // 👈 YouTube
-                {
-                  icon: WhatsappIcon, href: "https://wa.me/916389202030"
-                }, // WhatsApp (replace with actual number)
-                { icon: MapPin, href: "https://share.google/BYU7k1Knf0p4WshcS" }, // 👈 Location (Google Maps link)
-              ].map((item, index) => {
-                const IconComponent = item.icon;
-                return (
-                  <a
-                    key={index}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600/20 to-orange-600/20 flex items-center justify-center border border-white/10 group-hover:border-blue-400 transition-all duration-300 group-hover:scale-110">
-                      <IconComponent className="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
-                    </div>
-                  </a>
-                );
-              })}
+              {/* Facebook */}
+              <a href="https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#1877F2] hover:scale-110 transition">
+                  <Facebook className="h-5 w-5 text-white" />
+                </div>
+              </a>
+
+              {/* Instagram (Gradient) */}
+              <a href="https://www.instagram.com/citywitty.in" target="_blank" rel="noopener noreferrer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] via-[#8134AF] to-[#515BD4] hover:scale-110 transition">
+                  <Instagram className="h-5 w-5 text-white" />
+                </div>
+              </a>
+
+              {/* Twitter → X (custom SVG since Twitter icon = bird) */}
+              <a href="https://x.com/CityWitty_India" target="_blank" rel="noopener noreferrer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-black hover:scale-110 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" className="h-5 w-5">
+                    <path d="M18.244 2H21l-6.766 7.725L22 22h-7.317l-5.16-6.61L4.6 22H2l7.243-8.268L2 2h7.41l4.713 6.164L18.244 2zM16.9 20h1.9L8.1 4H6.1l10.8 16z" />
+                  </svg>
+                </div>
+              </a>
+
+              {/* LinkedIn */}
+              <a href="https://www.linkedin.com/company/citywitty-digital-ventures-pvt-ltd/" target="_blank" rel="noopener noreferrer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#0A66C2] hover:scale-110 transition">
+                  <Linkedin className="h-5 w-5 text-white" />
+                </div>
+              </a>
+
+              {/* YouTube */}
+              <a href="https://youtube.com/@citywitty3546?si=IfcAhXmKq9vmIfA8" target="_blank" rel="noopener noreferrer">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FF0000] hover:scale-110 transition">
+                  <Youtube className="h-5 w-5 text-white" />
+                </div>
+              </a>
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/916389202030"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#25D366] hover:scale-110 transition">
+                  <FaWhatsapp className="h-5 w-5 text-white" /> {/* ✅ Exact WhatsApp logo */}
+                </div>
+              </a>
+
+
+              {/* Google Maps / Location */}
+              {/* Google Maps / Location */}
+              <a
+                href="https://maps.app.goo.gl/3dUsoBqaWssY3Sqb9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-10"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#4285F4] hover:scale-110 transition">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
+              </a>
+
             </div>
 
 
+
+
+
+
+
+
+
+
           </div>
+
+
 
           {/* Quick Links */}
           <div className="space-y-6">
@@ -339,6 +394,27 @@ export function Footer() {
                   </span>
                 </Link>
               ))}
+            </div>
+
+            {/* CityWitty Ecosystem Links */}
+            <div className="mt-4 flex flex-wrap gap-3 w-70">
+              {/* <a href="https://www.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
+                <div className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-medium hover:scale-105 transition text-center">
+                  CityWitty.com
+                </div>
+              </a> */}
+
+              <a href="https://partner.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
+                <div className="px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-medium hover:scale-105 transition text-center">
+                  CW Merchant Hub
+                </div>
+              </a>
+
+              <a href="https://franchise.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
+                <div className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-sm font-medium hover:scale-105 transition text-center">
+                  CW Franchise Portal
+                </div>
+              </a>
             </div>
           </div>
 
