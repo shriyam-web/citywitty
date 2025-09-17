@@ -75,7 +75,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Header />
-      <HeroSection />
+      <HeroSection /> <br />
       <BannerCarousel />
       <MerchantCarousel />
       {/* <FeaturedMerchants /> */}
