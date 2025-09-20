@@ -17,6 +17,7 @@ const navigation = [
   { name: 'Activate Card', href: '/activate-track' },
   { name: 'Merchants', href: '/merchants' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Career', href: '/careers' },
   { name: 'Merchant Portal', href: 'https://partner.citywitty.com/' },
 ];
 

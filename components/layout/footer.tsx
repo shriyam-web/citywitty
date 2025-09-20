@@ -354,7 +354,9 @@ export function Footer() {
                 { name: 'Merchants', href: '/merchants' },
                 { name: 'Get Card', href: '/get-card' },
                 { name: 'About Us', href: '/about' },
-                { name: 'Contact', href: '/contact' }
+                { name: 'Contact', href: '/contact' },
+                { name: 'Career', href: '/careers' }
+
               ].map((link) => (
                 <Link
                   key={link.name}
