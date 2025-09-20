@@ -62,7 +62,7 @@ export default function CareerForm() {
     };
 
     return (
-        <section className=" rounded-xl p-10 w-full max-w-[90%] mx-auto" >
+        <section className=" rounded-xl p-10 w-full max-w-[60%] mx-auto" >
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Full Name */}
