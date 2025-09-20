@@ -39,7 +39,7 @@ export default function CareersPage() {
                             talented individuals to join our team.
                         </p>
                         <a
-                            href="#career-form"
+                            href="#applicationform"
                             className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition"
                         >
                             Apply Now
@@ -82,7 +82,7 @@ export default function CareersPage() {
                         Don’t wait—submit your application and become part of CityWitty today!
                     </p>
                     <a
-                        href="#career-form"
+                        href="#applicationform"
                         className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition"
                     >
                         Apply Now
