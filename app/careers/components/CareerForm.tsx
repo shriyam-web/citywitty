@@ -88,11 +88,9 @@ export default function CareerForm() {
     });
 
     const positions = [
-        "Frontend Developer",
-        "Backend Developer",
-        "UI/UX Designer",
-        "Marketing Executive",
-        "Customer Success Manager",
+        "Sales Executive / Business Development",
+        "Operations Associate / Intern",
+        "Social Media & Content Executive / Intern",
     ];
 
     const joiningOptions = [
@@ -129,7 +127,7 @@ export default function CareerForm() {
                             Application Submitted Successfully!
                         </h2>
                         <p className="text-gray-700 mb-6">
-                            Thank you for applying. Our team will get back to you soon.
+                            Thank you for applying. Our team will get back to you within 48-72 hours.
                         </p>
 
                         {/* ✅ Show Application ID */}

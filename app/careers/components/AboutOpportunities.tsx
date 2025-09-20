@@ -8,41 +8,28 @@ export default function AboutOpportunities() {
 
     const openPositions = [
         {
-            title: "Frontend Developer",
-            tagline: "Craft beautiful user experiences",
+            title: "Sales Executive / Business Development",
+            tagline: "Drive growth through partnerships",
             type: "Full-time",
             details:
-                "Work closely with designers to build responsive and high-performing user interfaces using React.js and Tailwind. Optimize performance and ensure cross-browser compatibility.",
+                "Identify and pursue new business opportunities, build strong client relationships, and achieve revenue targets. Work closely with the marketing and product teams to align sales strategies with company goals.",
         },
         {
-            title: "Backend Developer",
-            tagline: "Build robust and scalable APIs",
-            type: "Full-time",
+            title: "Operations Associate / Intern",
+            tagline: "Ensure smooth day-to-day operations",
+            type: "Internship",
             details:
-                "Design and maintain RESTful APIs, manage database schemas, and ensure security & scalability of our backend systems using Node.js and MongoDB.",
+                "Assist in managing business processes, coordinate with internal teams, and support operational efficiency. Gain hands-on experience in handling workflows, documentation, and execution of business strategies.",
         },
         {
-            title: "UI/UX Designer",
-            tagline: "Design intuitive interfaces",
-            type: "Remote",
+            title: "Social Media & Content Executive / Intern",
+            tagline: "Create engaging digital stories",
+            type: "Internship",
             details:
-                "Create wireframes, mockups, and prototypes. Conduct user research and implement feedback to ensure delightful user experiences.",
-        },
-        {
-            title: "Marketing Executive",
-            tagline: "Drive growth and engagement",
-            type: "Full-time",
-            details:
-                "Plan and execute marketing campaigns across digital platforms. Analyze engagement metrics and identify strategies for user acquisition.",
-        },
-        {
-            title: "Customer Success Manager",
-            tagline: "Ensure happiness for our users",
-            type: "Hybrid",
-            details:
-                "Engage with customers, resolve issues, and maintain long-term relationships. Provide feedback to product teams to improve user satisfaction.",
+                "Manage social media platforms, curate engaging content, and monitor audience interactions. Support brand presence by creating posts, reels, and campaigns while analyzing trends and engagement metrics.",
         },
     ];
+
 
     const toggleAccordion = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
