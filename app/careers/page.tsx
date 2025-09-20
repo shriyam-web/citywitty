@@ -50,7 +50,7 @@ export default function CareersPage() {
                     <div className="row">
                         <div className="col-sm-6">
                             {/* About Opportunities */}
-                            <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto">
+                            <section className="pt-16 px-6 md:px-12 max-w-7xl mx-auto">
                                 <AboutOpportunities />
                             </section>
                         </div>
@@ -59,9 +59,14 @@ export default function CareersPage() {
                         <div className="col-sm-6">
                             {/* Career Application Form */}
                             <div id="applicationform">
-                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 pt-16 text-center" >
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center" >
                                     Apply for a Position
+
                                 </h2>
+                                <p className="mt-2 text-center text-gray-600">
+                                    Fill out the form below and our team will get back to you.
+                                </p>
+
                             </div>
                             <CareerForm />
                         </div>
