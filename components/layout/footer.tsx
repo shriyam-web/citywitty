@@ -354,8 +354,9 @@ export function Footer() {
                 { name: 'Merchants', href: '/merchants' },
                 { name: 'Get Card', href: '/get-card' },
                 { name: 'About Us', href: '/about' },
-                { name: 'Contact', href: '/contact' },
-                { name: 'Career', href: '/careers' }
+                { name: 'Career', href: '/careers' },
+                { name: 'Gallery', href: '/gallery' },
+                { name: 'Contact', href: '/contact' }
 
               ].map((link) => (
                 <Link
@@ -399,25 +400,30 @@ export function Footer() {
             </div>
 
             {/* CityWitty Ecosystem Links */}
-            <div className="mt-4 flex flex-wrap gap-3 w-70">
-              {/* <a href="https://www.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
-                <div className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-medium hover:scale-105 transition text-center">
-                  CityWitty.com
-                </div>
-              </a> */}
-
-              <a href="https://partner.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
+            <div className="mt-4 flex flex-col gap-3 w-70">
+              <a
+                href="https://partner.citywitty.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
                 <div className="px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-medium hover:scale-105 transition text-center">
                   CW Merchant Hub
                 </div>
               </a>
 
-              <a href="https://franchise.citywitty.com/" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[150px]">
+              <a
+                href="https://franchise.citywitty.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
                 <div className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-sm font-medium hover:scale-105 transition text-center">
                   CW Franchise Portal
                 </div>
               </a>
             </div>
+
           </div>
 
           {/* Contact Info */}
