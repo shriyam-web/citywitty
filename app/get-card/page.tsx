@@ -373,12 +373,10 @@ export default function GetCardPage() {
 
                         {/* Pricing */}
                         <div className="mb-6">
-                          <p
-                            className={`text-sm line-through ${plan.popular ? "text-white/70" : "text-gray-500"
-                              }`}
-                          >
+                          <p className="text-sm line-through text-red-500">
                             ₹{plan.originalPrice}
                           </p>
+
 
 
                           <p
