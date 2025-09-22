@@ -78,12 +78,18 @@ const config: Config = {
             height: '0',
           },
         },
+         shine: {
+          '0%': { transform: 'translateX(-100%) rotate(20deg)', opacity: '0' },
+          '50%': { transform: 'translateX(100%) rotate(20deg)', opacity: '0.3' },
+          '100%': { transform: 'translateX(200%) rotate(20deg)', opacity: '0' },
+        },
         'gradient-move': {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
       },
       animation: {
+        shine: 'shine 2.5s infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'gradient-move': 'gradient-move 3s ease infinite',

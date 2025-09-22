@@ -7,6 +7,16 @@ import { Badge } from "@/components/ui/badge";
 import { CreditCard, Check, MessageCircle, Star, Clock, Shield, Gift } from "lucide-react";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 
+type Plan = {
+  name: string;
+  duration: string;
+  perYearValue?: number;   // ✅ now optional  // Display value per year
+  launchPrice: number;    // Checkout price
+  originalPrice: number;  // Total MRP for strikethrough
+  features: string[];
+  popular: boolean;
+  isAssuredGift?: boolean;
+};
 export const metadata: Metadata = {
   title: "Get CityWitty Card - Unlock Exclusive Discounts & Premium Offers",
   description:
@@ -74,53 +84,62 @@ const steps = [
   { step: 4, title: "Start Saving", description: "Begin enjoying exclusive discounts immediately", icon: Gift },
 ];
 
-const plans = [
+const plans: Plan[] = [
   {
-    name: "1 Year Plan",
+    name: "1 Year",
     duration: "1 Year",
-    price: 1999,
-    originalPrice: 2999,
+    launchPrice: 1499,
+    originalPrice: 2499, // strike-through shows 2-year anchor for discount
     features: [
-      "Access to 1000+ merchants",
-      "Up to 40% discount",
-      "12 months validity",
-      "Standard customer support",
+      "CW Wallet Points on every purchase",
+      "Exclusive CW merchant discounts",
+      "Priority support for card queries",
+      "Get upto 70% off accross CW Verified Merchants"
     ],
     popular: false,
+    isAssuredGift: false
   },
   {
-    name: "2 Year Plan",
+    name: "2 Year",
     duration: "2 Years",
-    price: 3499,
-    originalPrice: 5999,
+    perYearValue: 1249,
+    launchPrice: 2499,
+    originalPrice: 2499 * 2, // ₹4998
     features: [
-      "Access to 1500+ merchants",
-      "Up to 45% discount",
-      "24 months validity",
-      "Priority customer support",
-      "Exclusive merchant previews",
+      "CW Wallet Points on every purchase",
+      "Exclusive CW merchant discounts",
+      "Priority support for card queries",
+      "Get upto 70% off accross CW Verified Merchants",
+      "Highest savings locked for 24 months"
     ],
     popular: true,
+    isAssuredGift: true
   },
   {
-    name: "3 Year Plan",
+    name: "3 Year",
     duration: "3 Years",
-    price: 4999,
-    originalPrice: 8999,
+    perYearValue: 1099,
+    launchPrice: 3299,
+    originalPrice: 2499 * 3, // ₹7497
     features: [
-      "Access to all merchants",
-      "Up to 50% discount",
-      "36 months validity",
-      "24/7 premium support",
-      "Early access to new merchants",
-      "Family sharing (up to 4 members)",
+      "CW Wallet Points on every purchase",
+      "Exclusive CW merchant discounts",
+      "Priority support for card queries",
+      "Get upto 70% off accross CW Verified Merchants",
+      "Highest savings locked for 36 months"
     ],
-    popular: false,
-  },
+    popular: true,
+    isAssuredGift: true
+  }
 ];
 
 
+
 export default function GetCardPage() {
+
+
+
+
   const whatsAppMessage =
     "Hi! I want to purchase a CityWitty discount card. Please provide me with more details and help me with the process.";
 
@@ -273,100 +292,244 @@ export default function GetCardPage() {
         </div>
       </section>
 
-
-      {/* Pricing Plans */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Choose Your Plan</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Select the perfect plan that suits your lifestyle and saving goals
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4">
+              CityWitty Card Plans
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              Pick a plan that matches your lifestyle and unlock maximum savings.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Main Plans */}
+          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
             {plans.map((plan) => {
-              const isPopular = plan.duration === "2 Years"; // mark 2-year as popular
+              const savings = plan.originalPrice - plan.launchPrice;
+              const isMultiYear = plan.duration !== "1 Year";
+
+              // Card styling
+              let cardClasses =
+                "relative flex flex-col rounded-3xl overflow-hidden shadow-xl transition-transform duration-300 hover:-translate-y-2";
+              let textColorClass = "";
+              let shineClasses = "";
+
+              if (plan.duration === "3 Years") {
+                cardClasses +=
+                  " bg-gradient-to-br from-[#D4AF37] via-[#FFD700] to-[#FFD700] text-black";
+                textColorClass = "text-black";
+                shineClasses =
+                  "absolute inset-0 pointer-events-none before:absolute before:inset-0 before:bg-white before:opacity-20 before:rotate-12 before:blur-xl before:animate-shine";
+              } else if (plan.duration === "2 Years") {
+                cardClasses +=
+                  " bg-gradient-to-br from-[#C0C0C0] via-[#D3D3D3] to-[#E8E8E8] text-gray-900";
+                textColorClass = "text-gray-900";
+                shineClasses =
+                  "absolute inset-0 pointer-events-none before:absolute before:inset-0 before:bg-white before:opacity-20 before:rotate-12 before:blur-xl before:animate-shine";
+              } else {
+                cardClasses += plan.popular
+                  ? " bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white"
+                  : " bg-gradient-to-b from-white to-gray-50 border border-gray-200 text-gray-900";
+                textColorClass = plan.popular ? "text-white" : "text-gray-900";
+              }
+
               return (
-                <Card
-                  key={plan.name}
-                  className={`
-          relative shadow-lg transition-all duration-300 transform hover:-translate-y-1
-          ${isPopular ? "gradient-border scale-105 z-10" : "border border-gray-200 hover:border-blue-500"}
-        `}
-                >
-                  {isPopular && (
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-                      <Badge className="bg-blue-500 text-white px-4 py-1">Most Popular</Badge>
-                    </div>
-                  )}
-
-                  <CardContent className="p-8 text-center relative z-10">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{plan.name}</h3>
-
-                    <div className="mb-6">
-                      <div className="flex items-center justify-center space-x-2">
-                        <span className="text-4xl font-bold text-blue-600">₹{plan.price}</span>
-                        <div className="text-left">
-                          <div className="text-sm text-gray-500 line-through">₹{plan.originalPrice}</div>
-                          <div className="text-sm text-green-600">Save ₹{plan.originalPrice - plan.price}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <ul className="space-y-3 mb-8 text-left">
-                      {plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-center space-x-2">
-                          <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-                          <span className="text-gray-600">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <WhatsAppButton
-                      text={whatsAppMessage}
-                      label={`Get ${plan.name} Card`}
-                      fullWidth
-                      variant={isPopular ? "primary" : "default"}
-                    />
-
-                    {/* Decorative "Assured Gifts" */}
-                    {(plan.duration === "2 Years" || plan.duration === "3 Years") && (
-                      <div className="mt-4 flex justify-center">
-                        <div
-                          className="
-        relative flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-xl
-        cursor-default
-        group
-        text-gray-900 z-10
-        after:absolute after:inset-0 after:rounded-xl after:border-2 after:border-transparent
-        after:bg-[length:200%_200%] after:bg-gradient-to-r after:from-purple-700 after:via-pink-500 after:to-red-500
-        after:animate-gradientBorderAnim
-        after:z-0
-      "
-                        >
-                          <Gift className="w-5 h-5 text-yellow-400 z-10" />
-                          <span className="z-10 text-white">Get Assured Gifts!</span>
-
-                          {/* Tooltip */}
-                          <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-56 px-3 py-2 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
-                            CityWitty Privilege Card offers you some gifts on purchasing this card variant as Welcome Gift
-                          </div>
-                        </div>
-                      </div>
+                <div key={plan.name} className="relative">
+                  {/* Badges */}
+                  <div className="absolute top-4 left-4 z-20">
+                    {plan.duration === "2 Years" && (
+                      <span className="inline-block bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                        Most Popular
+                      </span>
                     )}
+                    {plan.duration === "3 Years" && (
+                      <span className="inline-block  bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                        Smart Buyer's Choice
+                      </span>
+                    )}
+                  </div>
 
-                  </CardContent>
-                </Card>
+
+
+                  {/* Card */}
+                  <div className={cardClasses}>
+                    {shineClasses && <div className={shineClasses}></div>}
+
+                    {/* Festive50 Badge */}
+                    <div className="absolute top-4 right-4 z-20">
+                      <span className="inline-block px-3 py-1 text-xs font-bold rounded-full shadow bg-red-500 text-white">
+                        Festive50 Applied
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex flex-col justify-between h-full p-8 text-center relative z-10 mt-6">
+                      <div>
+                        <h3 className={`text-2xl font-bold mb-4 ${textColorClass}`}>
+                          {plan.name} Plan
+                        </h3>
+
+                        {/* Pricing */}
+                        <div className="mb-6">
+                          <p
+                            className={`text-sm line-through ${plan.popular ? "text-white/70" : "text-gray-500"
+                              }`}
+                          >
+                            ₹{plan.originalPrice}
+                          </p>
+
+
+                          <p
+                            className={`text-4xl font-extrabold ${plan.duration === "3 Years"
+                              ? "text-black"
+                              : plan.duration === "2 Years"
+                                ? "text-gray-900"
+                                : plan.popular
+                                  ? "text-yellow-300"
+                                  : "text-green-600"
+                              }`}
+                          >
+                            ₹{plan.launchPrice}
+                          </p>
+
+
+
+                          {isMultiYear && (
+                            <p
+                              className={`text-base font-semibold ${plan.duration === "3 Years"
+                                ? "text-black/90"
+                                : plan.duration === "2 Years"
+                                  ? "text-gray-800"
+                                  : plan.popular
+                                    ? "text-white/90"
+                                    : "text-blue-600"
+                                }`}
+                            >
+                              ₹{plan.perYearValue}/year
+                            </p>
+                          )}
+
+
+
+                          <p
+                            className={`text-sm font-medium ${plan.popular || plan.duration === "3 Years"
+                              ? "text-green-700"
+                              : "text-green-500"
+                              }`}
+                          >
+                            You save ₹{savings}
+                          </p>
+                        </div>
+
+
+                        {/* Features */}
+                        <ul className="space-y-3 text-left mb-8">
+                          {plan.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <Check
+                                className={`h-5 w-5 ${plan.duration === "3 Years"
+                                  ? "text-black"
+                                  : plan.duration === "2 Years"
+                                    ? "text-gray-900"
+                                    : plan.popular
+                                      ? "text-yellow-300"
+                                      : "text-green-500"
+                                  }`}
+                              />
+                              <span className={textColorClass}>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* CTA */}
+                      <WhatsAppButton
+                        text={whatsAppMessage}
+                        label={`Get ${plan.name} Card`}
+                        fullWidth
+                        variant="primary"
+                      />
+
+                      {/* Gift */}
+                      {plan.isAssuredGift && (
+                        <div className="mt-4 flex justify-center">
+                          <span
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow ${plan.duration === "3 Years"
+                              ? "bg-black text-yellow-400"
+                              : plan.duration === "2 Years"
+                                ? "bg-gray-300 text-gray-900"
+                                : plan.popular
+                                  ? "bg-white/20 text-white"
+                                  : "bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-white"
+                              }`}
+                          >
+                            <Gift className="w-4 h-4" />
+                            {plan.duration === "3 Years"
+                              ? "Premium Assured Gift!"
+                              : plan.duration === "2 Years"
+                                ? "Assured Gift!"
+                                : "Assured Gift!"}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
 
+          {/* Student Plan */}
+          <div className="mt-16 max-w-3xl mx-auto">
+            <div className="relative flex flex-col rounded-3xl bg-gradient-to-r from-purple-50 via-purple-100 to-purple-200
+      border border-purple-400 shadow-xl p-8 text-center hover:-translate-y-2 transition-transform">
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+                <span className="bg-purple-600 text-white px-5 py-1.5 text-sm font-bold rounded-full shadow">
+                  Student Special – 33% Off
+                </span>
+              </div>
 
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Student Plan (Valid Student ID)</h3>
 
+              <div className="mb-6">
+                <p className="text-sm text-gray-500 line-through">₹1499</p>
+                <p className="text-4xl font-extrabold text-green-600">₹999</p>
+                <p className="text-sm text-green-600 font-medium">33% Off – Limited Time!</p>
+              </div>
 
+              <ul className="text-left space-y-3 mb-8 text-gray-700">
+                <li>Exclusive student tie-ups: cafes, gyms, clothing stores, arcades & salons</li>
+                <li>“Study & Chill” bundles with libraries & co-working spaces</li>
+                <li>Referral rewards: invite 3 friends for 1 month free or a special coupon</li>
+              </ul>
+
+              <WhatsAppButton
+                text={whatsAppMessage}
+                label="Get Student Card"
+                fullWidth
+                variant="primary"
+              />
+            </div>
+          </div>
         </div>
       </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* How It Works */}
       <section className="py-16 bg-gray-50">
