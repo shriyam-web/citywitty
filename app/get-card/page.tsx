@@ -310,168 +310,112 @@ export default function GetCardPage() {
               const savings = plan.originalPrice - plan.launchPrice;
               const isMultiYear = plan.duration !== "1 Year";
 
-              // Card styling
-              let cardClasses =
-                "relative flex flex-col rounded-3xl overflow-hidden shadow-xl transition-transform duration-300 hover:-translate-y-2";
-              let textColorClass = "";
-              let shineClasses = "";
+              // Card styling: white bg, shadow, rounded, gray outline
+              const cardClasses =
+                "relative flex flex-col rounded-3xl overflow-hidden shadow-xl border border-gray-200 transition-transform duration-300 hover:-translate-y-2 hover:scale-[1.02] bg-white text-gray-900 h-full";
 
-              if (plan.duration === "3 Years") {
-                cardClasses +=
-                  " bg-gradient-to-br from-[#D4AF37] via-[#FFD700] to-[#FFD700] text-black";
-                textColorClass = "text-black";
-                shineClasses =
-                  "absolute inset-0 pointer-events-none before:absolute before:inset-0 before:bg-white before:opacity-20 before:rotate-12 before:blur-xl before:animate-shine";
+              // Member badge
+              let memberBadge = null;
+              let memberBadgeClasses = "";
+              if (plan.duration === "1 Year") {
+                memberBadge = "Economy Member";
+                memberBadgeClasses =
+                  "bg-white text-gray-700 border border-gray-300"; // white bg
               } else if (plan.duration === "2 Years") {
-                cardClasses +=
-                  " bg-gradient-to-br from-[#C0C0C0] via-[#D3D3D3] to-[#E8E8E8] text-gray-900";
-                textColorClass = "text-gray-900";
-                shineClasses =
-                  "absolute inset-0 pointer-events-none before:absolute before:inset-0 before:bg-white before:opacity-20 before:rotate-12 before:blur-xl before:animate-shine";
-              } else {
-                cardClasses += plan.popular
-                  ? " bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white"
-                  : " bg-gradient-to-b from-white to-gray-50 border border-gray-200 text-gray-900";
-                textColorClass = plan.popular ? "text-white" : "text-gray-900";
+                memberBadge = "Silver Member";
+                memberBadgeClasses = "bg-gray-300 text-gray-900"; // silver bg
+              } else if (plan.duration === "3 Years") {
+                memberBadge = "Golden Member";
+                memberBadgeClasses = "bg-yellow-500 text-white"; // gold bg
               }
 
               return (
-                <div key={plan.name} className="relative">
-                  {/* Badges */}
-                  <div className="absolute top-4 left-4 z-20">
+                <div key={plan.name} className="relative flex flex-col h-full">
+                  {/* Existing Badges */}
+                  <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
                     {plan.duration === "2 Years" && (
                       <span className="inline-block bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                         Most Popular
                       </span>
                     )}
                     {plan.duration === "3 Years" && (
-                      <span className="inline-block  bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                      <span className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                         Smart Buyer's Choice
                       </span>
                     )}
                   </div>
 
-
+                  {/* Member Badge */}
+                  {memberBadge && (
+                    <div className="absolute top-4 right-4 z-20">
+                      <span
+                        className={`inline-block text-xs font-bold px-3 py-1 rounded-full shadow ${memberBadgeClasses}`}
+                      >
+                        {memberBadge}
+                      </span>
+                    </div>
+                  )}
 
                   {/* Card */}
                   <div className={cardClasses}>
-                    {shineClasses && <div className={shineClasses}></div>}
+                    {/* Content with shine effect */}
+                    <div className="relative flex flex-col justify-between h-full p-8 text-center mt-6 overflow-hidden">
+                      {/* Shine overlay inside content only */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-white/20 pointer-events-none animate-shine"></div>
 
-                    {/* Festive50 Badge */}
-                    <div className="absolute top-4 right-4 z-20">
-                      <span className="inline-block px-3 py-1 text-xs font-bold rounded-full shadow bg-red-500 text-white">
-                        Festive50 Applied
-                      </span>
-                    </div>
+                      <div className="relative z-10 flex flex-col justify-between h-full">
+                        <div>
+                          <h3 className="text-2xl font-bold mb-4">{plan.name} Plan</h3>
 
-                    {/* Content */}
-                    <div className="flex flex-col justify-between h-full p-8 text-center relative z-10 mt-6">
-                      <div>
-                        <h3 className={`text-2xl font-bold mb-4 ${textColorClass}`}>
-                          {plan.name} Plan
-                        </h3>
-
-                        {/* Pricing */}
-                        <div className="mb-6">
-                          <p className="text-sm line-through text-red-500">
-                            ₹{plan.originalPrice}
-                          </p>
-
-
-
-                          <p
-                            className={`text-4xl font-extrabold ${plan.duration === "3 Years"
-                              ? "text-black"
-                              : plan.duration === "2 Years"
-                                ? "text-gray-900"
-                                : plan.popular
-                                  ? "text-yellow-300"
-                                  : "text-green-600"
-                              }`}
-                          >
-                            ₹{plan.launchPrice}
-                          </p>
-
-
-
-                          {isMultiYear && (
-                            <p
-                              className={`text-base font-semibold ${plan.duration === "3 Years"
-                                ? "text-black/90"
-                                : plan.duration === "2 Years"
-                                  ? "text-gray-800"
-                                  : plan.popular
-                                    ? "text-white/90"
-                                    : "text-blue-600"
-                                }`}
-                            >
-                              ₹{plan.perYearValue}/year
+                          {/* Pricing */}
+                          <div className="mb-4">
+                            <p className="text-sm line-through text-red-500">₹{plan.originalPrice}</p>
+                            <p className="text-4xl font-extrabold text-green-600">₹{plan.launchPrice}</p>
+                            {isMultiYear && (
+                              <p className="text-base font-semibold text-gray-700">₹{plan.perYearValue}/year</p>
+                            )}
+                            {/* Festive50 below price */}
+                            <p className="inline-block mt-1 px-3 py-1 rounded-full bg-red-600 text-white font-medium text-sm animate-pulse">
+                              🎉 Festive50 Applied!
                             </p>
-                          )}
+                            <p className="text-sm font-medium text-green-500 mt-1">
+                              You save ₹{savings}
+                            </p>
+                          </div>
 
-
-
-                          <p
-                            className={`text-sm font-medium ${plan.popular || plan.duration === "3 Years"
-                              ? "text-green-700"
-                              : "text-green-500"
-                              }`}
-                          >
-                            You save ₹{savings}
-                          </p>
+                          {/* Features */}
+                          <ul className="space-y-3 text-left mb-6">
+                            {plan.features.map((feature, i) => (
+                              <li key={i} className="flex items-center gap-2">
+                                <Check className="h-5 w-5 text-green-500" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
 
+                        {/* CTA */}
+                        <WhatsAppButton
+                          text={whatsAppMessage}
+                          label={`Get ${plan.name} Card`}
+                          fullWidth
+                          variant="primary"
+                        />
 
-                        {/* Features */}
-                        <ul className="space-y-3 text-left mb-8">
-                          {plan.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2">
-                              <Check
-                                className={`h-5 w-5 ${plan.duration === "3 Years"
-                                  ? "text-black"
-                                  : plan.duration === "2 Years"
-                                    ? "text-gray-900"
-                                    : plan.popular
-                                      ? "text-yellow-300"
-                                      : "text-green-500"
-                                  }`}
-                              />
-                              <span className={textColorClass}>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* CTA */}
-                      <WhatsAppButton
-                        text={whatsAppMessage}
-                        label={`Get ${plan.name} Card`}
-                        fullWidth
-                        variant="primary"
-                      />
-
-                      {/* Gift */}
-                      {plan.isAssuredGift && (
+                        {/* Gift / No Gift */}
                         <div className="mt-4 flex justify-center">
-                          <span
-                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow ${plan.duration === "3 Years"
-                              ? "bg-black text-yellow-400"
-                              : plan.duration === "2 Years"
-                                ? "bg-gray-300 text-gray-900"
-                                : plan.popular
-                                  ? "bg-white/20 text-white"
-                                  : "bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-white"
-                              }`}
-                          >
-                            <Gift className="w-4 h-4" />
-                            {plan.duration === "3 Years"
-                              ? "Premium Assured Gift!"
-                              : plan.duration === "2 Years"
-                                ? "Assured Gift!"
-                                : "Assured Gift!"}
-                          </span>
+                          {plan.isAssuredGift ? (
+                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow bg-yellow-100 text-yellow-800">
+                              <Gift className="w-4 h-4" />
+                              {plan.duration === "3 Years" ? "Premium Assured Gift!" : "Assured Gift!"}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow bg-red-100 text-red-600">
+                              <span className="font-bold">✕</span> No Gift Included
+                            </span>
+                          )}
                         </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -480,39 +424,60 @@ export default function GetCardPage() {
           </div>
 
           {/* Student Plan */}
-          <div className="mt-16 max-w-3xl mx-auto">
-            <div className="relative flex flex-col rounded-3xl bg-gradient-to-r from-purple-50 via-purple-100 to-purple-200
-      border border-purple-400 shadow-xl p-8 text-center hover:-translate-y-2 transition-transform">
+          <div className="mt-16 max-w-3xl mx-auto relative">
+            <div className="relative flex flex-col rounded-3xl bg-[#f4e5ff] border border-purple-400 shadow-xl p-8 text-center hover:-translate-y-2 hover:scale-[1.02] transition-transform h-full overflow-hidden">
+              {/* Shine overlay inside content only */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-white/20 pointer-events-none animate-shine"></div>
+
+              {/* Festive33% Badge */}
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                <span className="bg-purple-600 text-white px-5 py-1.5 text-sm font-bold rounded-full shadow">
-                  Student Special – 33% Off
+                <span className="bg-purple-600 text-white px-5 py-1.5 text-sm font-bold rounded-full shadow animate-pulse">
+                  🎉 Festive33% Off
                 </span>
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Student Plan (Valid Student ID)</h3>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Student Plan (Valid Student ID)</h3>
 
-              <div className="mb-6">
-                <p className="text-sm text-gray-500 line-through">₹1499</p>
-                <p className="text-4xl font-extrabold text-green-600">₹999</p>
-                <p className="text-sm text-green-600 font-medium">33% Off – Limited Time!</p>
+                <div className="mb-6">
+                  <p className="text-sm text-gray-500 line-through">₹1499</p>
+                  <p className="text-4xl font-extrabold text-green-600">₹999</p>
+                  <p className="text-sm text-green-600 font-medium">33% Off – Limited Time!</p>
+                </div>
+
+                <ul className="text-left space-y-3 mb-8 text-gray-700">
+                  <li>Exclusive student tie-ups: cafes, gyms, clothing stores, arcades & salons</li>
+                  <li>“Study & Chill” bundles with libraries & co-working spaces</li>
+                  <li>Referral rewards: invite 3 friends for 1 month free or a special coupon</li>
+                </ul>
+
+                <WhatsAppButton
+                  text={whatsAppMessage}
+                  label="Get Student Card"
+                  fullWidth
+                  variant="primary"
+                />
               </div>
-
-              <ul className="text-left space-y-3 mb-8 text-gray-700">
-                <li>Exclusive student tie-ups: cafes, gyms, clothing stores, arcades & salons</li>
-                <li>“Study & Chill” bundles with libraries & co-working spaces</li>
-                <li>Referral rewards: invite 3 friends for 1 month free or a special coupon</li>
-              </ul>
-
-              <WhatsAppButton
-                text={whatsAppMessage}
-                label="Get Student Card"
-                fullWidth
-                variant="primary"
-              />
             </div>
           </div>
         </div>
+
+        {/* Tailwind shine animation */}
+        <style>
+          {`
+      @keyframes shine {
+        0% { transform: translateX(-100%) rotate(25deg); opacity: 0; }
+        50% { transform: translateX(100%) rotate(25deg); opacity: 0.3; }
+        100% { transform: translateX(200%) rotate(25deg); opacity: 0; }
+      }
+      .animate-shine {
+        animation: shine 2s infinite;
+      }
+    `}
+        </style>
       </section>
+
+
 
 
 
