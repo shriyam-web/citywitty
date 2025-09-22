@@ -47,7 +47,7 @@ const CareerSchema = new Schema<ICareerApplication>(
     experience: { type: Number, default: null },
     qualificationDegree: { type: String, required: true },
     qualificationPercent: { type: Number, required: true },
-    resumeUrl: { type: String }, // store file path if you upload to S3/Cloud/Server
+    resumeUrl: { type: String }, 
     resumePublicId: { type: String }, // store Cloudinary public_id
     status: {
       type: String,

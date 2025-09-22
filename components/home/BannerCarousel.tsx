@@ -3,7 +3,7 @@
 import Slider from "react-slick";
 import Image from "next/image";
 
-const images = ["/banners/1.png", "/banners/2.png"];
+const images = ["/banners/1.jpg", "/banners/2.jpg", "/banners/3.jpg", "/banners/4.jpg", "/banners/2.png"];
 
 function NextArrow(props: any) {
     const { onClick } = props;
