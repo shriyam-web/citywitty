@@ -3,16 +3,6 @@
 import { useState } from "react";
 import type { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//     title: "Admin Signup - CityWitty",
-//     description:
-//         "Create a secure admin account for CityWitty using your email, password, and secret code.",
-//     robots: {
-//         index: false,   // ❌ Search engines इस page को index नहीं करेंगे
-//         follow: false,  // ❌ Links को follow नहीं करेंगे
-//     },
-// };
-
 export default function AdminSignup() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
