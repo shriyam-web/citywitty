@@ -78,7 +78,7 @@ export default function HomePage() {
       <HeroSection /> <br />
       <BannerCarousel />
       <MerchantCarousel />
-      {/* <FeaturedMerchants /> */}
+      <FeaturedMerchants />
       <TestimonialsCarousel />
       <CategoriesSection />
       <CitiesPresence />

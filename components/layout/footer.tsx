@@ -213,8 +213,8 @@ export function Footer() {
       <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-pulse" />
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-2xl animate-pulse delay-1000" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
@@ -240,7 +240,7 @@ export function Footer() {
 
 
 
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
               India's premier discount card platform offering exclusive deals from verified merchants across the nation. Experience luxury for less.
             </p>
 
@@ -253,8 +253,8 @@ export function Footer() {
               ].map((feature, index) => {
                 const IconComponent = feature.icon;
                 return (
-                  <div key={index} className="flex items-center space-x-2 text-sm text-gray-300">
-                    <IconComponent className="h-4 w-4 text-blue-400" />
+                  <div key={index} className="flex items-center space-x-2 text-xs sm:text-sm text-gray-300">
+                    <IconComponent className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
                     <span>{feature.text}</span>
                   </div>
                 );
@@ -265,7 +265,7 @@ export function Footer() {
             {/* Social Media */}
 
 
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-3">
               {/* Facebook */}
               <a href="https://www.facebook.com/share/19b3cPzrDU/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#1877F2] hover:scale-110 transition">
@@ -443,12 +443,12 @@ export function Footer() {
                   <a
                     key={index}
                     href={contact.href}
-                    className="flex items-center space-x-3 text-gray-300 hover:text-blue-400 transition-colors group"
+                    className="flex items-center space-x-2 sm:space-x-3 text-gray-300 hover:text-blue-400 transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600/20 to-orange-600/20 flex items-center justify-center border border-white/10 group-hover:border-blue-400 transition-all duration-300">
-                      <IconComponent className="h-5 w-5" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-blue-600/20 to-orange-600/20 flex items-center justify-center border border-white/10 group-hover:border-blue-400 transition-all duration-300">
+                      <IconComponent className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
-                    <span className="text-sm">{contact.text}</span>
+                    <span className="text-xs sm:text-sm">{contact.text}</span>
                   </a>
                 );
               })}
@@ -473,9 +473,9 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-white/10 mt-16 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm leading-relaxed">
+        <div className="border-t border-white/10 mt-8 sm:mt-12 lg:mt-16 pt-6 sm:pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+            <div className="text-gray-400 text-xs sm:text-sm leading-relaxed">
               © 2025 <b>CityWitty Digital Ventures Private Limited</b>. All rights reserved.
               <br />
 
@@ -515,7 +515,7 @@ export function Footer() {
               </p>
             </div>
 
-            <div className="flex items-center space-x-6 text-sm">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-blue-400 transition-colors">
                 Privacy
               </Link>

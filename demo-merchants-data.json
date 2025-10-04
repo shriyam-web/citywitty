@@ -1,0 +1,904 @@
+[
+  {
+    "merchantId": "demo001",
+    "legalName": "Tasty Bites Restaurant Pvt Ltd",
+    "displayName": "Tasty Bites",
+    "merchantSlug": "tasty-bites",
+    "email": "contact@tastybites.com",
+    "emailVerified": true,
+    "phone": "+91-9876543210",
+    "phoneVerified": true,
+    "password": "$2a$10$dummyhashedpassword",
+    "category": "Restaurant",
+    "city": "Mumbai",
+    "streetAddress": "123 Food Street, Andheri West",
+    "pincode": "400058",
+    "locality": "Andheri",
+    "state": "Maharashtra",
+    "country": "India",
+    "whatsapp": "+91-9876543210",
+    "isWhatsappSame": true,
+    "gstNumber": "22AAAAA0000A1Z5",
+    "panNumber": "AAAAA0000A",
+    "businessType": "Private Limited",
+    "yearsInBusiness": "5",
+    "averageMonthlyRevenue": "500000",
+    "discountOffered": "10-20%",
+    "description": "Authentic Indian cuisine with modern twists. Serving delicious meals since 2019 with a focus on quality ingredients and customer satisfaction.",
+    "website": "https://tastybites.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/tastybites",
+      "instagram": "https://instagram.com/tastybites",
+      "youtube": "https://youtube.com/tastybites",
+      "linkedin": "https://linkedin.com/company/tastybites",
+      "x": "https://twitter.com/tastybites"
+    },
+    "agreeToTerms": true,
+    "logo": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&h=200&fit=crop&crop=center",
+    "storeImages": [
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop"
+    ],
+    "customOffer": "20% off on first order",
+    "ribbonTag": "Top Rated",
+    "mapLocation": "19.0760,72.8777",
+    "visibility": true,
+    "joinedSince": "2019-01-01T00:00:00.000Z",
+    "citywittyAssured": true,
+    "premiumSeller": true,
+    "verified": true,
+    "trust": true,
+    "averageRating": 4.5,
+    "tags": ["Indian", "Vegetarian", "Family Friendly", "Fine Dining"],
+    "status": "active",
+    "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
+    "qrcodeLink": "https://example.com/qr/tasty-bites",
+    "businessHours": {
+      "open": "10:00 AM",
+      "close": "10:00 PM",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    },
+    "bankDetails": {
+      "bankName": "HDFC Bank",
+      "accountHolderName": "Tasty Bites Restaurant Pvt Ltd",
+      "accountNumber": "1234567890",
+      "ifscCode": "HDFC0001234",
+      "branchName": "Andheri West",
+      "upiId": "tastybites@upi"
+    },
+    "ListingLimit": 100,
+    "Addedlistings": 50,
+    "totalGraphics": 10,
+    "totalReels": 5,
+    "isWebsite": true,
+    "totalEarnings": 250000,
+    "minimumOrderValue": 200,
+    "offlineDiscount": [
+      {
+        "category": "Food",
+        "offerTitle": "Lunch Special",
+        "offerDescription": "20% off on lunch items between 12 PM - 3 PM",
+        "discountValue": 40,
+        "discountPercent": 20,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      },
+      {
+        "category": "Beverages",
+        "offerTitle": "Happy Hour Drinks",
+        "offerDescription": "15% off on all beverages during happy hours",
+        "discountValue": 30,
+        "discountPercent": 15,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      }
+    ],
+    "branchLocations": [
+      {
+        "branchName": "Main Branch",
+        "city": "Mumbai",
+        "streetAddress": "123 Food Street, Andheri West",
+        "pincode": "400058",
+        "locality": "Andheri",
+        "state": "Maharashtra",
+        "country": "India",
+        "mapLocation": "19.0760,72.8777",
+        "latitude": 19.076,
+        "longitude": 72.8777
+      }
+    ],
+    "products": [
+      {
+        "_id": "prod001",
+        "name": "Butter Chicken",
+        "description": "Creamy and rich butter chicken with authentic spices",
+        "price": 350,
+        "category": "Main Course",
+        "images": ["https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Non-Veg", "Spicy", "Popular"],
+        "variants": [
+          {
+            "name": "Regular",
+            "price": 350,
+            "description": "Serves 1 person"
+          },
+          {
+            "name": "Family Pack",
+            "price": 650,
+            "description": "Serves 2-3 persons"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this dish spicy?",
+            "answer": "Yes, it has a medium spice level. We can adjust spice on request."
+          },
+          {
+            "question": "What comes with the dish?",
+            "answer": "Served with rice, naan, and salad."
+          }
+        ]
+      },
+      {
+        "_id": "prod002",
+        "name": "Paneer Tikka",
+        "description": "Marinated paneer cubes grilled to perfection",
+        "price": 280,
+        "category": "Appetizer",
+        "images": ["https://images.unsplash.com/photo-1604908177522-0a7a3a7a7a7a?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Veg", "Grilled", "Healthy"],
+        "variants": [
+          {
+            "name": "Regular",
+            "price": 280,
+            "description": "6 pieces"
+          },
+          {
+            "name": "Large",
+            "price": 450,
+            "description": "12 pieces"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this dish vegetarian?",
+            "answer": "Yes, completely vegetarian."
+          },
+          {
+            "question": "Can I make it less spicy?",
+            "answer": "Yes, we can adjust the spice level."
+          }
+        ]
+      }
+    ],
+    "ratings": [
+      {
+        "userId": "user001",
+        "user": "Rajesh Kumar",
+        "rating": 5,
+        "review": "Amazing food and great service! Highly recommended.",
+        "reply": "Thank you for your kind words!",
+        "createdAt": "2024-01-15T10:30:00.000Z"
+      },
+      {
+        "userId": "user002",
+        "user": "Priya Sharma",
+        "rating": 4,
+        "review": "Good food but a bit pricey. Overall satisfied.",
+        "reply": "We appreciate your feedback and will work on our pricing.",
+        "createdAt": "2024-01-20T14:20:00.000Z"
+      },
+      {
+        "userId": "user003",
+        "user": "Amit Singh",
+        "rating": 5,
+        "review": "Best Indian restaurant in Mumbai. Must visit!",
+        "reply": "We're glad you enjoyed your experience!",
+        "createdAt": "2024-01-25T18:45:00.000Z"
+      }
+    ]
+  },
+  {
+    "merchantId": "demo005",
+    "legalName": "Mumbai Spice Restaurant Pvt Ltd",
+    "displayName": "Mumbai Spice",
+    "merchantSlug": "mumbai-spice",
+    "email": "contact@mumbaispice.com",
+    "emailVerified": true,
+    "phone": "+91-9876543218",
+    "phoneVerified": true,
+    "password": "$2a$10$dummyhashedpassword",
+    "category": "Restaurant",
+    "city": "Mumbai",
+    "streetAddress": "90 Spice Road, Bandra West",
+    "pincode": "400050",
+    "locality": "Bandra",
+    "state": "Maharashtra",
+    "country": "India",
+    "whatsapp": "+91-9876543218",
+    "isWhatsappSame": true,
+    "gstNumber": "27FFFFF4444F1Z5",
+    "panNumber": "FFFFF4444F",
+    "businessType": "Private Limited",
+    "yearsInBusiness": "4",
+    "averageMonthlyRevenue": "450000",
+    "discountOffered": "10-15%",
+    "description": "Authentic Maharashtrian cuisine with modern twists. Serving Mumbai since 2020.",
+    "website": "https://mumbaispice.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/mumbaispice",
+      "instagram": "https://instagram.com/mumbaispice",
+      "youtube": "https://youtube.com/mumbaispice",
+      "linkedin": "https://linkedin.com/company/mumbaispice",
+      "x": "https://twitter.com/mumbaispice"
+    },
+    "agreeToTerms": true,
+    "logo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=200&h=200&fit=crop&crop=center",
+    "storeImages": [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop"
+    ],
+    "customOffer": "10% off on first order",
+    "ribbonTag": "New",
+    "mapLocation": "19.0596,72.8295",
+    "visibility": true,
+    "joinedSince": "2020-01-01T00:00:00.000Z",
+    "citywittyAssured": true,
+    "premiumSeller": false,
+    "verified": true,
+    "trust": true,
+    "averageRating": 4.2,
+    "tags": ["Maharashtrian", "Spicy", "Local"],
+    "status": "active",
+    "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
+    "qrcodeLink": "https://example.com/qr/mumbai-spice",
+    "businessHours": {
+      "open": "11:00 AM",
+      "close": "10:00 PM",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    },
+    "bankDetails": {
+      "bankName": "HDFC Bank",
+      "accountHolderName": "Mumbai Spice Restaurant Pvt Ltd",
+      "accountNumber": "1234567898",
+      "ifscCode": "HDFC0001242",
+      "branchName": "Bandra West",
+      "upiId": "mumbaispice@upi"
+    },
+    "ListingLimit": 60,
+    "Addedlistings": 30,
+    "totalGraphics": 6,
+    "totalReels": 3,
+    "isWebsite": true,
+    "totalEarnings": 220000,
+    "minimumOrderValue": 200,
+    "offlineDiscount": [
+      {
+        "category": "Food",
+        "offerTitle": "Weekend Special",
+        "offerDescription": "15% off on all items during weekends",
+        "discountValue": 30,
+        "discountPercent": 15,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      }
+    ],
+    "branchLocations": [
+      {
+        "branchName": "Main Branch",
+        "city": "Mumbai",
+        "streetAddress": "90 Spice Road, Bandra West",
+        "pincode": "400050",
+        "locality": "Bandra",
+        "state": "Maharashtra",
+        "country": "India",
+        "mapLocation": "19.0596,72.8295",
+        "latitude": 19.0596,
+        "longitude": 72.8295
+      }
+    ],
+    "products": [
+      {
+        "_id": "prod009",
+        "name": "Pav Bhaji",
+        "description": "Mumbai's famous pav bhaji with butter and spices",
+        "price": 150,
+        "category": "Main Course",
+        "images": ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Veg", "Street Food", "Popular"],
+        "variants": [
+          {
+            "name": "Regular",
+            "price": 150,
+            "description": "Serves 1 person"
+          },
+          {
+            "name": "Jumbo",
+            "price": 250,
+            "description": "Serves 2 persons"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is it spicy?",
+            "answer": "Medium spice level, can be adjusted."
+          },
+          {
+            "question": "What comes with it?",
+            "answer": "Served with pav, onions, and lemon."
+          }
+        ]
+      }
+    ],
+    "ratings": [
+      {
+        "userId": "user010",
+        "user": "Arjun Nair",
+        "rating": 4,
+        "review": "Good local food, authentic taste.",
+        "reply": "Thank you for your feedback!",
+        "createdAt": "2024-03-01T13:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "merchantId": "demo002",
+    "legalName": "Spice Villa Restaurant Pvt Ltd",
+    "displayName": "Spice Villa",
+    "merchantSlug": "spice-villa",
+    "email": "contact@spicevilla.com",
+    "emailVerified": true,
+    "phone": "+91-9876543215",
+    "phoneVerified": true,
+    "password": "$2a$10$dummyhashedpassword",
+    "category": "Restaurant",
+    "city": "Delhi",
+    "streetAddress": "45 Curry Lane, Connaught Place",
+    "pincode": "110001",
+    "locality": "Connaught Place",
+    "state": "Delhi",
+    "country": "India",
+    "whatsapp": "+91-9876543215",
+    "isWhatsappSame": true,
+    "gstNumber": "07CCCCC1111C1Z5",
+    "panNumber": "CCCCC1111C",
+    "businessType": "Private Limited",
+    "yearsInBusiness": "7",
+    "averageMonthlyRevenue": "600000",
+    "discountOffered": "15-25%",
+    "description": "Traditional Indian cuisine with a modern touch. Serving Delhi since 2015.",
+    "website": "https://spicevilla.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/spicevilla",
+      "instagram": "https://instagram.com/spicevilla",
+      "youtube": "https://youtube.com/spicevilla",
+      "linkedin": "https://linkedin.com/company/spicevilla",
+      "x": "https://twitter.com/spicevilla"
+    },
+    "agreeToTerms": true,
+    "logo": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop&crop=center",
+    "storeImages": [
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop"
+    ],
+    "customOffer": "15% off on weekend orders",
+    "ribbonTag": "Popular",
+    "mapLocation": "28.6139,77.2090",
+    "visibility": true,
+    "joinedSince": "2015-06-01T00:00:00.000Z",
+    "citywittyAssured": true,
+    "premiumSeller": false,
+    "verified": true,
+    "trust": true,
+    "averageRating": 4.3,
+    "tags": ["Indian", "Spicy", "Family Friendly"],
+    "status": "active",
+    "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
+    "qrcodeLink": "https://example.com/qr/spice-villa",
+    "businessHours": {
+      "open": "11:00 AM",
+      "close": "11:00 PM",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    },
+    "bankDetails": {
+      "bankName": "ICICI Bank",
+      "accountHolderName": "Spice Villa Restaurant Pvt Ltd",
+      "accountNumber": "1234567895",
+      "ifscCode": "ICIC0001239",
+      "branchName": "Connaught Place",
+      "upiId": "spicevilla@upi"
+    },
+    "ListingLimit": 80,
+    "Addedlistings": 40,
+    "totalGraphics": 8,
+    "totalReels": 4,
+    "isWebsite": true,
+    "totalEarnings": 300000,
+    "minimumOrderValue": 250,
+    "offlineDiscount": [
+      {
+        "category": "Food",
+        "offerTitle": "Dinner Special",
+        "offerDescription": "25% off on dinner items after 8 PM",
+        "discountValue": 50,
+        "discountPercent": 25,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      }
+    ],
+    "branchLocations": [
+      {
+        "branchName": "Main Branch",
+        "city": "Delhi",
+        "streetAddress": "45 Curry Lane, Connaught Place",
+        "pincode": "110001",
+        "locality": "Connaught Place",
+        "state": "Delhi",
+        "country": "India",
+        "mapLocation": "28.6139,77.2090",
+        "latitude": 28.6139,
+        "longitude": 77.2090
+      }
+    ],
+    "products": [
+      {
+        "_id": "prod003",
+        "name": "Chicken Biryani",
+        "description": "Aromatic basmati rice with tender chicken and spices",
+        "price": 320,
+        "category": "Main Course",
+        "images": ["https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Non-Veg", "Rice", "Spicy"],
+        "variants": [
+          {
+            "name": "Regular",
+            "price": 320,
+            "description": "Serves 1 person"
+          },
+          {
+            "name": "Family Pack",
+            "price": 580,
+            "description": "Serves 2-3 persons"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this dish halal?",
+            "answer": "Yes, we serve halal certified meat."
+          },
+          {
+            "question": "Can I customize the spice level?",
+            "answer": "Yes, we can adjust spice levels as per your preference."
+          }
+        ]
+      },
+      {
+        "_id": "prod004",
+        "name": "Dal Makhani",
+        "description": "Creamy black lentils cooked with butter and spices",
+        "price": 220,
+        "category": "Main Course",
+        "images": ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Veg", "Lentils", "Creamy"],
+        "variants": [
+          {
+            "name": "Regular",
+            "price": 220,
+            "description": "Serves 1 person"
+          },
+          {
+            "name": "Large",
+            "price": 380,
+            "description": "Serves 2 persons"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this dish vegan?",
+            "answer": "No, it contains butter and cream."
+          },
+          {
+            "question": "How long does it take to prepare?",
+            "answer": "About 20-25 minutes."
+          }
+        ]
+      }
+    ],
+    "ratings": [
+      {
+        "userId": "user004",
+        "user": "Vikram Patel",
+        "rating": 4,
+        "review": "Great food and ambiance. Will visit again.",
+        "reply": "Thank you! Looking forward to your next visit.",
+        "createdAt": "2024-02-01T12:00:00.000Z"
+      },
+      {
+        "userId": "user005",
+        "user": "Sneha Gupta",
+        "rating": 5,
+        "review": "Authentic flavors and excellent service.",
+        "reply": "We're glad you enjoyed our authentic cuisine!",
+        "createdAt": "2024-02-05T15:30:00.000Z"
+      }
+    ]
+  },
+  {
+    "merchantId": "demo003",
+    "legalName": "Royal Sarees Pvt Ltd",
+    "displayName": "Royal Sarees",
+    "merchantSlug": "royal-sarees",
+    "email": "contact@royalsarees.com",
+    "emailVerified": true,
+    "phone": "+91-9876543216",
+    "phoneVerified": true,
+    "password": "$2a$10$dummyhashedpassword",
+    "category": "Retail",
+    "city": "Kolkata",
+    "streetAddress": "78 Silk Street, Park Street",
+    "pincode": "700016",
+    "locality": "Park Street",
+    "state": "West Bengal",
+    "country": "India",
+    "whatsapp": "+91-9876543216",
+    "isWhatsappSame": true,
+    "gstNumber": "19DDDDD2222D1Z5",
+    "panNumber": "DDDDD2222D",
+    "businessType": "Private Limited",
+    "yearsInBusiness": "10",
+    "averageMonthlyRevenue": "700000",
+    "discountOffered": "10-15%",
+    "description": "Exclusive collection of sarees and traditional wear. Serving Kolkata since 2012.",
+    "website": "https://royalsarees.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/royalsarees",
+      "instagram": "https://instagram.com/royalsarees",
+      "youtube": "https://youtube.com/royalsarees",
+      "linkedin": "https://linkedin.com/company/royalsarees",
+      "x": "https://twitter.com/royalsarees"
+    },
+    "agreeToTerms": true,
+    "logo": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=200&h=200&fit=crop&crop=center",
+    "storeImages": [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop"
+    ],
+    "customOffer": "10% off on new arrivals",
+    "ribbonTag": "Exclusive",
+    "mapLocation": "22.5726,88.3639",
+    "visibility": true,
+    "joinedSince": "2012-08-01T00:00:00.000Z",
+    "citywittyAssured": true,
+    "premiumSeller": true,
+    "verified": true,
+    "trust": false,
+    "averageRating": 4.6,
+    "tags": ["Sarees", "Traditional", "Fashion"],
+    "status": "active",
+    "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
+    "qrcodeLink": "https://example.com/qr/royal-sarees",
+    "businessHours": {
+      "open": "10:00 AM",
+      "close": "9:00 PM",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    },
+    "bankDetails": {
+      "bankName": "Axis Bank",
+      "accountHolderName": "Royal Sarees Pvt Ltd",
+      "accountNumber": "1234567896",
+      "ifscCode": "UTIB0001240",
+      "branchName": "Park Street",
+      "upiId": "royalsarees@upi"
+    },
+    "ListingLimit": 90,
+    "Addedlistings": 45,
+    "totalGraphics": 12,
+    "totalReels": 6,
+    "isWebsite": true,
+    "totalEarnings": 350000,
+    "minimumOrderValue": 300,
+    "offlineDiscount": [
+      {
+        "category": "Sarees",
+        "offerTitle": "Festival Sale",
+        "offerDescription": "15% off on all sarees during festivals",
+        "discountValue": 150,
+        "discountPercent": 15,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      }
+    ],
+    "branchLocations": [
+      {
+        "branchName": "Main Store",
+        "city": "Kolkata",
+        "streetAddress": "78 Silk Street, Park Street",
+        "pincode": "700016",
+        "locality": "Park Street",
+        "state": "West Bengal",
+        "country": "India",
+        "mapLocation": "22.5726,88.3639",
+        "latitude": 22.5726,
+        "longitude": 88.3639
+      }
+    ],
+    "products": [
+      {
+        "_id": "prod005",
+        "name": "Banarasi Silk Saree",
+        "description": "Handwoven Banarasi silk saree with intricate designs",
+        "price": 2500,
+        "category": "Sarees",
+        "images": ["https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Silk", "Banarasi", "Traditional"],
+        "variants": [
+          {
+            "name": "Standard",
+            "price": 2500,
+            "description": "6 meters with blouse piece"
+          },
+          {
+            "name": "Premium",
+            "price": 3500,
+            "description": "6 meters with premium blouse piece"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this handwoven?",
+            "answer": "Yes, traditionally handwoven by skilled artisans."
+          },
+          {
+            "question": "Can I get it customized?",
+            "answer": "Yes, we offer customization services."
+          }
+        ]
+      },
+      {
+        "_id": "prod006",
+        "name": "Cotton Saree",
+        "description": "Comfortable cotton saree for everyday wear",
+        "price": 800,
+        "category": "Sarees",
+        "images": ["https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Cotton", "Casual", "Comfortable"],
+        "variants": [
+          {
+            "name": "Plain",
+            "price": 800,
+            "description": "Simple cotton saree"
+          },
+          {
+            "name": "Printed",
+            "price": 1200,
+            "description": "Printed cotton saree"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this machine washable?",
+            "answer": "Yes, gentle machine wash recommended."
+          },
+          {
+            "question": "What sizes are available?",
+            "answer": "Standard 6 meters with blouse piece."
+          }
+        ]
+      }
+    ],
+    "ratings": [
+      {
+        "userId": "user006",
+        "user": "Anjali Mehta",
+        "rating": 5,
+        "review": "Beautiful collection and excellent quality.",
+        "reply": "Thank you for your appreciation!",
+        "createdAt": "2024-02-10T09:00:00.000Z"
+      },
+      {
+        "userId": "user007",
+        "user": "Ravi Jain",
+        "rating": 4,
+        "review": "Good variety but prices are high.",
+        "reply": "We offer premium quality products.",
+        "createdAt": "2024-02-15T11:30:00.000Z"
+      }
+    ]
+  },
+  {
+    "merchantId": "demo004",
+    "legalName": "Green Leaf Organic Store Pvt Ltd",
+    "displayName": "Green Leaf",
+    "merchantSlug": "green-leaf",
+    "email": "contact@greenleaf.com",
+    "emailVerified": true,
+    "phone": "+91-9876543217",
+    "phoneVerified": true,
+    "password": "$2a$10$dummyhashedpassword",
+    "category": "Retail",
+    "city": "Bangalore",
+    "streetAddress": "56 Organic Lane, Jayanagar",
+    "pincode": "560041",
+    "locality": "Jayanagar",
+    "state": "Karnataka",
+    "country": "India",
+    "whatsapp": "+91-9876543217",
+    "isWhatsappSame": true,
+    "gstNumber": "29EEEEE3333E1Z5",
+    "panNumber": "EEEEE3333E",
+    "businessType": "Private Limited",
+    "yearsInBusiness": "6",
+    "averageMonthlyRevenue": "550000",
+    "discountOffered": "10-20%",
+    "description": "Organic and natural products store. Serving Bangalore since 2016.",
+    "website": "https://greenleaf.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/greenleaf",
+      "instagram": "https://instagram.com/greenleaf",
+      "youtube": "https://youtube.com/greenleaf",
+      "linkedin": "https://linkedin.com/company/greenleaf",
+      "x": "https://twitter.com/greenleaf"
+    },
+    "agreeToTerms": true,
+    "logo": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=200&h=200&fit=crop&crop=center",
+    "storeImages": [
+      "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop"
+    ],
+    "customOffer": "15% off on organic products",
+    "ribbonTag": "Organic",
+    "mapLocation": "12.9716,77.5946",
+    "visibility": true,
+    "joinedSince": "2016-09-01T00:00:00.000Z",
+    "citywittyAssured": true,
+    "premiumSeller": false,
+    "verified": true,
+    "trust": true,
+    "averageRating": 4.4,
+    "tags": ["Organic", "Natural", "Healthy"],
+    "status": "active",
+    "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
+    "qrcodeLink": "https://example.com/qr/green-leaf",
+    "businessHours": {
+      "open": "9:00 AM",
+      "close": "9:00 PM",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    },
+    "bankDetails": {
+      "bankName": "SBI Bank",
+      "accountHolderName": "Green Leaf Organic Store Pvt Ltd",
+      "accountNumber": "1234567897",
+      "ifscCode": "SBIN0001241",
+      "branchName": "Jayanagar",
+      "upiId": "greenleaf@upi"
+    },
+    "ListingLimit": 70,
+    "Addedlistings": 35,
+    "totalGraphics": 9,
+    "totalReels": 4,
+    "isWebsite": true,
+    "totalEarnings": 280000,
+    "minimumOrderValue": 150,
+    "offlineDiscount": [
+      {
+        "category": "Organic Products",
+        "offerTitle": "Health Week",
+        "offerDescription": "20% off on all organic products",
+        "discountValue": 40,
+        "discountPercent": 20,
+        "status": "Active",
+        "validUpto": "2024-12-31T00:00:00.000Z"
+      }
+    ],
+    "branchLocations": [
+      {
+        "branchName": "Main Store",
+        "city": "Bangalore",
+        "streetAddress": "56 Organic Lane, Jayanagar",
+        "pincode": "560041",
+        "locality": "Jayanagar",
+        "state": "Karnataka",
+        "country": "India",
+        "mapLocation": "12.9716,77.5946",
+        "latitude": 12.9716,
+        "longitude": 77.5946
+      }
+    ],
+    "products": [
+      {
+        "_id": "prod007",
+        "name": "Organic Honey",
+        "description": "Pure organic honey from local beekeepers",
+        "price": 450,
+        "category": "Food",
+        "images": ["https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Organic", "Honey", "Natural"],
+        "variants": [
+          {
+            "name": "500g",
+            "price": 450,
+            "description": "500 grams jar"
+          },
+          {
+            "name": "1kg",
+            "price": 850,
+            "description": "1 kilogram jar"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Is this raw honey?",
+            "answer": "Yes, it's unprocessed raw honey."
+          },
+          {
+            "question": "How should I store it?",
+            "answer": "Store in a cool, dry place."
+          }
+        ]
+      },
+      {
+        "_id": "prod008",
+        "name": "Organic Vegetables Pack",
+        "description": "Fresh organic vegetables bundle",
+        "price": 300,
+        "category": "Food",
+        "images": ["https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=400&h=300&fit=crop"],
+        "isAvailable": true,
+        "tags": ["Organic", "Vegetables", "Fresh"],
+        "variants": [
+          {
+            "name": "Small",
+            "price": 300,
+            "description": "2-3 kg mixed vegetables"
+          },
+          {
+            "name": "Large",
+            "price": 500,
+            "description": "5-6 kg mixed vegetables"
+          }
+        ],
+        "faqs": [
+          {
+            "question": "Are these vegetables organic?",
+            "answer": "Yes, all vegetables are certified organic."
+          },
+          {
+            "question": "How fresh are they?",
+            "answer": "Harvested fresh daily from local organic farms."
+          }
+        ]
+      }
+    ],
+    "ratings": [
+      {
+        "userId": "user008",
+        "user": "Karan Sharma",
+        "rating": 4,
+        "review": "Good quality organic products at reasonable prices.",
+        "reply": "Thank you for choosing organic!",
+        "createdAt": "2024-02-20T10:00:00.000Z"
+      },
+      {
+        "userId": "user009",
+        "user": "Meera Patel",
+        "rating": 5,
+        "review": "Best place for organic groceries in Bangalore.",
+        "reply": "We're glad you found what you were looking for!",
+        "createdAt": "2024-02-25T14:30:00.000Z"
+      }
+    ]
+  }
+]

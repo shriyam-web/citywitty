@@ -1,137 +1,125 @@
-import mongoose, { Schema, models, model } from "mongoose";
+import mongoose, { Schema, Document, model, models } from "mongoose";
 
-// 🔹 Renewal History
-const RenewalSchema = new Schema({
-  renewedOn: { type: Date, default: null },
-  validUpto: { type: Date, default: null },
-});
-
-// 🔹 Order Items inside an order
-const OrderItemSchema = new Schema({
-  productName: { type: String, default: "" },
-  productId: { type: String, default: "" },
-  quantity: { type: Number, default: 1 },
-  price: { type: Number, default: 0 },
-  discount: { type: Number, default: 0 },
-  finalPrice: { type: Number, default: 0 },
-});
-
-// 🔹 Reviews on an order
-const ReviewSchema = new Schema({
-  rating: { type: Number, min: 1, max: 5, default: 0 },
-  comment: { type: String, default: "" },
-  merchantReply: { type: String, default: "" },
-  reviewedOn: { type: Date, default: null },
-});
-
-// 🔹 Orders
-const OrderSchema = new Schema({
-  orderId: { type: String, default: "" },
-  merchant: { type: String, default: "" },
-  amount: { type: Number, default: 0 },
-  discountApplied: { type: Number, default: 0 },
-  savings: { type: Number, default: 0 },
-  finalAmount: { type: Number, default: 0 },
-  items: { type: [OrderItemSchema], default: [] },
-  review: { type: ReviewSchema, default: {} },
-  date: { type: Date, default: null },
-  status: {
-    type: String,
-    enum: ["completed", "pending", "cancelled"],
-    default: "pending",
-  },
-});
-
-// 🔹 Support Tickets
-const SupportTicketSchema = new Schema({
-  ticketId: { type: String, default: "" },
-  subject: { type: String, default: "" },
-  message: { type: String, default: "" },
-  status: {
-    type: String,
-    enum: ["open", "in-progress", "resolved", "closed"],
-    default: "open",
-  },
-  createdAt: { type: Date, default: Date.now },
-  resolvedAt: { type: Date, default: null },
-  replies: {
-    type: [
-      {
-        sender: {
-          type: String,
-          enum: ["user", "support", "merchant"],
-          default: "user",
-        },
-        message: { type: String, default: "" },
-        sentAt: { type: Date, default: Date.now },
-      },
-    ],
-    default: [],
-  },
-});
-
-// 🔹 User Schema
-const UserSchema = new Schema(
+// ---------------- Address Sub-Schema ----------------
+const AddressSchema = new Schema(
   {
-    // Basic Auth
-    name: { type: String, default: "" },
+    addressName: { type: String, required: true },
+    streetAddress: { type: String, required: true },
+    landmark: { type: String },
+    locality: { type: String },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    pincode: { type: String, required: true },
+    country: { type: String, default: "India" },
+    latitude: { type: Number },
+    longitude: { type: Number },
+    geoLocation: { type: String }, // e.g. Google Maps link
+  },
+  { _id: false }
+);
+
+// ---------------- Referred User Sub-Schema ----------------
+const ReferredUserSchema = new Schema(
+  {
+    userId: { type: String, required: true },
+    name: { type: String, required: true },
+  },
+  { _id: false }
+);
+
+// ---------------- User Interface ----------------
+export interface IUser extends Document {
+  userId: string;
+  name: string;
+  email: string;
+  password: string;
+  provider: "credentials" | "google";
+  isCardExist: boolean;
+  cardVarientName?: string;
+  cardNumber?: string;
+  purchasedDate?: Date;
+  expiryDate?: Date;
+  isRenewed?: boolean;
+  renewedOn?: Date | null;
+  validUpto?: Date | null;
+  cardStatus: "active" | "expired" | "blocked" | "pending";
+  deactivationReason?: string;
+  mobile?: string;
+  whatsapp?: string;
+  myAddresses?: {
+    addressName: string;
+    streetAddress: string;
+    landmark?: string;
+    locality?: string;
+    city: string;
+    state: string;
+    pincode: string;
+    country?: string;
+    latitude?: number;
+    longitude?: number;
+    geoLocation?: string;
+  }[];
+  profilePicture?: string;
+  dateOfBirth?: Date;
+  lastLogin?: Date;
+  myReferral?: string;
+  referredUsers?: { userId: string; name: string }[];
+  walletBalance?: number;
+  totalPurchases?: number;
+  totalSaving?: number;
+  cart?: string[]; // product ids
+  wishlist?: string[]; // product ids
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// ---------------- User Schema ----------------
+const UserSchema = new Schema<IUser>(
+  {
+    userId: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, default: "" }, // optional if Google login
-    role: { type: String, default: "user" },
+    password: { type: String, required: true, minlength: 6 },
     provider: {
       type: String,
       enum: ["credentials", "google"],
       default: "credentials",
     },
 
-    // Card Information
     isCardExist: { type: Boolean, default: false },
-    cardVariantName: { type: String, default: "" },
-    // cardNumber: { type: String, unique: true, sparse: true, default: null },
-    cardNumber: { type: String, unique: true, sparse: true},
-    
-    purchasedOn: { type: Date, default: null },
+    cardVarientName: { type: String },
+    cardNumber: { type: String },
+    purchasedDate: { type: Date },
+    expiryDate: { type: Date },
+    isRenewed: { type: Boolean, default: false },
+    renewedOn: { type: Date, default: null },
     validUpto: { type: Date, default: null },
-    renewed: { type: [RenewalSchema], default: [] },
     cardStatus: {
       type: String,
       enum: ["active", "expired", "blocked", "pending"],
-      default: "active",
+      default: "pending",
     },
-    statusReason: { type: String, default: "" },
+    deactivationReason: { type: String },
 
-    // Contact & Location
-    mobileNumber: { type: String, default: "" },
-    whatsappNumber: { type: String, default: "" },
-    address: { type: String, default: "" },
-    city: { type: String, default: "" },
-    pincode: { type: String, default: "" },
-    state: { type: String, default: "" },
-    country: { type: String, default: "" },
+    mobile: { type: String },
+    whatsapp: { type: String },
+    myAddresses: [AddressSchema],
 
-    // Profile & Preferences
-    profilePicture: { type: String, default: "" },
-    dateOfBirth: { type: Date, default: null },
-    lastLogin: { type: Date, default: null },
-    preferences: {
-      notifications: { type: Boolean, default: true },
-      language: { type: String, default: "en" },
-    },
-    // referralCode: { type: String, unique: true, sparse: true, default: null }, 
-referralCode: { type: String, unique: true, sparse: true},
-    // Wallet & Savings
+    profilePicture: { type: String }, // cloudinary link
+    dateOfBirth: { type: Date },
+    lastLogin: { type: Date },
+
+    myReferral: { type: String },
+    referredUsers: [ReferredUserSchema],
+
     walletBalance: { type: Number, default: 0 },
     totalPurchases: { type: Number, default: 0 },
-    totalSavings: { type: Number, default: 0 },
+    totalSaving: { type: Number, default: 0 },
 
-    // Orders & History
-    orderHistory: { type: [OrderSchema], default: [] },
-
-    // Support
-    supportTickets: { type: [SupportTicketSchema], default: [] },
+    cart: [{ type: String }], // product ids
+    wishlist: [{ type: String }], // product ids
   },
-  { timestamps: true }
+  { timestamps: true } // adds createdAt & updatedAt
 );
 
-const User = models.User || model("User", UserSchema);
-export default User;
+export default models.User || model<IUser>("User", UserSchema);

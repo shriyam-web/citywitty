@@ -30,4 +30,8 @@ const Admin =
   (mongoose.models.Admin as Model<IAdmin>) ||
   mongoose.model<IAdmin>("Admin", AdminSchema);
 
+
 export default Admin;
+
+
+

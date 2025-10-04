@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic"; // ⬅️ Add this line
 import dbConnect from "@/lib/mongodb";
-import Partner from "@/models/Partner";
+import Partner from "@/models/partner";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
