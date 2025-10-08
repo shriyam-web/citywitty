@@ -1,17 +1,17 @@
 [
   {
     "merchantId": "demo001",
-    "legalName": "Tasty Bites Restaurant Pvt Ltd",
-    "displayName": "Tasty Bites",
-    "merchantSlug": "tasty-bites",
-    "email": "contact@tastybites.com",
+    "legalName": "TechHub Electronics Pvt Ltd",
+    "displayName": "TechHub Electronics",
+    "merchantSlug": "techhub-electronics",
+    "email": "contact@techhub.com",
     "emailVerified": true,
     "phone": "+91-9876543210",
     "phoneVerified": true,
     "password": "$2a$10$dummyhashedpassword",
-    "category": "Restaurant",
+    "category": "Electronics",
     "city": "Mumbai",
-    "streetAddress": "123 Food Street, Andheri West",
+    "streetAddress": "123 Tech Street, Andheri West",
     "pincode": "400058",
     "locality": "Andheri",
     "state": "Maharashtra",
@@ -24,23 +24,23 @@
     "yearsInBusiness": "5",
     "averageMonthlyRevenue": "500000",
     "discountOffered": "10-20%",
-    "description": "Authentic Indian cuisine with modern twists. Serving delicious meals since 2019 with a focus on quality ingredients and customer satisfaction.",
-    "website": "https://tastybites.com",
+    "description": "Premium electronics store offering latest gadgets and accessories. Serving Mumbai since 2019 with authentic products and warranty support.",
+    "website": "https://techhub.com",
     "socialLinks": {
-      "facebook": "https://facebook.com/tastybites",
-      "instagram": "https://instagram.com/tastybites",
-      "youtube": "https://youtube.com/tastybites",
-      "linkedin": "https://linkedin.com/company/tastybites",
-      "x": "https://twitter.com/tastybites"
+      "facebook": "https://facebook.com/techhub",
+      "instagram": "https://instagram.com/techhub",
+      "youtube": "https://youtube.com/techhub",
+      "linkedin": "https://linkedin.com/company/techhub",
+      "x": "https://twitter.com/techhub"
     },
     "agreeToTerms": true,
-    "logo": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&h=200&fit=crop&crop=center",
+    "logo": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=200&fit=crop&crop=center",
     "storeImages": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop"
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=400&fit=crop"
     ],
-    "customOffer": "20% off on first order",
+    "customOffer": "20% off on first purchase",
     "ribbonTag": "Top Rated",
     "mapLocation": "19.0760,72.8777",
     "visibility": true,
@@ -50,10 +50,10 @@
     "verified": true,
     "trust": true,
     "averageRating": 4.5,
-    "tags": ["Indian", "Vegetarian", "Family Friendly", "Fine Dining"],
+    "tags": ["Electronics", "Gadgets", "Accessories", "Premium"],
     "status": "active",
     "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
-    "qrcodeLink": "https://example.com/qr/tasty-bites",
+    "qrcodeLink": "https://example.com/qr/techhub",
     "businessHours": {
       "open": "10:00 AM",
       "close": "10:00 PM",
@@ -61,11 +61,11 @@
     },
     "bankDetails": {
       "bankName": "HDFC Bank",
-      "accountHolderName": "Tasty Bites Restaurant Pvt Ltd",
+      "accountHolderName": "TechHub Electronics Pvt Ltd",
       "accountNumber": "1234567890",
       "ifscCode": "HDFC0001234",
       "branchName": "Andheri West",
-      "upiId": "tastybites@upi"
+      "upiId": "techhub@upi"
     },
     "ListingLimit": 100,
     "Addedlistings": 50,
@@ -76,18 +76,18 @@
     "minimumOrderValue": 200,
     "offlineDiscount": [
       {
-        "category": "Food",
-        "offerTitle": "Lunch Special",
-        "offerDescription": "20% off on lunch items between 12 PM - 3 PM",
+        "category": "Electronics",
+        "offerTitle": "Weekend Sale",
+        "offerDescription": "20% off on all electronics during weekends",
         "discountValue": 40,
         "discountPercent": 20,
         "status": "Active",
         "validUpto": "2024-12-31T00:00:00.000Z"
       },
       {
-        "category": "Beverages",
-        "offerTitle": "Happy Hour Drinks",
-        "offerDescription": "15% off on all beverages during happy hours",
+        "category": "Accessories",
+        "offerTitle": "Accessory Bundle",
+        "offerDescription": "15% off on accessory bundles",
         "discountValue": 30,
         "discountPercent": 15,
         "status": "Active",
@@ -98,7 +98,7 @@
       {
         "branchName": "Main Branch",
         "city": "Mumbai",
-        "streetAddress": "123 Food Street, Andheri West",
+        "streetAddress": "123 Tech Street, Andheri West",
         "pincode": "400058",
         "locality": "Andheri",
         "state": "Maharashtra",
@@ -111,65 +111,65 @@
     "products": [
       {
         "_id": "prod001",
-        "name": "Butter Chicken",
-        "description": "Creamy and rich butter chicken with authentic spices",
-        "price": 350,
-        "category": "Main Course",
-        "images": ["https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=300&fit=crop"],
+        "name": "Wireless Bluetooth Headphones",
+        "description": "Premium wireless headphones with noise cancellation and 30-hour battery life",
+        "price": 2999,
+        "category": "Electronics",
+        "images": ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop"],
         "isAvailable": true,
-        "tags": ["Non-Veg", "Spicy", "Popular"],
+        "tags": ["Audio", "Wireless", "Premium", "Popular"],
         "variants": [
           {
-            "name": "Regular",
-            "price": 350,
-            "description": "Serves 1 person"
+            "name": "Black",
+            "price": 2999,
+            "description": "Classic black color"
           },
           {
-            "name": "Family Pack",
-            "price": 650,
-            "description": "Serves 2-3 persons"
+            "name": "White",
+            "price": 2999,
+            "description": "Premium white color"
           }
         ],
         "faqs": [
           {
-            "question": "Is this dish spicy?",
-            "answer": "Yes, it has a medium spice level. We can adjust spice on request."
+            "question": "What is the battery life?",
+            "answer": "Up to 30 hours of playback time with noise cancellation on."
           },
           {
-            "question": "What comes with the dish?",
-            "answer": "Served with rice, naan, and salad."
+            "question": "Does it support wireless charging?",
+            "answer": "Yes, it comes with a wireless charging case."
           }
         ]
       },
       {
         "_id": "prod002",
-        "name": "Paneer Tikka",
-        "description": "Marinated paneer cubes grilled to perfection",
-        "price": 280,
-        "category": "Appetizer",
-        "images": ["https://images.unsplash.com/photo-1604908177522-0a7a3a7a7a7a?w=400&h=300&fit=crop"],
+        "name": "Smartphone 128GB",
+        "description": "Latest smartphone with advanced camera and fast processor",
+        "price": 24999,
+        "category": "Electronics",
+        "images": ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop"],
         "isAvailable": true,
-        "tags": ["Veg", "Grilled", "Healthy"],
+        "tags": ["Smartphone", "Camera", "Fast", "Premium"],
         "variants": [
           {
-            "name": "Regular",
-            "price": 280,
-            "description": "6 pieces"
+            "name": "128GB",
+            "price": 24999,
+            "description": "128GB storage"
           },
           {
-            "name": "Large",
-            "price": 450,
-            "description": "12 pieces"
+            "name": "256GB",
+            "price": 29999,
+            "description": "256GB storage"
           }
         ],
         "faqs": [
           {
-            "question": "Is this dish vegetarian?",
-            "answer": "Yes, completely vegetarian."
+            "question": "What is the camera quality?",
+            "answer": "48MP main camera with ultra-wide and macro lenses."
           },
           {
-            "question": "Can I make it less spicy?",
-            "answer": "Yes, we can adjust the spice level."
+            "question": "Does it support 5G?",
+            "answer": "Yes, it supports 5G connectivity."
           }
         ]
       }
@@ -179,7 +179,7 @@
         "userId": "user001",
         "user": "Rajesh Kumar",
         "rating": 5,
-        "review": "Amazing food and great service! Highly recommended.",
+        "review": "Amazing products and great service! Highly recommended.",
         "reply": "Thank you for your kind words!",
         "createdAt": "2024-01-15T10:30:00.000Z"
       },
@@ -187,15 +187,15 @@
         "userId": "user002",
         "user": "Priya Sharma",
         "rating": 4,
-        "review": "Good food but a bit pricey. Overall satisfied.",
-        "reply": "We appreciate your feedback and will work on our pricing.",
+        "review": "Good quality products but prices are high.",
+        "reply": "We offer premium quality products.",
         "createdAt": "2024-01-20T14:20:00.000Z"
       },
       {
         "userId": "user003",
         "user": "Amit Singh",
         "rating": 5,
-        "review": "Best Indian restaurant in Mumbai. Must visit!",
+        "review": "Best electronics store in Mumbai. Must visit!",
         "reply": "We're glad you enjoyed your experience!",
         "createdAt": "2024-01-25T18:45:00.000Z"
       }
@@ -203,17 +203,17 @@
   },
   {
     "merchantId": "demo005",
-    "legalName": "Mumbai Spice Restaurant Pvt Ltd",
-    "displayName": "Mumbai Spice",
-    "merchantSlug": "mumbai-spice",
-    "email": "contact@mumbaispice.com",
+    "legalName": "Fashion Forward Clothing Pvt Ltd",
+    "displayName": "Fashion Forward",
+    "merchantSlug": "fashion-forward",
+    "email": "contact@fashionforward.com",
     "emailVerified": true,
     "phone": "+91-9876543218",
     "phoneVerified": true,
     "password": "$2a$10$dummyhashedpassword",
-    "category": "Restaurant",
+    "category": "Fashion",
     "city": "Mumbai",
-    "streetAddress": "90 Spice Road, Bandra West",
+    "streetAddress": "90 Style Avenue, Bandra West",
     "pincode": "400050",
     "locality": "Bandra",
     "state": "Maharashtra",
@@ -226,23 +226,23 @@
     "yearsInBusiness": "4",
     "averageMonthlyRevenue": "450000",
     "discountOffered": "10-15%",
-    "description": "Authentic Maharashtrian cuisine with modern twists. Serving Mumbai since 2020.",
-    "website": "https://mumbaispice.com",
+    "description": "Trendy fashion store offering latest clothing and accessories. Serving Mumbai since 2020 with authentic brands and styling advice.",
+    "website": "https://fashionforward.com",
     "socialLinks": {
-      "facebook": "https://facebook.com/mumbaispice",
-      "instagram": "https://instagram.com/mumbaispice",
-      "youtube": "https://youtube.com/mumbaispice",
-      "linkedin": "https://linkedin.com/company/mumbaispice",
-      "x": "https://twitter.com/mumbaispice"
+      "facebook": "https://facebook.com/fashionforward",
+      "instagram": "https://instagram.com/fashionforward",
+      "youtube": "https://youtube.com/fashionforward",
+      "linkedin": "https://linkedin.com/company/fashionforward",
+      "x": "https://twitter.com/fashionforward"
     },
     "agreeToTerms": true,
-    "logo": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=200&h=200&fit=crop&crop=center",
+    "logo": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=200&h=200&fit=crop&crop=center",
     "storeImages": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop"
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop"
     ],
-    "customOffer": "10% off on first order",
+    "customOffer": "10% off on first purchase",
     "ribbonTag": "New",
     "mapLocation": "19.0596,72.8295",
     "visibility": true,
@@ -252,10 +252,10 @@
     "verified": true,
     "trust": true,
     "averageRating": 4.2,
-    "tags": ["Maharashtrian", "Spicy", "Local"],
+    "tags": ["Fashion", "Clothing", "Accessories", "Trendy"],
     "status": "active",
     "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
-    "qrcodeLink": "https://example.com/qr/mumbai-spice",
+    "qrcodeLink": "https://example.com/qr/fashion-forward",
     "businessHours": {
       "open": "11:00 AM",
       "close": "10:00 PM",
@@ -263,11 +263,11 @@
     },
     "bankDetails": {
       "bankName": "HDFC Bank",
-      "accountHolderName": "Mumbai Spice Restaurant Pvt Ltd",
+      "accountHolderName": "Fashion Forward Clothing Pvt Ltd",
       "accountNumber": "1234567898",
       "ifscCode": "HDFC0001242",
       "branchName": "Bandra West",
-      "upiId": "mumbaispice@upi"
+      "upiId": "fashionforward@upi"
     },
     "ListingLimit": 60,
     "Addedlistings": 30,
@@ -278,9 +278,9 @@
     "minimumOrderValue": 200,
     "offlineDiscount": [
       {
-        "category": "Food",
-        "offerTitle": "Weekend Special",
-        "offerDescription": "15% off on all items during weekends",
+        "category": "Clothing",
+        "offerTitle": "Weekend Sale",
+        "offerDescription": "15% off on all clothing items during weekends",
         "discountValue": 30,
         "discountPercent": 15,
         "status": "Active",
@@ -291,7 +291,7 @@
       {
         "branchName": "Main Branch",
         "city": "Mumbai",
-        "streetAddress": "90 Spice Road, Bandra West",
+        "streetAddress": "90 Style Avenue, Bandra West",
         "pincode": "400050",
         "locality": "Bandra",
         "state": "Maharashtra",
@@ -304,33 +304,33 @@
     "products": [
       {
         "_id": "prod009",
-        "name": "Pav Bhaji",
-        "description": "Mumbai's famous pav bhaji with butter and spices",
-        "price": 150,
-        "category": "Main Course",
-        "images": ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop"],
+        "name": "Designer Kurti",
+        "description": "Elegant embroidered kurti with modern design",
+        "price": 1899,
+        "category": "Clothing",
+        "images": ["https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=300&fit=crop"],
         "isAvailable": true,
-        "tags": ["Veg", "Street Food", "Popular"],
+        "tags": ["Kurti", "Designer", "Embroidered", "Elegant"],
         "variants": [
           {
-            "name": "Regular",
-            "price": 150,
-            "description": "Serves 1 person"
+            "name": "M",
+            "price": 1899,
+            "description": "Medium size"
           },
           {
-            "name": "Jumbo",
-            "price": 250,
-            "description": "Serves 2 persons"
+            "name": "L",
+            "price": 1899,
+            "description": "Large size"
           }
         ],
         "faqs": [
           {
-            "question": "Is it spicy?",
-            "answer": "Medium spice level, can be adjusted."
+            "question": "What is the fabric?",
+            "answer": "Premium cotton with embroidery work."
           },
           {
-            "question": "What comes with it?",
-            "answer": "Served with pav, onions, and lemon."
+            "question": "Can I get it customized?",
+            "answer": "Yes, we offer customization services."
           }
         ]
       }
@@ -340,7 +340,7 @@
         "userId": "user010",
         "user": "Arjun Nair",
         "rating": 4,
-        "review": "Good local food, authentic taste.",
+        "review": "Great fashion collection and ambiance.",
         "reply": "Thank you for your feedback!",
         "createdAt": "2024-03-01T13:00:00.000Z"
       }
@@ -348,17 +348,17 @@
   },
   {
     "merchantId": "demo002",
-    "legalName": "Spice Villa Restaurant Pvt Ltd",
-    "displayName": "Spice Villa",
-    "merchantSlug": "spice-villa",
-    "email": "contact@spicevilla.com",
+    "legalName": "Style Hub Fashion Pvt Ltd",
+    "displayName": "Style Hub",
+    "merchantSlug": "style-hub",
+    "email": "contact@stylehub.com",
     "emailVerified": true,
     "phone": "+91-9876543215",
     "phoneVerified": true,
     "password": "$2a$10$dummyhashedpassword",
-    "category": "Restaurant",
+    "category": "Fashion",
     "city": "Delhi",
-    "streetAddress": "45 Curry Lane, Connaught Place",
+    "streetAddress": "45 Fashion Avenue, Connaught Place",
     "pincode": "110001",
     "locality": "Connaught Place",
     "state": "Delhi",
@@ -371,23 +371,23 @@
     "yearsInBusiness": "7",
     "averageMonthlyRevenue": "600000",
     "discountOffered": "15-25%",
-    "description": "Traditional Indian cuisine with a modern touch. Serving Delhi since 2015.",
-    "website": "https://spicevilla.com",
+    "description": "Trendy fashion store offering latest clothing and accessories. Serving Delhi since 2015 with authentic brands and styling advice.",
+    "website": "https://stylehub.com",
     "socialLinks": {
-      "facebook": "https://facebook.com/spicevilla",
-      "instagram": "https://instagram.com/spicevilla",
-      "youtube": "https://youtube.com/spicevilla",
-      "linkedin": "https://linkedin.com/company/spicevilla",
-      "x": "https://twitter.com/spicevilla"
+      "facebook": "https://facebook.com/stylehub",
+      "instagram": "https://instagram.com/stylehub",
+      "youtube": "https://youtube.com/stylehub",
+      "linkedin": "https://linkedin.com/company/stylehub",
+      "x": "https://twitter.com/stylehub"
     },
     "agreeToTerms": true,
-    "logo": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop&crop=center",
+    "logo": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=200&h=200&fit=crop&crop=center",
     "storeImages": [
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=400&fit=crop"
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop"
     ],
-    "customOffer": "15% off on weekend orders",
+    "customOffer": "15% off on weekend purchases",
     "ribbonTag": "Popular",
     "mapLocation": "28.6139,77.2090",
     "visibility": true,
@@ -397,10 +397,10 @@
     "verified": true,
     "trust": true,
     "averageRating": 4.3,
-    "tags": ["Indian", "Spicy", "Family Friendly"],
+    "tags": ["Fashion", "Clothing", "Accessories", "Trendy"],
     "status": "active",
     "paymentMethodAccepted": ["Cash", "Card", "UPI", "Net Banking"],
-    "qrcodeLink": "https://example.com/qr/spice-villa",
+    "qrcodeLink": "https://example.com/qr/style-hub",
     "businessHours": {
       "open": "11:00 AM",
       "close": "11:00 PM",
@@ -408,11 +408,11 @@
     },
     "bankDetails": {
       "bankName": "ICICI Bank",
-      "accountHolderName": "Spice Villa Restaurant Pvt Ltd",
+      "accountHolderName": "Style Hub Fashion Pvt Ltd",
       "accountNumber": "1234567895",
       "ifscCode": "ICIC0001239",
       "branchName": "Connaught Place",
-      "upiId": "spicevilla@upi"
+      "upiId": "stylehub@upi"
     },
     "ListingLimit": 80,
     "Addedlistings": 40,
@@ -423,9 +423,9 @@
     "minimumOrderValue": 250,
     "offlineDiscount": [
       {
-        "category": "Food",
-        "offerTitle": "Dinner Special",
-        "offerDescription": "25% off on dinner items after 8 PM",
+        "category": "Clothing",
+        "offerTitle": "Weekend Sale",
+        "offerDescription": "25% off on clothing items during weekends",
         "discountValue": 50,
         "discountPercent": 25,
         "status": "Active",
@@ -436,7 +436,7 @@
       {
         "branchName": "Main Branch",
         "city": "Delhi",
-        "streetAddress": "45 Curry Lane, Connaught Place",
+        "streetAddress": "45 Fashion Avenue, Connaught Place",
         "pincode": "110001",
         "locality": "Connaught Place",
         "state": "Delhi",
@@ -449,65 +449,65 @@
     "products": [
       {
         "_id": "prod003",
-        "name": "Chicken Biryani",
-        "description": "Aromatic basmati rice with tender chicken and spices",
-        "price": 320,
-        "category": "Main Course",
-        "images": ["https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop"],
+        "name": "Designer Jeans",
+        "description": "Premium denim jeans with modern fit and style",
+        "price": 2999,
+        "category": "Clothing",
+        "images": ["https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=300&fit=crop"],
         "isAvailable": true,
-        "tags": ["Non-Veg", "Rice", "Spicy"],
+        "tags": ["Jeans", "Denim", "Designer", "Modern"],
         "variants": [
           {
-            "name": "Regular",
-            "price": 320,
-            "description": "Serves 1 person"
+            "name": "32",
+            "price": 2999,
+            "description": "Size 32"
           },
           {
-            "name": "Family Pack",
-            "price": 580,
-            "description": "Serves 2-3 persons"
+            "name": "34",
+            "price": 2999,
+            "description": "Size 34"
           }
         ],
         "faqs": [
           {
-            "question": "Is this dish halal?",
-            "answer": "Yes, we serve halal certified meat."
+            "question": "What is the fabric?",
+            "answer": "Premium cotton denim with stretch."
           },
           {
-            "question": "Can I customize the spice level?",
-            "answer": "Yes, we can adjust spice levels as per your preference."
+            "question": "Can I get it customized?",
+            "answer": "Yes, we offer tailoring services."
           }
         ]
       },
       {
         "_id": "prod004",
-        "name": "Dal Makhani",
-        "description": "Creamy black lentils cooked with butter and spices",
-        "price": 220,
-        "category": "Main Course",
-        "images": ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop"],
+        "name": "Cotton T-Shirt",
+        "description": "Comfortable cotton t-shirt for everyday wear",
+        "price": 899,
+        "category": "Clothing",
+        "images": ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop"],
         "isAvailable": true,
-        "tags": ["Veg", "Lentils", "Creamy"],
+        "tags": ["T-Shirt", "Cotton", "Casual", "Comfortable"],
         "variants": [
           {
-            "name": "Regular",
-            "price": 220,
-            "description": "Serves 1 person"
+            "name": "M",
+            "price": 899,
+            "description": "Medium size"
           },
           {
-            "name": "Large",
-            "price": 380,
-            "description": "Serves 2 persons"
+            "name": "L",
+            "price": 899,
+            "description": "Large size"
           }
         ],
         "faqs": [
           {
-            "question": "Is this dish vegan?",
-            "answer": "No, it contains butter and cream."
+            "question": "Is this machine washable?",
+            "answer": "Yes, gentle machine wash recommended."
           },
           {
-            "question": "How long does it take to prepare?",
-            "answer": "About 20-25 minutes."
+            "question": "What colors are available?",
+            "answer": "Multiple colors available in store."
           }
         ]
       }
@@ -517,7 +517,7 @@
         "userId": "user004",
         "user": "Vikram Patel",
         "rating": 4,
-        "review": "Great food and ambiance. Will visit again.",
+        "review": "Great fashion collection and ambiance. Will visit again.",
         "reply": "Thank you! Looking forward to your next visit.",
         "createdAt": "2024-02-01T12:00:00.000Z"
       },
@@ -525,8 +525,8 @@
         "userId": "user005",
         "user": "Sneha Gupta",
         "rating": 5,
-        "review": "Authentic flavors and excellent service.",
-        "reply": "We're glad you enjoyed our authentic cuisine!",
+        "review": "Trendy styles and excellent service.",
+        "reply": "We're glad you enjoyed our collection!",
         "createdAt": "2024-02-05T15:30:00.000Z"
       }
     ]

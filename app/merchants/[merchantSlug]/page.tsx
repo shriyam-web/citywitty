@@ -180,7 +180,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         <>
             <Header />
 
-            <div className="min-h-screen bg-gray-50 py-16 pt-24 sm:pt-20">
+            <div className="min-h-screen bg-gray-50 py-16 pt-20 sm:pt-20">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
                     {/* Hero Header */}
                     <div className="relative h-72 sm:h-64 md:h-72 lg:h-80 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg overflow-hidden mb-4 sm:mb-6 md:mb-8  ">
@@ -188,7 +188,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             <img
                                 src={merchant.storeImages[0]}
                                 alt={merchant.displayName}
-                                className="w-full   h-full object-cover"
+                                className="w-full h-full object-cover"
                             />
                         )}
                         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -212,7 +212,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                 <img
                                     src={merchant.logo || "https://via.placeholder.com/100x100?text=No+Logo"}
                                     alt={merchant.displayName}
-                                    className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-lg border-2 sm:border-4 border-white shadow-lg pt-0 sm:pt-2 md:pt-4 lg:pt-6"
+                                    className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-lg border-2 sm:border-4 border-white shadow-lg"
                                 />
                                 <div className="flex-1 min-w-0 max-w-full">
                                     {merchant.citywittyAssured && (

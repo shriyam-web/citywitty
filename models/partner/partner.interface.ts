@@ -3,6 +3,7 @@ import { IProduct } from "./product/product.interface";
 
 export interface IPartner extends Document {
     merchantId: string;
+    username?: string;
     legalName: string;
     displayName: string;
     merchantSlug?: string;
@@ -46,9 +47,6 @@ export interface IPartner extends Document {
     visibility: boolean;
     joinedSince: Date;
     citywittyAssured: boolean;
-    premiumSeller?: boolean;
-    verified?: boolean;
-    trust?: boolean;
     ratings?: {
         userId: string;
         user: string;
@@ -60,8 +58,8 @@ export interface IPartner extends Document {
     averageRating?: number;
     tags?: string[];
     status: "pending" | "active" | "suspended" | "inactive";
+    
     suspensionReason?: string; // <-- new field added
-
 
     purchasedPackage?: {
         variantName: string;
