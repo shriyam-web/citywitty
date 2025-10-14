@@ -70,6 +70,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const { register } = useAuth();
   const router = useRouter();
+
   const emailDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "protonmail.com"];
   const validatePassword = (pwd: string) => ({
     length: pwd.length >= 8,
