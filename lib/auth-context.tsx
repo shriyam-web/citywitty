@@ -247,6 +247,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
 
+      if (data.provider && data.provider !== "credentials") {
+        toast.error(`This account uses ${data.provider} login. Please sign in with ${data.provider === "google" ? "Google" : "the correct"} method.`);
+        return false;
+      }
+
       const loggedInUser: User = {
         id: data._id,
         email: data.email,

@@ -19,7 +19,7 @@ const handler = NextAuth({
 
       if (existingUser) {
         if (account?.provider && existingUser.provider !== account.provider) {
-          return "/register?auth_error=provider_mismatch";
+          return "/login?auth_error=provider_mismatch";
         }
 
         if (!existingUser.provider && account?.provider) {
