@@ -34,6 +34,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   provider: "credentials" | "google";
+  role: "admin" | "merchant" | "franchise" | "it" | "user";
   isCardExist: boolean;
   cardVarientName?: string;
   cardNumber?: string;
@@ -84,6 +85,11 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: ["credentials", "google"],
       default: "credentials",
+    },
+    role: {
+      type: String,
+      enum: ["admin", "merchant", "franchise", "it", "user"],
+      default: "user",
     },
 
     isCardExist: { type: Boolean, default: false },

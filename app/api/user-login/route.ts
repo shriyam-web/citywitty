@@ -18,10 +18,17 @@ export async function POST(req: NextRequest) {
 
     const user = await User.findOne({
       email: { $regex: new RegExp(`^${email}$`, "i") },
-      role,
     });
 
     if (!user) {
+      return NextResponse.json(
+        { message: "No account found." },
+        { status: 401 }
+      );
+    }
+
+    // Check role: if user has a role and it doesn't match, treat as not found
+    if (user.role && user.role !== role) {
       return NextResponse.json(
         { message: "No account found." },
         { status: 401 }

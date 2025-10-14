@@ -2,8 +2,8 @@
 // 📌 login/page.tsx (or same file where your LoginPage component is)
 import type { Metadata } from "next";
 import Script from "next/script";
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { signIn } from "next-auth/react";
@@ -63,6 +63,15 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const authError = searchParams.get('auth_error');
+    const provider = searchParams.get('provider');
+    if (authError === 'provider_mismatch' && provider) {
+      setError(`Please sign in using ${provider} of the user`);
+    }
+  }, [searchParams]);
 
 
 
