@@ -100,7 +100,7 @@ function LocationDropdown({ manualLocation, setManualLocation, location, loading
 
 // --------------------- Header Component ---------------------
 export function Header() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
