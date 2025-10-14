@@ -18,6 +18,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
+import { randomBytes } from "crypto";
 
 const handler = NextAuth({
   providers: [
@@ -33,7 +34,12 @@ const handler = NextAuth({
       const existingUser = await User.findOne({ email: user.email });
 
       if (!existingUser) {
+        // Generate userId: starts with "CW-U" + 6 random alphanumeric chars (total 10 chars)
+        const randomPart = randomBytes(3).toString('hex').toUpperCase(); // 6 chars
+        const userId = `CW-U${randomPart}`;
+
         await User.create({
+          userId,
           name: user.name,
           email: user.email,
           provider: "google",

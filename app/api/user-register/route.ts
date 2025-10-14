@@ -32,9 +32,10 @@
 export const dynamic = "force-dynamic"; // ⬅️ ensures dynamic API
 
 import dbConnect from "@/lib/mongodb";
-import User from "@/models/User"; 
+import User from "@/models/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs"; // ✅ import bcrypt
+import { randomBytes } from "crypto";
 
 export async function POST(req: Request) {
   try {
@@ -45,6 +46,10 @@ export async function POST(req: Request) {
     // Agar frontend se provider aata hai to use karo, warna "credentials"
     const provider = data.provider || "credentials";
     data.role = data.role || "user";
+
+    // Generate userId: starts with "CW-U" + 6 random alphanumeric chars (total 10 chars)
+    const randomPart = randomBytes(3).toString('hex').toUpperCase(); // 6 chars
+    data.userId = `CW-U${randomPart}`;
 
     if (provider === "credentials") {
       if (!data.password) {
