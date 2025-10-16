@@ -77,7 +77,7 @@ export default function HomePage() {
       <Header />
       <HeroSection /> <br />
       <BannerCarousel />
-      <MerchantCarousel />
+      {/* <MerchantCarousel /> */}
       <FeaturedMerchants />
       <TestimonialsCarousel />
       <CategoriesSection />
