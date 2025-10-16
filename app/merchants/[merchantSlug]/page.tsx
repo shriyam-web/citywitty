@@ -162,6 +162,16 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         return dist < 1 ? `${(dist * 1000).toFixed(0)} m` : `${dist.toFixed(1)} km`;
     };
 
+    const ensureHttps = (url: string | undefined): string => {
+        if (!url) return '';
+        // If URL already has a protocol, return it as is
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url;
+        }
+        // Otherwise, prepend https://
+        return `https://${url}`;
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 py-16">
@@ -256,7 +266,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         </div>
                                         <div className="flex items-center space-x-1">
                                             <Star className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400 fill-current flex-shrink-0" />
-                                            <span className="font-medium text-sm sm:text-base">{merchant.averageRating?.toFixed(1) || "N/A"}</span>
+                                            <span className="font-medium text-sm sm:text-base">{merchant.averageRating?.toFixed(1) || "5"}</span>
                                         </div>
                                         {merchant.joinedSince && (
                                             <div className="flex items-center space-x-1 text-sm sm:text-base">
@@ -428,7 +438,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         {merchant.website && (
                                             <div className="flex items-center space-x-3 break-words max-w-full">
                                                 <Globe className="h-5 w-5 text-gray-500" />
-                                                <a href={merchant.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all max-w-full truncate">
+                                                <a href={ensureHttps(merchant.website)} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all max-w-full truncate">
                                                     {merchant.website}
                                                 </a>
                                             </div>
@@ -444,31 +454,31 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         {merchant.socialLinks && (
                                             <div className="flex flex-wrap gap-3 sm:gap-4 mt-4">
                                                 {merchant.socialLinks.facebook && (
-                                                    <a href={merchant.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center space-x-1">
+                                                    <a href={ensureHttps(merchant.socialLinks.facebook)} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center space-x-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54v-2.89h2.54v-2.205c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562v1.878h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z" /></svg>
                                                         <span>Facebook</span>
                                                     </a>
                                                 )}
                                                 {merchant.socialLinks.instagram && (
-                                                    <a href={merchant.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:underline flex items-center space-x-1">
+                                                    <a href={ensureHttps(merchant.socialLinks.instagram)} target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:underline flex items-center space-x-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.75 2a1 1 0 110 2 1 1 0 010-2zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" /></svg>
                                                         <span>Instagram</span>
                                                     </a>
                                                 )}
                                                 {merchant.socialLinks.youtube && (
-                                                    <a href={merchant.socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline flex items-center space-x-1">
+                                                    <a href={ensureHttps(merchant.socialLinks.youtube)} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline flex items-center space-x-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
                                                         <span>YouTube</span>
                                                     </a>
                                                 )}
                                                 {merchant.socialLinks.twitter && (
-                                                    <a href={merchant.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline flex items-center space-x-1">
+                                                    <a href={ensureHttps(merchant.socialLinks.twitter)} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline flex items-center space-x-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" /></svg>
                                                         <span>Twitter</span>
                                                     </a>
                                                 )}
                                                 {merchant.socialLinks.linkedin && (
-                                                    <a href={merchant.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline flex items-center space-x-1">
+                                                    <a href={ensureHttps(merchant.socialLinks.linkedin)} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline flex items-center space-x-1">
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 3a2 2 0 110 4 2 2 0 010-4z" /></svg>
                                                         <span>LinkedIn</span>
                                                     </a>
