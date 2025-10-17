@@ -33,7 +33,7 @@ export function FeaturedMerchants() {
   useEffect(() => {
     async function fetchMerchants() {
       try {
-        const response = await fetch("/api/partners");
+        const response = await fetch("/api/partners?all=true");
         const data = await response.json();
         setMerchants(data);
       } catch (error) {
@@ -67,7 +67,7 @@ export function FeaturedMerchants() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mb-12">
           {merchants.map((merchant) => (
             <Card key={merchant._id} className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
               <CardContent className="p-0">
@@ -75,21 +75,21 @@ export function FeaturedMerchants() {
                   <img
                     src={merchant.logo || "https://via.placeholder.com/400x224?text=No+Image"}
                     alt={merchant.displayName}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+                    <span className="bg-orange-500 text-white px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-semibold">
                       {merchant.offlineDiscount && merchant.offlineDiscount.length > 0
                         ? `${merchant.offlineDiscount[0].discountPercent}% OFF`
                         : merchant.customOffer || ""}
                     </span>
                   </div>
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-black/70 text-white px-2 py-1 rounded text-sm">
+                  <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
+                    <span className="bg-black/70 text-white px-2 py-1 rounded text-xs sm:text-sm">
                       {merchant.category}
                     </span>
                   </div>
-                  <div className="absolute bottom-4 right-4 flex flex-wrap gap-1 max-w-[60%] justify-end">
+                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 flex flex-wrap gap-1 max-w-[50%] sm:max-w-[60%] justify-end">
                     {merchant.citywittyAssured && (
                       <Badge
                         variant="default"
@@ -126,28 +126,28 @@ export function FeaturedMerchants() {
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4">
+                <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                       {merchant.displayName}
                     </h3>
-                    <p className="text-gray-600 text-sm line-clamp-2">
+                    <p className="text-gray-600 text-xs sm:text-sm line-clamp-2">
                       {merchant.description}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1 text-gray-600">
-                      <MapPin className="h-4 w-4" />
-                      <span className="text-sm">{merchant.city}</span>
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm">{merchant.city}</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-medium">{merchant.averageRating?.toFixed(1) || "N/A"}</span>
+                      <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 fill-current" />
+                      <span className="text-xs sm:text-sm font-medium">{merchant.averageRating?.toFixed(1) || "5.0"}</span>
                     </div>
                   </div>
 
-                  <Button className="w-full group-hover:bg-blue-600 transition-colors" asChild>
+                  <Button className="w-full group-hover:bg-blue-600 transition-colors text-sm sm:text-base" asChild>
                     <Link href={merchant.merchantSlug ? `/merchants/${merchant.merchantSlug}` : '#'}>
                       View Details
                     </Link>
