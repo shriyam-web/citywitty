@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, Star, Phone, Mail, Globe, Clock, CreditCard, Shield, Award, Share2, MessageCircle, ThumbsUp } from 'lucide-react';
+import { MapPin, Star, Phone, Mail, Globe, Clock, CreditCard, Shield, Award, Share2, MessageCircle, ThumbsUp, Check, Flame, User, IndianRupee, Tag, TrendingDown, Sparkles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -13,6 +13,28 @@ import { BranchLocationsMap } from '@/components/merchant/BranchLocationsMap';
 import { SuggestedMerchantsNearYou } from '@/components/merchant/SuggestedMerchantsNearYou';
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+    FaUtensils,
+    FaTshirt,
+    FaSpa,
+    FaHotel,
+    FaLaptop,
+    FaCar,
+    FaDumbbell,
+    FaGraduationCap,
+    FaBuilding,
+    FaPlane,
+    FaGift,
+    FaHeartbeat,
+    FaCoffee,
+    FaShoppingBag,
+    FaPalette,
+    FaHome,
+} from "react-icons/fa";
 
 interface MerchantProductVariant {
     variantId?: string;
@@ -150,6 +172,13 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
     const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
     const [distance, setDistance] = useState<string | null>(null);
 
+    // Offline Purchase Modal State
+    const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+    const [userId, setUserId] = useState('');
+    const [userName, setUserName] = useState('');
+    const [purchaseAmount, setPurchaseAmount] = useState('');
+    const [finalAmount, setFinalAmount] = useState('');
+
     useEffect(() => {
         async function fetchMerchant() {
             try {
@@ -217,6 +246,37 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         return `https://${url}`;
     };
 
+    // Calculate discount applied
+    const calculateDiscount = (): string => {
+        const purchase = parseFloat(purchaseAmount) || 0;
+        const final = parseFloat(finalAmount) || 0;
+        const discount = purchase - final;
+        return discount > 0 ? discount.toFixed(2) : '0.00';
+    };
+
+    const handlePurchaseSubmit = async () => {
+        // Add your API call here to submit the offline purchase
+        console.log({
+            userId,
+            userName,
+            purchaseAmount,
+            finalAmount,
+            discountApplied: calculateDiscount(),
+            merchantId: merchant?._id,
+            merchantSlug: params.merchantSlug
+        });
+
+        // Reset form and close modal
+        setUserId('');
+        setUserName('');
+        setPurchaseAmount('');
+        setFinalAmount('');
+        setIsPurchaseModalOpen(false);
+
+        // Show success message (you can add a toast notification here)
+        alert('Purchase recorded successfully!');
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 py-16">
@@ -237,12 +297,6 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
             label: 'Premium Seller',
             icon: Award,
             activeClass: 'bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white shadow-lg shadow-amber-500/30',
-        },
-        {
-            key: 'verified',
-            label: 'Verified',
-            icon: Shield,
-            activeClass: 'bg-gradient-to-r from-emerald-400 to-emerald-600 text-white shadow-lg shadow-emerald-500/30',
         },
         {
             key: 'citywittyAssured',
@@ -324,15 +378,261 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         <>
             <Header />
 
-            <div className="min-h-screen bg-slate-100 py-16 pt-24 sm:pt-24">
+            {/* Background Watermark Icons */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+                {/* Top-Left Corner - Food Icon */}
+                <FaUtensils
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '2%',
+                        left: '1%',
+                        fontSize: '180px',
+                        opacity: 0.18,
+                        transform: 'rotate(-18deg)',
+                    }}
+                />
+                {/* Top-Right Corner - Fashion Icon */}
+                <FaTshirt
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '3%',
+                        right: '2%',
+                        fontSize: '160px',
+                        opacity: 0.20,
+                        transform: 'rotate(22deg)',
+                    }}
+                />
+                {/* Bottom-Left Corner - Spa Icon */}
+                <FaSpa
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '2%',
+                        left: '1%',
+                        fontSize: '200px',
+                        opacity: 0.15,
+                        transform: 'rotate(15deg)',
+                    }}
+                />
+                {/* Bottom-Right Corner - Hotel Icon */}
+                <FaHotel
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '1%',
+                        right: '1%',
+                        fontSize: '220px',
+                        opacity: 0.17,
+                        transform: 'rotate(-25deg)',
+                    }}
+                />
+                {/* Left Edge Upper - Laptop Icon */}
+                <FaLaptop
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '20%',
+                        left: '0%',
+                        fontSize: '150px',
+                        opacity: 0.16,
+                        transform: 'rotate(12deg)',
+                    }}
+                />
+                {/* Left Edge Middle - Coffee Icon */}
+                <FaCoffee
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '40%',
+                        left: '2%',
+                        fontSize: '140px',
+                        opacity: 0.19,
+                        transform: 'rotate(-22deg)',
+                    }}
+                />
+                {/* Left Edge Lower - Plane Icon */}
+                <FaPlane
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '70%',
+                        left: '3%',
+                        fontSize: '155px',
+                        opacity: 0.18,
+                        transform: 'rotate(28deg)',
+                    }}
+                />
+                {/* Right Edge Upper - Car Icon */}
+                <FaCar
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '18%',
+                        right: '0%',
+                        fontSize: '170px',
+                        opacity: 0.20,
+                        transform: 'rotate(-15deg)',
+                    }}
+                />
+                {/* Right Edge Middle - Health Icon */}
+                <FaHeartbeat
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '42%',
+                        right: '1%',
+                        fontSize: '165px',
+                        opacity: 0.17,
+                        transform: 'rotate(20deg)',
+                    }}
+                />
+                {/* Right Edge Lower - Building Icon */}
+                <FaBuilding
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '75%',
+                        right: '2%',
+                        fontSize: '175px',
+                        opacity: 0.16,
+                        transform: 'rotate(-18deg)',
+                    }}
+                />
+                {/* Top Center-Left - Shopping Bag Icon */}
+                <FaShoppingBag
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '8%',
+                        left: '25%',
+                        fontSize: '130px',
+                        opacity: 0.22,
+                        transform: 'rotate(32deg)',
+                    }}
+                />
+                {/* Top Center - Fitness Icon */}
+                <FaDumbbell
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '5%',
+                        left: '50%',
+                        fontSize: '145px',
+                        opacity: 0.19,
+                        transform: 'rotate(-28deg)',
+                    }}
+                />
+                {/* Top Center-Right - Gift Icon */}
+                <FaGift
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '10%',
+                        right: '30%',
+                        fontSize: '135px',
+                        opacity: 0.18,
+                        transform: 'rotate(25deg)',
+                    }}
+                />
+                {/* Middle Center-Left - Palette Icon */}
+                <FaPalette
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '35%',
+                        left: '20%',
+                        fontSize: '148px',
+                        opacity: 0.20,
+                        transform: 'rotate(-15deg)',
+                    }}
+                />
+                {/* Middle Center - Education Icon */}
+                <FaGraduationCap
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '50%',
+                        left: '48%',
+                        fontSize: '190px',
+                        opacity: 0.16,
+                        transform: 'rotate(18deg)',
+                    }}
+                />
+                {/* Middle Center-Right - Home Icon */}
+                <FaHome
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '38%',
+                        right: '25%',
+                        fontSize: '185px',
+                        opacity: 0.17,
+                        transform: 'rotate(-22deg)',
+                    }}
+                />
+                {/* Bottom Center-Left - another Food category */}
+                <FaCoffee
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '20%',
+                        left: '15%',
+                        fontSize: '125px',
+                        opacity: 0.21,
+                        transform: 'rotate(30deg)',
+                    }}
+                />
+                {/* Bottom Center - another Shopping Icon */}
+                <FaShoppingBag
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '12%',
+                        left: '52%',
+                        fontSize: '142px',
+                        opacity: 0.19,
+                        transform: 'rotate(-25deg)',
+                    }}
+                />
+                {/* Bottom Center-Right - another icon */}
+                <FaDumbbell
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '25%',
+                        right: '20%',
+                        fontSize: '138px',
+                        opacity: 0.18,
+                        transform: 'rotate(20deg)',
+                    }}
+                />
+                {/* Additional spread - top mid-left */}
+                <FaBuilding
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '15%',
+                        left: '12%',
+                        fontSize: '120px',
+                        opacity: 0.17,
+                        transform: 'rotate(-12deg)',
+                    }}
+                />
+                {/* Additional spread - mid-right */}
+                <FaGraduationCap
+                    className="absolute text-slate-400"
+                    style={{
+                        top: '60%',
+                        right: '15%',
+                        fontSize: '155px',
+                        opacity: 0.16,
+                        transform: 'rotate(16deg)',
+                    }}
+                />
+                {/* Additional spread - lower mid */}
+                <FaLaptop
+                    className="absolute text-slate-400"
+                    style={{
+                        bottom: '30%',
+                        left: '40%',
+                        fontSize: '128px',
+                        opacity: 0.20,
+                        transform: 'rotate(-20deg)',
+                    }}
+                />
+            </div>
+
+            <div className="min-h-screen bg-slate-100 py-6 pt-24 sm:pt-28 relative z-10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="relative mb-12">
+                    <div className="relative mb-4">
                         <div className="absolute inset-0 -z-10">
                             <div className="absolute -top-16 left-6 h-40 w-40 rounded-full bg-indigo-300/25 blur-3xl"></div>
                             <div className="absolute -bottom-16 right-8 h-44 w-44 rounded-full bg-sky-300/25 blur-3xl"></div>
                         </div>
                         <div className="relative overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
-                            <div className="relative h-48 w-full sm:h-56 lg:h-60">
+                            <div className="relative h-24 w-full sm:h-28 lg:h-32">
                                 {galleryImages.length > 0 ? (
                                     <img
                                         src={galleryImages[0]}
@@ -340,30 +640,46 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         className="h-full w-full object-cover"
                                     />
                                 ) : (
-                                    <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">
+                                    <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm font-semibold uppercase tracking-wider text-slate-500">
                                         Citywitty Merchant
                                     </div>
                                 )}
                             </div>
-                            <div className="grid gap-6 p-5 sm:p-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
-                                <div className="flex flex-col gap-4 sm:gap-5">
-                                    <div className="flex items-start gap-3 sm:gap-4">
-                                        <div className="hidden h-20 w-20 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-24 sm:w-24 lg:h-28 lg:w-28 flex-shrink-0">
+                            <div className="grid gap-2 p-3 sm:p-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
+                                <div className="flex flex-col gap-2 sm:gap-2">
+                                    <div className="flex items-start gap-2.5 sm:gap-3">
+                                        <div className="hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0">
                                             <img
                                                 src={merchant.logo || "https://via.placeholder.com/120x120?text=No+Logo"}
                                                 alt={merchant.displayName}
                                                 className="h-full w-full object-cover"
                                             />
                                         </div>
-                                        <div className="space-y-3 sm:space-y-4">
-                                            <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
-                                                <span className="rounded-full bg-slate-900/90 px-2 sm:px-3 py-1 text-white shadow-sm">{merchant.category}</span>
+                                        <div className="space-y-1.5 sm:space-y-2">
+                                            <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                                <span className="rounded-full bg-slate-900/90 px-2 sm:px-2.5 py-0.5 text-white shadow-sm">{merchant.category}</span>
                                                 {merchant.ribbonTag && (
-                                                    <span className="rounded-full bg-indigo-600/10 px-2 sm:px-3 py-1 text-indigo-600">{merchant.ribbonTag}</span>
+                                                    <span className="rounded-full bg-indigo-600/10 px-2 sm:px-2.5 py-0.5 text-indigo-600">{merchant.ribbonTag}</span>
                                                 )}
+                                                <span className="flex items-center gap-1.5 rounded-full bg-amber-500 px-2 sm:px-2.5 py-0.5 text-white shadow-sm">
+                                                    <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                                    {merchant.averageRating?.toFixed(1) || "5.0"}
+                                                </span>
                                             </div>
-                                            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900 leading-tight">
+                                            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight flex flex-wrap items-center gap-2">
                                                 {merchant.displayName}
+                                                {merchant.verified && (
+                                                    <TooltipProvider>
+                                                        <Tooltip>
+                                                            <TooltipTrigger asChild>
+                                                                <div className="flex items-center justify-center rounded-md bg-emerald-500 p-1 shadow-sm cursor-pointer">
+                                                                    <Check className="h-3.5 w-3.5 text-white" />
+                                                                </div>
+                                                            </TooltipTrigger>
+                                                            <TooltipContent>Verified seller</TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+                                                )}
                                             </h1>
                                             {merchant.customOffer ? (
                                                 <p className="max-w-2xl text-sm sm:text-base leading-relaxed text-slate-600">{merchant.customOffer}</p>
@@ -372,72 +688,118 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                                     Premium {merchant.category.toLowerCase()} experiences curated for Citywitty shoppers.
                                                 </p>
                                             )}
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-[13px] text-slate-500">
-                                        <div className="flex items-center gap-2 rounded-full bg-slate-900/90 px-3 sm:px-4 py-1 text-white shadow-sm whitespace-nowrap">
-                                            <Star className="h-3 w-3 sm:h-4 sm:w-4 text-amber-300" />
-                                            <span className="text-sm sm:text-[15px] font-semibold">{merchant.averageRating?.toFixed(1) || "5.0"}</span>
-                                        </div>
-                                        {distance && (
-                                            <div className="flex items-center gap-2 text-slate-600 whitespace-nowrap">
-                                                <Share2 className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-500" />
-                                                <span className="font-medium text-xs sm:text-sm">{distance}</span>
-                                            </div>
-                                        )}
-                                        {merchant.joinedSince && (
-                                            <div className="flex items-center gap-2 text-slate-600 whitespace-nowrap">
-                                                <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-500" />
-                                                <span className="font-medium text-xs sm:text-sm">Since {new Date(merchant.joinedSince).getFullYear()}</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                    {activeStatusBadges.length > 0 && (
-                                        <div className="flex flex-wrap gap-2">
-                                            {activeStatusBadges.map((item) => (
-                                                <div
-                                                    key={item.key}
-                                                    className={`${item.activeClass} flex items-center gap-1 sm:gap-2 rounded-full px-2 sm:px-3 py-1 sm:py-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] shadow-sm`}
-                                                >
-                                                    <item.icon className="h-3 w-3 sm:h-4 sm:w-4" />
-                                                    <span className="hidden sm:inline">{item.label}</span>
+                                            {activeStatusBadges.length > 0 && (
+                                                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                                                    {activeStatusBadges.map((item) => (
+                                                        <div
+                                                            key={item.key}
+                                                            className={`${item.activeClass} flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-semibold uppercase tracking-wider shadow-sm`}
+                                                        >
+                                                            <item.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                                            <span className="hidden sm:inline">{item.label}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="flex flex-col gap-3 sm:gap-4">
-                                    <div className="grid gap-2 sm:gap-3 sm:grid-cols-2">
-                                        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 sm:py-3">
-                                            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Established</div>
-                                            <div className="mt-1 sm:mt-2 text-lg sm:text-xl font-semibold text-slate-900">
-                                                {merchant.joinedSince ? `${new Date(merchant.joinedSince).getFullYear()}` : 'Since 2020'}
-                                            </div>
-                                            <div className="text-[11px] sm:text-xs text-slate-500">Years serving</div>
-                                        </div>
-                                        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 sm:py-3">
-                                            <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Distance</div>
-                                            <div className="mt-1 sm:mt-2 text-lg sm:text-xl font-semibold text-slate-900">
-                                                {distance || 'Nearby'}
-                                            </div>
-                                            <div className="text-[11px] sm:text-xs text-slate-500">From you</div>
+                                            )}
                                         </div>
                                     </div>
-                                    <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
-                                        <Button asChild className="h-9 sm:h-10 rounded-full bg-emerald-500 px-4 sm:px-5 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-white hover:bg-emerald-600 whitespace-nowrap">
+                                    <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
+                                        <Button asChild className="h-7 sm:h-8 rounded-full bg-emerald-500 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-emerald-600 whitespace-nowrap">
                                             <a href={`https://wa.me/${merchant.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                                                <MessageCircle className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                                <MessageCircle className="mr-1 sm:mr-1.5 h-3 w-3" />
                                                 <span className="hidden sm:inline">WhatsApp</span>
                                                 <span className="sm:hidden">Chat</span>
                                             </a>
                                         </Button>
-                                        <Button asChild variant="outline" className="h-9 sm:h-10 rounded-full border border-slate-300 bg-white px-4 sm:px-5 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-slate-700 hover:bg-slate-100 whitespace-nowrap">
+                                        <Button asChild variant="outline" className="h-7 sm:h-8 rounded-full border border-slate-300 bg-white px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-100 whitespace-nowrap">
                                             <a href={merchant.mapLocation ? merchant.mapLocation : `tel:${merchant.phone}`} target={merchant.mapLocation ? "_blank" : undefined} rel={merchant.mapLocation ? "noopener noreferrer" : undefined}>
-                                                <MapPin className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                                <MapPin className="mr-1 sm:mr-1.5 h-3 w-3" />
                                                 {merchant.mapLocation ? 'Directions' : 'Call'}
                                             </a>
                                         </Button>
+                                        <Button
+                                            variant="outline"
+                                            className="h-7 sm:h-8 rounded-full border border-indigo-300 bg-indigo-50 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-indigo-700 hover:bg-indigo-100 whitespace-nowrap"
+                                            onClick={() => setIsPurchaseModalOpen(true)}
+                                        >
+                                            <CreditCard className="mr-1 sm:mr-1.5 h-3 w-3" />
+                                            Made an offline Purchase
+                                        </Button>
                                     </div>
+                                </div>
+                                <div className="flex flex-col gap-2 sm:gap-2">
+                                    <div className="grid gap-2 sm:grid-cols-2">
+                                        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-2.5 sm:px-3 py-1.5">
+                                            <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Established</div>
+                                            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900">
+                                                {merchant.joinedSince ? `${new Date(merchant.joinedSince).getFullYear()}` : 'Since 2020'}
+                                            </div>
+                                            <div className="text-xs text-slate-500">Years serving</div>
+                                        </div>
+                                        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-2.5 sm:px-3 py-1.5">
+                                            <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Distance</div>
+                                            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900">
+                                                {distance || 'Nearby'}
+                                            </div>
+                                            <div className="text-xs text-slate-500">From you</div>
+                                        </div>
+                                    </div>
+                                    {offerCount > 0 && (
+                                        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-red-700 via-red-800 to-red-900 px-3 sm:px-4 py-2 sm:py-2.5 transition-all duration-500 hover:scale-[1.02] border-2 border-red-500/50">
+                                            {/* Animated Fire Background Blobs */}
+                                            <div className="absolute inset-0 overflow-hidden">
+                                                <div className="absolute -top-10 -right-10 h-40 w-40 bg-red-600/50 rounded-full blur-3xl animate-pulse"></div>
+                                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-32 bg-red-700/40 rounded-full blur-2xl animate-pulse animation-delay-1s"></div>
+                                                <div className="absolute -bottom-10 -left-10 h-36 w-36 bg-red-800/50 rounded-full blur-3xl animate-pulse animation-delay-2s"></div>
+                                            </div>
+
+                                            {/* Shine Effect on Hover */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                                            <div className="relative z-10 space-y-1">
+                                                {/* Hot Deals Header with Flames */}
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <Flame className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
+                                                        <div className="text-xs font-bold uppercase tracking-wider text-red-100 animate-pulse">
+                                                            🔥 Hot Deals
+                                                        </div>
+                                                        <Flame className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
+                                                    </div>
+                                                    <div className="animate-ping-slow">
+                                                        <span className="text-xl">🔥</span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Offer Count - Big & Bold */}
+                                                <div className="flex items-baseline gap-1.5">
+                                                    <div className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-200 via-white to-red-200 animate-gradient-x">
+                                                        {offerCount}
+                                                    </div>
+                                                    <div className="text-base sm:text-lg font-bold text-white/95">
+                                                        Live Offer{offerCount > 1 ? 's' : ''}! 💰
+                                                    </div>
+                                                </div>
+
+                                                {/* Urgency Badge */}
+                                                <div className="flex items-center gap-1.5 pt-0.5">
+                                                    <div className="flex-1 h-1 bg-red-500/50 rounded-full overflow-hidden">
+                                                        <div className="h-full w-2/3 bg-gradient-to-r from-red-400 to-white animate-pulse"></div>
+                                                    </div>
+                                                    <div className="text-xs font-bold text-red-200 uppercase tracking-wider animate-pulse">
+                                                        ⏰ Hurry!
+                                                    </div>
+                                                </div>
+
+                                                {/* Subtext */}
+                                                <div className="text-xs text-red-100/90 font-semibold flex items-center gap-1">
+                                                    <span className="inline-block">⚡</span>
+                                                    Limited time specials
+                                                    <span className="inline-block">⚡</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -980,19 +1342,154 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             )}
                         </div>
                     </div>
-
-                    {/* Back Button */}
-                    <div className="mt-8 text-center">
-                        <Button variant="outline" asChild>
-                            <Link href="/merchants">Back to All Merchants</Link>
-                        </Button>
-                    </div>
                 </div>
             </div>
 
             {/* Suggested Merchants Section - Full Width */}
             <SuggestedMerchantsNearYou />
             <Footer />
+
+            {/* Offline Purchase Modal */}
+            <Dialog open={isPurchaseModalOpen} onOpenChange={setIsPurchaseModalOpen}>
+                <DialogContent className="sm:max-w-[520px] p-0 overflow-hidden">
+                    {/* Header */}
+                    <div className="bg-indigo-600 px-6 py-5">
+                        <div className="flex items-center gap-3">
+                            <div className="h-12 w-12 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                                <CreditCard className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <DialogTitle className="text-xl font-semibold text-white">
+                                    Record Offline Purchase
+                                </DialogTitle>
+                                <DialogDescription className="text-indigo-100 text-sm">
+                                    Track transaction and calculate savings
+                                </DialogDescription>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Form Content */}
+                    <div className="px-6 py-6 space-y-5 bg-white">
+                        {/* User ID Field */}
+                        <div className="space-y-2">
+                            <Label htmlFor="userId" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                <Tag className="h-4 w-4 text-indigo-600" />
+                                User ID
+                            </Label>
+                            <Input
+                                id="userId"
+                                placeholder="CW-U123456"
+                                value={userId}
+                                onChange={(e) => setUserId(e.target.value)}
+                                className="h-11 text-sm font-medium border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                        </div>
+
+                        {/* User Name Field */}
+                        <div className="space-y-2">
+                            <Label htmlFor="userName" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                <User className="h-4 w-4 text-indigo-600" />
+                                Customer Name
+                            </Label>
+                            <Input
+                                id="userName"
+                                placeholder="Enter full name"
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
+                                className="h-11 text-sm font-medium border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                        </div>
+
+                        {/* Purchase Amount Field */}
+                        <div className="space-y-2">
+                            <Label htmlFor="purchaseAmount" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                <IndianRupee className="h-4 w-4 text-indigo-600" />
+                                Original Amount
+                            </Label>
+                            <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">
+                                    ₹
+                                </span>
+                                <Input
+                                    id="purchaseAmount"
+                                    type="number"
+                                    placeholder="0.00"
+                                    value={purchaseAmount}
+                                    onChange={(e) => setPurchaseAmount(e.target.value)}
+                                    className="h-11 pl-8 text-sm font-semibold border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Final Amount Field */}
+                        <div className="space-y-2">
+                            <Label htmlFor="finalAmount" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                <TrendingDown className="h-4 w-4 text-indigo-600" />
+                                Final Amount (After Discount)
+                            </Label>
+                            <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">
+                                    ₹
+                                </span>
+                                <Input
+                                    id="finalAmount"
+                                    type="number"
+                                    placeholder="0.00"
+                                    value={finalAmount}
+                                    onChange={(e) => setFinalAmount(e.target.value)}
+                                    className="h-11 pl-8 text-sm font-semibold border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Discount Display */}
+                        <div className="rounded-lg bg-green-50 border border-green-200 p-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-lg bg-green-600 flex items-center justify-center">
+                                        <Sparkles className="h-5 w-5 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-medium text-green-700 uppercase tracking-wide">
+                                            Total Savings
+                                        </p>
+                                        <p className="text-2xl font-bold text-green-700 mt-0.5">
+                                            ₹{calculateDiscount()}
+                                        </p>
+                                    </div>
+                                </div>
+                                {parseFloat(calculateDiscount()) > 0 && (
+                                    <div className="px-3 py-1.5 rounded-md bg-green-600 text-white text-xs font-semibold">
+                                        {((parseFloat(calculateDiscount()) / (parseFloat(purchaseAmount) || 1)) * 100).toFixed(1)}% OFF
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end gap-3">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsPurchaseModalOpen(false)}
+                            className="h-10 px-6 text-sm font-medium border-gray-300 text-gray-700 hover:bg-gray-100"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={handlePurchaseSubmit}
+                            className="h-10 px-6 text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={!userId || !userName || !purchaseAmount || !finalAmount}
+                        >
+                            <Check className="mr-2 h-4 w-4" />
+                            Submit Purchase
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
