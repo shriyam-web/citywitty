@@ -254,6 +254,11 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         return discount > 0 ? discount.toFixed(2) : '0.00';
     };
 
+    const isOfferExpired = (validUpto: Date | string): boolean => {
+        const expiryDate = new Date(validUpto);
+        return expiryDate < new Date();
+    };
+
     const handlePurchaseSubmit = async () => {
         // Add your API call here to submit the offline purchase
         console.log({
@@ -296,19 +301,19 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
             key: 'premiumSeller',
             label: 'Premium Seller',
             icon: Award,
-            activeClass: 'bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white shadow-lg shadow-amber-500/30',
+            activeClass: 'bg-white text-amber-700 border border-amber-200 shadow-sm',
         },
         {
             key: 'citywittyAssured',
             label: 'Assured',
             icon: ThumbsUp,
-            activeClass: 'bg-gradient-to-r from-sky-400 via-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30',
+            activeClass: 'bg-white text-blue-600 border border-blue-200 shadow-sm',
         },
         {
             key: 'topRated',
-            label: 'Top Merchant',
+            label: 'Top Seller',
             icon: Star,
-            activeClass: 'bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-600 text-white shadow-lg shadow-indigo-500/30',
+            activeClass: 'bg-white text-indigo-600 border border-indigo-200 shadow-sm',
         }
     ];
 
@@ -363,15 +368,15 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         ? `${merchant.streetAddress}, ${displayCity}`
         : displayCity;
     const snapshotItems = [
-        merchant.category
-            ? { icon: Award, label: 'Primary Category', value: merchant.category }
-            : null,
+        // merchant.category
+        //     ? { icon: Award, label: 'Primary Category', value: merchant.category }
+        //     : null,
         headquarters
-            ? { icon: MapPin, label: 'Headquarters', value: headquarters }
+            ? { icon: MapPin, label: 'Main Branch', value: headquarters }
             : null,
-        formattedJoinedSince
-            ? { icon: Clock, label: 'Joined Citywitty', value: formattedJoinedSince }
-            : null,
+        // formattedJoinedSince
+        //     ? { icon: Clock, label: 'Joined Citywitty', value: formattedJoinedSince }
+        //     : null,
     ].filter((item): item is { icon: LucideIcon; label: string; value: string } => Boolean(item));
 
     return (
@@ -632,7 +637,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             <div className="absolute -bottom-16 right-8 h-44 w-44 rounded-full bg-sky-300/25 blur-3xl"></div>
                         </div>
                         <div className="relative overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
-                            <div className="relative h-24 w-full sm:h-28 lg:h-32">
+                            <div className="relative h-40 w-full sm:h-52 lg:h-64">
                                 {galleryImages.length > 0 ? (
                                     <img
                                         src={galleryImages[0]}
@@ -657,14 +662,19 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         </div>
                                         <div className="space-y-1.5 sm:space-y-2">
                                             <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                                                <span className="rounded-full bg-slate-900/90 px-2 sm:px-2.5 py-0.5 text-white shadow-sm">{merchant.category}</span>
+                                                <span className="rounded-full bg-white border border-slate-300 px-2 sm:px-2.5 py-0.5 text-slate-700 shadow-sm">{merchant.category}</span>
                                                 {merchant.ribbonTag && (
                                                     <span className="rounded-full bg-indigo-600/10 px-2 sm:px-2.5 py-0.5 text-indigo-600">{merchant.ribbonTag}</span>
                                                 )}
-                                                <span className="flex items-center gap-1.5 rounded-full bg-amber-500 px-2 sm:px-2.5 py-0.5 text-white shadow-sm">
-                                                    <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                                                    {merchant.averageRating?.toFixed(1) || "5.0"}
-                                                </span>
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="flex items-center gap-1.5 rounded-full bg-amber-500 px-2 sm:px-2.5 py-0.5 text-white shadow-sm">
+                                                        <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                                        {merchant.averageRating?.toFixed(1) || "5.0"}
+                                                    </span>
+                                                    <span className="text-[10px] sm:text-xs font-semibold text-slate-600 normal-case">
+                                                        ({merchant.ratings?.length || 1} review{merchant.ratings && merchant.ratings.length !== 1 ? 's' : ''})
+                                                    </span>
+                                                </div>
                                             </div>
                                             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight flex flex-wrap items-center gap-2">
                                                 {merchant.displayName}
@@ -672,8 +682,8 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                                     <TooltipProvider>
                                                         <Tooltip>
                                                             <TooltipTrigger asChild>
-                                                                <div className="flex items-center justify-center rounded-md bg-emerald-500 p-1 shadow-sm cursor-pointer">
-                                                                    <Check className="h-3.5 w-3.5 text-white" />
+                                                                <div className="flex items-center justify-center rounded-full bg-blue-500 p-1 cursor-pointer hover:scale-110 transition-all duration-300">
+                                                                    <Check className="h-3 w-3 text-white font-bold" strokeWidth={3} />
                                                                 </div>
                                                             </TooltipTrigger>
                                                             <TooltipContent>Verified seller</TooltipContent>
@@ -693,9 +703,9 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                                     {activeStatusBadges.map((item) => (
                                                         <div
                                                             key={item.key}
-                                                            className={`${item.activeClass} flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-semibold uppercase tracking-wider shadow-sm`}
+                                                            className={`${item.activeClass} flex items-center gap-0 sm:gap-0.5 rounded-full px-1 sm:px-1.5 py-0 sm:py-0.5 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider shadow-sm`}
                                                         >
-                                                            <item.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                                                            <item.icon className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
                                                             <span className="hidden sm:inline">{item.label}</span>
                                                         </div>
                                                     ))}
@@ -703,28 +713,29 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                             )}
                                         </div>
                                     </div>
-                                    <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
-                                        <Button asChild className="h-7 sm:h-8 rounded-full bg-emerald-500 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-emerald-600 whitespace-nowrap">
-                                            <a href={`https://wa.me/${merchant.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                                                <MessageCircle className="mr-1 sm:mr-1.5 h-3 w-3" />
-                                                <span className="hidden sm:inline">WhatsApp</span>
-                                                <span className="sm:hidden">Chat</span>
-                                            </a>
-                                        </Button>
-                                        <Button asChild variant="outline" className="h-7 sm:h-8 rounded-full border border-slate-300 bg-white px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-slate-700 hover:bg-slate-100 whitespace-nowrap">
-                                            <a href={merchant.mapLocation ? merchant.mapLocation : `tel:${merchant.phone}`} target={merchant.mapLocation ? "_blank" : undefined} rel={merchant.mapLocation ? "noopener noreferrer" : undefined}>
-                                                <MapPin className="mr-1 sm:mr-1.5 h-3 w-3" />
-                                                {merchant.mapLocation ? 'Directions' : 'Call'}
-                                            </a>
-                                        </Button>
-                                        <Button
-                                            variant="outline"
-                                            className="h-7 sm:h-8 rounded-full border border-indigo-300 bg-indigo-50 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-indigo-700 hover:bg-indigo-100 whitespace-nowrap"
-                                            onClick={() => setIsPurchaseModalOpen(true)}
-                                        >
-                                            <CreditCard className="mr-1 sm:mr-1.5 h-3 w-3" />
-                                            Made an offline Purchase
-                                        </Button>
+                                    <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-slate-200/50 bg-gradient-to-r from-blue-50/60 via-cyan-50/40 to-emerald-50/60 rounded-lg -mx-2 sm:-mx-3 px-2 sm:px-3">
+                                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                            <Button asChild className="h-7 sm:h-8 rounded-full bg-emerald-500 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-emerald-600 whitespace-nowrap">
+                                                <a href={`https://wa.me/${merchant.whatsapp}`} target="_blank" rel="noopener noreferrer">
+                                                    <MessageCircle className="mr-1 sm:mr-1.5 h-3 w-3" />
+                                                    <span className="hidden sm:inline">WhatsApp</span>
+                                                    <span className="sm:hidden">Chat</span>
+                                                </a>
+                                            </Button>
+                                            <Button asChild className="h-7 sm:h-8 rounded-full bg-blue-600 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-blue-700 whitespace-nowrap">
+                                                <a href={merchant.mapLocation ? merchant.mapLocation : `tel:${merchant.phone}`} target={merchant.mapLocation ? "_blank" : undefined} rel={merchant.mapLocation ? "noopener noreferrer" : undefined}>
+                                                    <MapPin className="mr-1 sm:mr-1.5 h-3 w-3" />
+                                                    {merchant.mapLocation ? 'Directions' : 'Call'}
+                                                </a>
+                                            </Button>
+                                            <Button
+                                                className="h-7 sm:h-8 rounded-full bg-indigo-600 px-3 sm:px-4 text-xs font-semibold uppercase tracking-wider text-white hover:bg-indigo-700 whitespace-nowrap"
+                                                onClick={() => setIsPurchaseModalOpen(true)}
+                                            >
+                                                <CreditCard className="mr-1 sm:mr-1.5 h-3 w-3" />
+                                                Made an offline Purchase
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2 sm:gap-2">
@@ -734,7 +745,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                             <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900">
                                                 {merchant.joinedSince ? `${new Date(merchant.joinedSince).getFullYear()}` : 'Since 2020'}
                                             </div>
-                                            <div className="text-xs text-slate-500">Years serving</div>
+                                            <div className="text-xs text-slate-500">For you</div>
                                         </div>
                                         <div className="rounded-2xl border border-slate-200 bg-slate-50 px-2.5 sm:px-3 py-1.5">
                                             <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Distance</div>
@@ -873,7 +884,15 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                                                 </div>
                                                                 <div className="flex flex-col">
                                                                     <dt className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{item.label}</dt>
-                                                                    <dd className="text-sm font-bold text-slate-900">{item.value}</dd>
+                                                                    {item.label === 'Primary Category' ? (
+                                                                        <dd className="inline-flex">
+                                                                            <Badge className="bg-white text-indigo-600 border border-indigo-200 shadow-sm text-sm font-bold">
+                                                                                {item.value}
+                                                                            </Badge>
+                                                                        </dd>
+                                                                    ) : (
+                                                                        <dd className="text-sm font-bold text-slate-900">{item.value}</dd>
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -916,61 +935,72 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                     </CardHeader>
                                     <CardContent>
                                         <div className="flex flex-col gap-5">
-                                            {merchant.offlineDiscount.map((offer, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="relative isolate overflow-hidden rounded-[24px] border border-dashed border-slate-200 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
-                                                >
-                                                    <div className="flex flex-col gap-6 sm:grid sm:grid-cols-[minmax(0,1fr)_220px] sm:gap-0 sm:items-stretch">
-                                                        <div className="flex flex-col gap-5 p-6 sm:p-7">
-                                                            <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-500">
-                                                                <span className="rounded-full bg-indigo-50 px-3 py-1 text-indigo-600">{offer.category}</span>
-                                                                <span
-                                                                    className={`rounded-full px-3 py-1 ${offer.status === 'Active' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-slate-200 text-slate-500'}`}
-                                                                >
-                                                                    {offer.status}
-                                                                </span>
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                <h4 className="text-xl font-semibold text-slate-900">{offer.offerTitle}</h4>
-                                                                <p className="text-sm leading-6 text-slate-600">{offer.offerDescription}</p>
-                                                            </div>
-                                                            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
-                                                                {offer.discountValue > 0 && (
-                                                                    <span className="rounded-full bg-slate-100 px-3 py-1">Save ₹{offer.discountValue}</span>
-                                                                )}
-                                                                <span className="rounded-full bg-slate-100 px-3 py-1">In-store redemption</span>
-                                                            </div>
-                                                            <div className="text-xs text-slate-500">
-                                                                Show this ticket at checkout to redeem your discount.
-                                                            </div>
-                                                        </div>
-                                                        <div className="relative flex shrink-0 flex-col items-center justify-center gap-3 bg-gradient-to-br from-indigo-600 via-indigo-500 to-indigo-500 px-6 py-8 text-white sm:border-l sm:border-dashed sm:border-white/30 sm:px-8">
-                                                            <div className="text-[11px] font-semibold uppercase tracking-[0.4em] text-indigo-100/80">Save</div>
-                                                            <div className="flex items-end gap-1 text-3xl font-bold leading-none">
-                                                                <span>{offer.discountPercent}</span>
-                                                                <span className="text-xl font-semibold">%</span>
-                                                            </div>
-                                                            {offer.discountValue > 0 && (
-                                                                <div className="text-xs font-semibold text-indigo-100/80">
-                                                                    Up to ₹{offer.discountValue}
+                                            {merchant.offlineDiscount.map((offer, index) => {
+                                                const expired = isOfferExpired(offer.validUpto);
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className={`relative isolate overflow-hidden rounded-[24px] border border-dashed bg-white transition-all duration-300 ${expired
+                                                                ? 'border-slate-200/40 bg-slate-50/50 shadow-sm opacity-50 pointer-events-none cursor-not-allowed'
+                                                                : 'border-slate-200 shadow-sm hover:shadow-lg'
+                                                            }`}
+                                                    >
+                                                        <div className="flex flex-col gap-6 sm:grid sm:grid-cols-[minmax(0,1fr)_220px] sm:gap-0 sm:items-stretch">
+                                                            <div className="flex flex-col gap-5 p-6 sm:p-7">
+                                                                <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-500">
+                                                                    <span className="rounded-full bg-indigo-50 px-3 py-1 text-indigo-600">{offer.category}</span>
+                                                                    <span
+                                                                        className={`rounded-full px-3 py-1 ${expired
+                                                                                ? 'bg-red-500/10 text-red-600'
+                                                                                : offer.status === 'Active'
+                                                                                    ? 'bg-emerald-500/10 text-emerald-600'
+                                                                                    : 'bg-slate-200 text-slate-500'
+                                                                            }`}
+                                                                    >
+                                                                        {expired ? 'Expired' : offer.status}
+                                                                    </span>
                                                                 </div>
-                                                            )}
-                                                            <div className="text-xs text-center text-indigo-100/80">
-                                                                Valid until {new Date(offer.validUpto).toLocaleDateString()}
+                                                                <div className="space-y-2">
+                                                                    <h4 className="text-xl font-semibold text-slate-900">{offer.offerTitle}</h4>
+                                                                    <p className="text-sm leading-6 text-slate-600">{offer.offerDescription}</p>
+                                                                </div>
+                                                                <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
+                                                                    {offer.discountValue > 0 && (
+                                                                        <span className="rounded-full bg-slate-100 px-3 py-1">Save ₹{offer.discountValue}</span>
+                                                                    )}
+                                                                    <span className="rounded-full bg-slate-100 px-3 py-1">In-store redemption</span>
+                                                                </div>
+                                                                <div className="text-xs text-slate-500">
+                                                                    Show this ticket at checkout to redeem your discount.
+                                                                </div>
+                                                            </div>
+                                                            <div className="relative flex shrink-0 flex-col items-center justify-center gap-3 bg-gradient-to-br from-indigo-600 via-indigo-500 to-indigo-500 px-6 py-8 text-white sm:border-l sm:border-dashed sm:border-white/30 sm:px-8">
+                                                                <div className="text-[11px] font-semibold uppercase tracking-[0.4em] text-indigo-100/80">Save</div>
+                                                                <div className="flex items-end gap-1 text-3xl font-bold leading-none">
+                                                                    <span>{offer.discountPercent}</span>
+                                                                    <span className="text-xl font-semibold">%</span>
+                                                                </div>
+                                                                {offer.discountValue > 0 && (
+                                                                    <div className="text-xs font-semibold text-indigo-100/80">
+                                                                        Up to ₹{offer.discountValue}
+                                                                    </div>
+                                                                )}
+                                                                <div className="text-xs text-center text-indigo-100/80">
+                                                                    Valid until {new Date(offer.validUpto).toLocaleDateString()}
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="absolute -left-6 top-1/2 hidden h-12 w-12 -translate-y-1/2 rounded-full border border-dashed border-slate-200 bg-slate-100 sm:block"
+                                                        ></span>
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="absolute -right-6 top-1/2 hidden h-12 w-12 -translate-y-1/2 rounded-full border border-dashed border-slate-200 bg-slate-100 sm:block"
+                                                        ></span>
                                                     </div>
-                                                    <span
-                                                        aria-hidden="true"
-                                                        className="absolute -left-6 top-1/2 hidden h-12 w-12 -translate-y-1/2 rounded-full border border-dashed border-slate-200 bg-slate-100 sm:block"
-                                                    ></span>
-                                                    <span
-                                                        aria-hidden="true"
-                                                        className="absolute -right-6 top-1/2 hidden h-12 w-12 -translate-y-1/2 rounded-full border border-dashed border-slate-200 bg-slate-100 sm:block"
-                                                    ></span>
-                                                </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     </CardContent>
                                 </Card>
