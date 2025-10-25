@@ -190,7 +190,6 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                 <OfflineDiscountsSection merchant={merchant} isOfferExpired={isOfferExpired} />
                                 <ProductsSection products={merchant.products ?? []} />
                                 <FAQSection faqs={merchant.faqs ?? []} />
-                                <RelatedSearches tags={merchant.relatedSearches} />
                             </div>
 
                             {/* Right Column - Sidebar */}
@@ -222,14 +221,16 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             />
                         )}
 
-                        {/* Suggested Merchants */}
-                        <SuggestedMerchantsNearYou
-                            excludeId={merchant._id}
-                            city={merchant.city}
-                        />
                     </div>
                 </div>
             </div>
+
+            <SuggestedMerchantsNearYou
+                excludeId={merchant._id}
+                city={merchant.city}
+            />
+
+            <RelatedSearches tags={merchant.relatedSearches ?? merchant.tags ?? []} />
 
             <div className="relative z-50">
                 <Footer />

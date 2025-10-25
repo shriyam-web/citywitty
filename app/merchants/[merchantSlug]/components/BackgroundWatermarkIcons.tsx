@@ -16,6 +16,9 @@ import {
     FaShoppingBag,
     FaPalette,
     FaHome,
+    FaLeaf,
+    FaBook,
+    FaMusic,
 } from "react-icons/fa";
 
 export const BackgroundWatermarkIcons: React.FC = () => {
@@ -25,9 +28,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaUtensils
                 className="absolute text-slate-400"
                 style={{
-                    top: '50px',
-                    left: '3%',
-                    fontSize: '240px',
+                    top: '60px',
+                    left: '4%',
+                    fontSize: '120px',
                     opacity: 0.20,
                     transform: 'rotate(-18deg)',
                 }}
@@ -36,9 +39,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaTshirt
                 className="absolute text-slate-400"
                 style={{
-                    top: '30px',
-                    right: '2%',
-                    fontSize: '150px',
+                    top: '40px',
+                    right: '8%',
+                    fontSize: '90px',
                     opacity: 0.22,
                     transform: 'rotate(22deg)',
                 }}
@@ -47,9 +50,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaLaptop
                 className="absolute text-slate-400"
                 style={{
-                    top: '200px',
-                    left: '6%',
-                    fontSize: '85px',
+                    top: '220px',
+                    left: '12%',
+                    fontSize: '60px',
                     opacity: 0.23,
                     transform: 'rotate(12deg)',
                 }}
@@ -58,9 +61,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaSpa
                 className="absolute text-slate-400"
                 style={{
-                    top: '320px',
-                    left: '1%',
-                    fontSize: '170px',
+                    top: '340px',
+                    left: '6%',
+                    fontSize: '110px',
                     opacity: 0.19,
                     transform: 'rotate(15deg)',
                 }}
@@ -69,9 +72,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaHotel
                 className="absolute text-slate-400"
                 style={{
-                    top: '280px',
-                    left: '42%',
-                    fontSize: '210px',
+                    top: '300px',
+                    left: '44%',
+                    fontSize: '130px',
                     opacity: 0.18,
                     transform: 'rotate(-12deg)',
                 }}
@@ -81,8 +84,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '420px',
-                    right: '8%',
-                    fontSize: '95px',
+                    right: '14%',
+                    fontSize: '65px',
                     opacity: 0.21,
                     transform: 'rotate(-25deg)',
                 }}
@@ -91,9 +94,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaDumbbell
                 className="absolute text-slate-400"
                 style={{
-                    top: '560px',
-                    left: '5%',
-                    fontSize: '130px',
+                    top: '600px',
+                    left: '14%',
+                    fontSize: '90px',
                     opacity: 0.22,
                     transform: 'rotate(18deg)',
                 }}
@@ -103,8 +106,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '640px',
-                    left: '48%',
-                    fontSize: '200px',
+                    left: '56%',
+                    fontSize: '125px',
                     opacity: 0.20,
                     transform: 'rotate(-8deg)',
                 }}
@@ -113,9 +116,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaBuilding
                 className="absolute text-slate-400"
                 style={{
-                    top: '680px',
-                    right: '4%',
-                    fontSize: '110px',
+                    top: '720px',
+                    right: '10%',
+                    fontSize: '70px',
                     opacity: 0.19,
                     transform: 'rotate(20deg)',
                 }}
@@ -125,8 +128,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '820px',
-                    left: '10%',
-                    fontSize: '165px',
+                    left: '18%',
+                    fontSize: '105px',
                     opacity: 0.21,
                     transform: 'rotate(-15deg)',
                 }}
@@ -137,7 +140,7 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 style={{
                     top: '900px',
                     left: '38%',
-                    fontSize: '90px',
+                    fontSize: '60px',
                     opacity: 0.20,
                     transform: 'rotate(28deg)',
                 }}
@@ -147,8 +150,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '940px',
-                    right: '6%',
-                    fontSize: '145px',
+                    right: '16%',
+                    fontSize: '95px',
                     opacity: 0.18,
                     transform: 'rotate(-20deg)',
                 }}
@@ -157,9 +160,9 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaCoffee
                 className="absolute text-slate-400"
                 style={{
-                    top: '150px',
-                    right: '15%',
-                    fontSize: '100px',
+                    top: '160px',
+                    right: '24%',
+                    fontSize: '60px',
                     opacity: 0.17,
                     transform: 'rotate(35deg)',
                 }}
@@ -168,8 +171,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '480px',
-                    left: '30%',
-                    fontSize: '115px',
+                    left: '34%',
+                    fontSize: '70px',
                     opacity: 0.19,
                     transform: 'rotate(-22deg)',
                 }}
@@ -178,8 +181,8 @@ export const BackgroundWatermarkIcons: React.FC = () => {
                 className="absolute text-slate-400"
                 style={{
                     top: '780px',
-                    right: '20%',
-                    fontSize: '125px',
+                    right: '28%',
+                    fontSize: '80px',
                     opacity: 0.18,
                     transform: 'rotate(16deg)',
                 }}
@@ -187,11 +190,41 @@ export const BackgroundWatermarkIcons: React.FC = () => {
             <FaHome
                 className="absolute text-slate-400"
                 style={{
-                    top: '1050px',
-                    left: '25%',
-                    fontSize: '135px',
+                    top: '1080px',
+                    left: '36%',
+                    fontSize: '90px',
                     opacity: 0.20,
                     transform: 'rotate(-10deg)',
+                }}
+            />
+            <FaLeaf
+                className="absolute text-slate-400"
+                style={{
+                    top: '520px',
+                    right: '32%',
+                    fontSize: '65px',
+                    opacity: 0.18,
+                    transform: 'rotate(10deg)',
+                }}
+            />
+            <FaBook
+                className="absolute text-slate-400"
+                style={{
+                    top: '680px',
+                    left: '42%',
+                    fontSize: '75px',
+                    opacity: 0.19,
+                    transform: 'rotate(-14deg)',
+                }}
+            />
+            <FaMusic
+                className="absolute text-slate-400"
+                style={{
+                    top: '1020px',
+                    left: '12%',
+                    fontSize: '70px',
+                    opacity: 0.18,
+                    transform: 'rotate(8deg)',
                 }}
             />
         </div>
