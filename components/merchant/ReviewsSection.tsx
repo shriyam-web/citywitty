@@ -373,6 +373,9 @@ export function ReviewsSection({ reviews, merchantId }: ReviewsSectionProps) {
                                     <div className="flex items-center justify-between mb-3">
                                         <div className="flex items-center space-x-2">
                                             <span className="font-semibold text-lg">{rating.user}</span>
+                                            {rating.userId && (
+                                                <Badge className="text-xs bg-emerald-100 text-emerald-700">Verified</Badge>
+                                            )}
                                             {user?.id === rating.userId && (
                                                 <Badge variant="secondary" className="text-xs">You</Badge>
                                             )}
@@ -410,11 +413,9 @@ export function ReviewsSection({ reviews, merchantId }: ReviewsSectionProps) {
                                             </Button>
                                         </div>
                                     )}
-                                    {rating.reply && (
-                                        <div className="mt-4 pl-6 border-l-4 border-blue-200 bg-blue-50 p-4 rounded-r-lg">
-                                            <p className="text-sm text-gray-600"><strong className="text-blue-600">Merchant Reply:</strong> {rating.reply}</p>
-                                        </div>
-                                    )}
+                                    <div className="mt-4 pl-6 border-l-4 border-blue-200 bg-blue-50 p-4 rounded-r-lg">
+                                        <p className="text-sm text-gray-600"><strong className="text-blue-600">Merchant Reply:</strong> {rating.reply || 'Thank you for your review!'}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
