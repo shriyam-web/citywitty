@@ -1,5 +1,5 @@
 import dbConnect from "../lib/mongodb";
-import Partner from "../models/partner";
+import Partner from "../models/partner/partner";
 
 const demoMerchants = [
     {
