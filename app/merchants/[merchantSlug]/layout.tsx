@@ -17,11 +17,29 @@ interface Props {
  * Fetch merchant data server-side for metadata generation
  * This ensures SEO data is available during build/on-demand ISR
  */
+function resolveBaseUrl(): string {
+  const explicitUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicitUrl) {
+    if (explicitUrl.startsWith('http://') || explicitUrl.startsWith('https://')) {
+      return explicitUrl;
+    }
+    return `https://${explicitUrl}`;
+  }
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) {
+    if (vercelUrl.startsWith('http://') || vercelUrl.startsWith('https://')) {
+      return vercelUrl;
+    }
+    return `https://${vercelUrl}`;
+  }
+  return 'http://localhost:3000';
+}
+
 async function getMerchantData(merchantSlug: string): Promise<Merchant | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const baseUrl = resolveBaseUrl();
     const response = await fetch(
-      `${baseUrl}/api/merchants/${merchantSlug}`,
+      new URL(`/api/merchants/${merchantSlug}`, baseUrl).toString(),
       {
         headers: {
           'Accept': 'application/json',
@@ -60,52 +78,65 @@ export async function generateMetadata(
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://citywitty.com';
-  const canonicalUrl = `${baseUrl}/merchants/${merchant.merchantSlug}`;
+  const baseUrl = resolveBaseUrl();
+  const slug = merchant.merchantSlug || params.merchantSlug;
+  const canonicalUrl = new URL(`/merchants/${slug}`, baseUrl).toString();
   const ratingValue = merchant.averageRating ? merchant.averageRating.toFixed(1) : null;
   const ratingCount = merchant.ratings?.length ?? 0;
-
-  // Construct compelling meta description
   const metaDescription =
     `${merchant.displayName} in ${merchant.city} - ${merchant.category}. `
     + (ratingValue ? `${ratingValue}/5 stars (${ratingCount} reviews). ` : '')
     + (merchant.offlineDiscount?.length ? `${merchant.offlineDiscount.length} exclusive deals. ` : '')
     + `Contact: ${merchant.phone}. ${merchant.description?.substring(0, 80)}...`;
-
-  // Construct title with SEO-friendly format
   const metaTitle =
     `${merchant.displayName} - ${merchant.category} in ${merchant.city} | CityWitty`
     + (merchant.topRated ? ' | Top Rated' : '')
     + (merchant.verified ? ' | Verified' : '');
+  const primaryImage = merchant.storeImages?.[0] || merchant.logo || '';
+  const resolvedImage = primaryImage ? new URL(primaryImage, baseUrl).toString() : undefined;
+  const tags = merchant.tags?.map((tag) => tag?.trim()).filter((tag): tag is string => Boolean(tag)) ?? [];
+  const relatedTerms = Array.isArray(merchant.relatedSearches)
+    ? merchant.relatedSearches.map((term: unknown) => typeof term === 'string' ? term.trim() : '').filter((term): term is string => Boolean(term))
+    : [];
+  const keywordSet = new Set<string>([
+    merchant.displayName,
+    merchant.category,
+    merchant.city,
+    'local business',
+    ...tags,
+    ...relatedTerms,
+  ]);
+  const keywords = Array.from(keywordSet);
+  const primaryBranch = merchant.branchLocations?.[0];
+  const countryName = primaryBranch?.country;
 
   return {
-    // Basic Meta Tags
+    metadataBase: new URL(baseUrl),
     title: metaTitle,
-    description: metaDescription.substring(0, 160), // Google's recommended length
-    keywords: [
-      merchant.displayName,
-      merchant.category,
-      merchant.city,
-      'local business',
-      ...(merchant.tags || []),
-    ].join(', '),
-
-    // Canonical URL - prevent duplicate content issues
+    description: metaDescription.substring(0, 160),
+    keywords,
+    applicationName: 'CityWitty',
+    category: merchant.category,
+    classification: merchant.category,
+    publisher: 'CityWitty',
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        'en-IN': canonicalUrl,
+        'en': canonicalUrl,
+        'x-default': canonicalUrl,
+      },
     },
-
-    // Open Graph - for social media sharing
     openGraph: {
-      type: 'website',
+      type: 'profile',
       title: metaTitle,
       description: metaDescription.substring(0, 160),
       url: canonicalUrl,
       siteName: 'CityWitty',
-      images: merchant.storeImages?.[0] || merchant.logo
+      images: resolvedImage
         ? [
           {
-            url: merchant.storeImages?.[0] || merchant.logo || '',
+            url: resolvedImage,
             width: 1200,
             height: 630,
             alt: `${merchant.displayName} storefront`,
@@ -114,28 +145,39 @@ export async function generateMetadata(
         ]
         : undefined,
       locale: 'en_IN',
+      alternateLocale: ['en_US'],
+      emails: merchant.email ? [merchant.email] : undefined,
+      phoneNumbers: merchant.phone ? [merchant.phone] : undefined,
+      firstName: merchant.displayName,
+      lastName: merchant.businessName || merchant.displayName,
+      username: slug,
+      countryName,
     },
-
-    // Twitter Card - for Twitter/X sharing
     twitter: {
       card: 'summary_large_image',
       title: metaTitle,
       description: metaDescription.substring(0, 160),
-      images: merchant.storeImages?.[0] || merchant.logo ? [merchant.storeImages?.[0] || merchant.logo || ''] : undefined,
+      images: resolvedImage ? [resolvedImage] : undefined,
+      site: '@CityWitty',
       creator: '@CityWitty',
+      
     },
-
-    // Robots directives
     robots: {
       index: true,
       follow: true,
       nocache: false,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
     },
-
-    // Mobile and viewport optimizations
     viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
-
-    // Additional SEO
     authors: [{ name: 'CityWitty' }],
     creator: 'CityWitty',
     formatDetection: {
@@ -143,8 +185,6 @@ export async function generateMetadata(
       email: true,
       address: true,
     },
-
-    // Verification and tracking
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     },

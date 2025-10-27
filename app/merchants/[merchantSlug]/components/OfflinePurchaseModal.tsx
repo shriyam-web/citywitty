@@ -29,6 +29,7 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
     const [userName, setUserName] = useState('');
     const [purchaseAmount, setPurchaseAmount] = useState('');
     const [finalAmount, setFinalAmount] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const calculateDiscount = (): string => {
         const purchase = parseFloat(purchaseAmount) || 0;
@@ -38,25 +39,44 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
     };
 
     const handleSubmit = async () => {
-        console.log({
-            userId,
-            userName,
-            purchaseAmount,
-            finalAmount,
-            discountApplied: calculateDiscount(),
+        if (isSubmitting) return;
+
+        const payload = {
+            userId: userId.trim(),
+            userName: userName.trim(),
             merchantId,
-            merchantSlug
-        });
+            merchantSlug,
+            purchaseAmount: parseFloat(purchaseAmount),
+            finalAmount: parseFloat(finalAmount),
+            discountApplied: parseFloat(calculateDiscount()),
+        };
 
-        // Reset form and close modal
-        setUserId('');
-        setUserName('');
-        setPurchaseAmount('');
-        setFinalAmount('');
-        onClose();
+        setIsSubmitting(true);
 
-        // Show success message (you can add a toast notification here)
-        alert('Purchase recorded successfully!');
+        try {
+            const response = await fetch('/api/purchase-requests', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                const error = await response.json().catch(() => null);
+                throw new Error(error?.error || 'Failed to record purchase');
+            }
+
+            setUserId('');
+            setUserName('');
+            setPurchaseAmount('');
+            setFinalAmount('');
+            alert('Purchase recorded successfully!');
+            onClose();
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'Failed to record purchase';
+            alert(message);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -202,10 +222,10 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        disabled={!userId || !userName || !purchaseAmount || !finalAmount}
+                        disabled={isSubmitting || !userId || !userName || !purchaseAmount || !finalAmount}
                         className="rounded-full bg-indigo-600 hover:bg-indigo-700"
                     >
-                        Submit Purchase
+                        {isSubmitting ? 'Submitting...' : 'Submit Purchase'}
                     </Button>
                 </DialogFooter>
             </DialogContent>
