@@ -24,7 +24,8 @@ import {
     OfflinePurchaseModal
 } from './components';
 
-export default function MerchantProfilePage({ params }: { params: { merchantSlug: string } }) {
+export default function MerchantProfilePage({ params }: { params: { merchantSlug?: string } }) {
+    const merchantSlug = params?.merchantSlug ?? notFound();
     const [merchant, setMerchant] = useState<Merchant | null>(null);
     const [loading, setLoading] = useState(true);
     const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -36,7 +37,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
     useEffect(() => {
         async function fetchMerchant() {
             try {
-                const response = await fetch(`/api/merchants/${params.merchantSlug}`);
+                const response = await fetch(`/api/merchants/${merchantSlug}`);
                 if (response.status === 404) {
                     notFound();
                 }
@@ -59,7 +60,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
             }
         }
         fetchMerchant();
-    }, [params.merchantSlug]);
+    }, [merchantSlug]);
 
     useEffect(() => {
         if (navigator.geolocation && merchant?.latitude !== undefined && merchant?.longitude !== undefined) {
@@ -240,12 +241,12 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
             <MerchantStructuredData merchant={merchant} />
 
             {/* Offline Purchase Modal */}
-            {merchant && (
+            {merchant?.merchantId && (
                 <OfflinePurchaseModal
                     isOpen={isPurchaseModalOpen}
                     onClose={() => setIsPurchaseModalOpen(false)}
-                    merchantId={merchant._id}
-                    merchantSlug={params.merchantSlug}
+                    merchantId={merchant.merchantId}
+                    merchantSlug={merchantSlug}
                 />
             )}
         </>
