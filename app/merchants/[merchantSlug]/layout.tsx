@@ -7,6 +7,7 @@ import {
   generateFAQSchema,
 } from './seo-helpers';
 import type { Merchant } from './types';
+import { Nothing_You_Could_Do } from 'next/font/google';
 
 interface Props {
   params: { merchantSlug: string };
@@ -152,7 +153,7 @@ export async function generateMetadata(
       lastName: merchant.businessName || merchant.displayName,
       username: slug,
       countryName,
-    },
+    }, 
     twitter: {
       card: 'summary_large_image',
       title: metaTitle,
