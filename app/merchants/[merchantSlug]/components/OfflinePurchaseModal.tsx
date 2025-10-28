@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { IndianRupee, Tag, TrendingDown } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { IndianRupee, Tag, TrendingDown, Phone } from 'lucide-react';
 import {
     FaDumbbell,
     FaGift,
@@ -27,6 +28,8 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
 }) => {
     const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
+    const [userMobileNo, setUserMobileNo] = useState('');
+    const [productPurchased, setProductPurchased] = useState('');
     const [purchaseAmount, setPurchaseAmount] = useState('');
     const [finalAmount, setFinalAmount] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +47,8 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
         const payload = {
             userId: userId.trim(),
             userName: userName.trim(),
+            userMobileNo: userMobileNo.trim(),
+            productPurchased: productPurchased.trim(),
             merchantId,
             merchantSlug,
             purchaseAmount: parseFloat(purchaseAmount),
@@ -67,6 +72,8 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
 
             setUserId('');
             setUserName('');
+            setUserMobileNo('');
+            setProductPurchased('');
             setPurchaseAmount('');
             setFinalAmount('');
             alert('Purchase recorded successfully!');
@@ -169,6 +176,32 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
                     </div>
 
                     <div className="space-y-2">
+                        <Label htmlFor="userMobileNo" className="text-sm font-semibold text-slate-700">Mobile Number</Label>
+                        <div className="relative">
+                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+                            <Input
+                                id="userMobileNo"
+                                type="tel"
+                                placeholder="Enter your mobile number"
+                                value={userMobileNo}
+                                onChange={(e) => setUserMobileNo(e.target.value)}
+                                className="rounded-xl border-slate-300 focus:border-indigo-500 pl-10"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="productPurchased" className="text-sm font-semibold text-slate-700">Product/Service Purchased</Label>
+                        <Textarea
+                            id="productPurchased"
+                            placeholder="Describe what you purchased"
+                            value={productPurchased}
+                            onChange={(e) => setProductPurchased(e.target.value)}
+                            className="rounded-xl border-slate-300 focus:border-indigo-500 min-h-[80px]"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
                         <Label htmlFor="purchaseAmount" className="text-sm font-semibold text-slate-700">Purchase Amount</Label>
                         <div className="relative">
                             <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -222,7 +255,7 @@ export const OfflinePurchaseModal: React.FC<OfflinePurchaseModalProps> = ({
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        disabled={isSubmitting || !userId || !userName || !purchaseAmount || !finalAmount}
+                        disabled={isSubmitting || !userId || !userName || !userMobileNo || !productPurchased || !purchaseAmount || !finalAmount}
                         className="rounded-full bg-indigo-600 hover:bg-indigo-700"
                     >
                         {isSubmitting ? 'Submitting...' : 'Submit Purchase'}

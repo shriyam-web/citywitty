@@ -10,6 +10,8 @@ export async function POST(req: Request) {
     const {
       userId,
       userName,
+      userMobileNo,
+      productPurchased,
       merchantId,
       merchantSlug,
       purchaseAmount,
@@ -20,6 +22,8 @@ export async function POST(req: Request) {
     if (
       !userId ||
       !userName ||
+      !userMobileNo ||
+      !productPurchased ||
       !merchantId ||
       !merchantSlug ||
       typeof purchaseAmount !== "number" ||
@@ -35,11 +39,14 @@ export async function POST(req: Request) {
     const purchaseRequest = await PurchaseRequest.create({
       userId,
       userName,
+      userMobileNo,
+      productPurchased,
       merchantId,
       merchantSlug,
       purchaseAmount,
       finalAmount,
       discountApplied,
+      status: 'pending',
     });
 
     return NextResponse.json(
