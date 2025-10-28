@@ -8,6 +8,8 @@ import {
 } from './seo-helpers';
 import type { Merchant } from './types';
 import { Nothing_You_Could_Do } from 'next/font/google';
+import dbConnect from '@/lib/mongodb';
+import Partner from '@/models/partner/partner';
 
 interface Props {
   params: { merchantSlug: string };
@@ -38,25 +40,43 @@ function resolveBaseUrl(): string {
 
 async function getMerchantData(merchantSlug: string): Promise<Merchant | null> {
   try {
+    // Try direct database query first (more reliable for metadata generation)
+    console.log(`[Metadata] Fetching merchant data from database for slug: ${merchantSlug}`);
+
+    await dbConnect();
+    const merchant = await Partner.findOne({
+      merchantSlug,
+      status: "active"
+    }).lean();
+
+    if (merchant) {
+      console.log(`[Metadata] Successfully fetched merchant from DB: ${merchant.displayName}`);
+      return JSON.parse(JSON.stringify(merchant)) as Merchant;
+    }
+
+    // Fallback to API fetch if database query fails
+    console.log(`[Metadata] Merchant not found in DB, trying API fallback`);
     const baseUrl = resolveBaseUrl();
-    const response = await fetch(
-      new URL(`/api/merchants/${merchantSlug}`, baseUrl).toString(),
-      {
-        headers: {
-          'Accept': 'application/json',
-        },
-        // ISR - revalidate every 1 hour
-        next: { revalidate: 3600 },
-      }
-    );
+    const apiUrl = new URL(`/api/merchants/${merchantSlug}`, baseUrl).toString();
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 3600 },
+      cache: 'no-store',
+    });
 
     if (!response.ok) {
+      console.error(`[Metadata] Merchant API returned ${response.status} for slug: ${merchantSlug}`);
       return null;
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log(`[Metadata] Successfully fetched merchant from API: ${data.displayName}`);
+    return data;
   } catch (error) {
-    console.error('Failed to fetch merchant for metadata:', error);
+    console.error('[Metadata] Failed to fetch merchant for metadata:', error);
     return null;
   }
 }
@@ -72,9 +92,15 @@ export async function generateMetadata(
   const merchant = await getMerchantData(params.merchantSlug);
 
   if (!merchant) {
+    // Create a more user-friendly title using the slug
+    const formattedSlug = params.merchantSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
     return {
-      title: 'Merchant Not Found | CityWitty',
-      description: 'The merchant you are looking for does not exist.',
+      title: `${formattedSlug} | CityWitty`,
+      description: `Discover ${formattedSlug} on CityWitty - Your local business directory with exclusive deals and discounts.`,
       robots: 'noindex, nofollow',
     };
   }
@@ -153,7 +179,7 @@ export async function generateMetadata(
       lastName: merchant.businessName || merchant.displayName,
       username: slug,
       countryName,
-    }, 
+    },
     twitter: {
       card: 'summary_large_image',
       title: metaTitle,
@@ -161,7 +187,7 @@ export async function generateMetadata(
       images: resolvedImage ? [resolvedImage] : undefined,
       site: '@CityWitty',
       creator: '@CityWitty',
-      
+
     },
     robots: {
       index: true,
