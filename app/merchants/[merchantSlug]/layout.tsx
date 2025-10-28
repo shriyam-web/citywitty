@@ -10,6 +10,7 @@ import type { Merchant } from './types';
 import { Nothing_You_Could_Do } from 'next/font/google';
 import dbConnect from '@/lib/mongodb';
 import Partner from '@/models/partner/partner';
+import type { IPartner } from '@/models/partner/partner/partner.interface';
 
 interface Props {
   params: { merchantSlug: string };
@@ -47,7 +48,7 @@ async function getMerchantData(merchantSlug: string): Promise<Merchant | null> {
     const merchant = await Partner.findOne({
       merchantSlug,
       status: "active"
-    }).lean();
+    }).lean() as unknown as IPartner | null;
 
     if (merchant) {
       console.log(`[Metadata] Successfully fetched merchant from DB: ${merchant.displayName}`);
