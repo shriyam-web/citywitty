@@ -2,9 +2,10 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, CreditCard, Check, Clock } from 'lucide-react';
+import { Star, MapPin, CreditCard, Check, Clock, ChevronDown } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import type { Merchant } from '../types';
 
 interface MerchantHeroProps {
@@ -26,7 +27,78 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
     onPurchaseClick
 }) => {
     const galleryImages = merchant.storeImages ?? [];
-    const offerCount = merchant.offlineDiscount?.length ?? 0;
+    const offerCount = React.useMemo(() => {
+        if (!merchant.offlineDiscount || merchant.offlineDiscount.length === 0) return 0;
+        const now = new Date();
+        return merchant.offlineDiscount.filter(offer =>
+            offer.status === "Active" &&
+            new Date(offer.validUpto) >= now
+        ).length;
+    }, [merchant.offlineDiscount]);
+
+    const formatMinutesToDisplay = React.useCallback((value: number) => {
+        const normalizedValue = ((value % 1440) + 1440) % 1440;
+        let hours = Math.floor(normalizedValue / 60);
+        const minutes = normalizedValue % 60;
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
+        return `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+    }, []);
+
+    const weeklyScheduleTooltip = React.useMemo(() => {
+        const businessHours = merchant.businessHours;
+        if (!businessHours?.open || !businessHours?.close) return null;
+
+        const parseTimeToMinutes = (time: string) => {
+            const trimmed = time.trim();
+            const match = trimmed.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+            if (!match) return null;
+            let hours = parseInt(match[1], 10);
+            const minutes = parseInt(match[2], 10);
+            const meridiem = match[3]?.toUpperCase();
+            if (meridiem === 'AM') {
+                if (hours === 12) hours = 0;
+            } else if (meridiem === 'PM') {
+                if (hours !== 12) hours += 12;
+            }
+            if (hours >= 24 || minutes >= 60) return null;
+            return hours * 60 + minutes;
+        };
+
+        const openMinutes = parseTimeToMinutes(businessHours.open);
+        const closeMinutes = parseTimeToMinutes(businessHours.close);
+        if (openMinutes === null || closeMinutes === null) return null;
+
+        const openDisplay = formatMinutesToDisplay(openMinutes);
+        const closeDisplay = formatMinutesToDisplay(closeMinutes);
+        const days = businessHours.days ?? [];
+        const normalizedDays = days.map((day) => day.toLowerCase());
+        const operatesAllWeek = normalizedDays.length === 0;
+        const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const isTwentyFourHours = closeMinutes === openMinutes;
+
+        return (
+            <div className="space-y-2 p-2">
+                <div className="text-sm font-semibold border-b border-slate-200 pb-2">Business Hours</div>
+                <div className="space-y-1">
+                    {weekDays.map((day) => {
+                        const isOpenDay = operatesAllWeek || normalizedDays.includes(day.toLowerCase());
+                        return (
+                            <div key={day} className="flex justify-between text-xs">
+                                <span className={`font-medium ${isOpenDay ? 'text-slate-700' : 'text-slate-400'}`}>
+                                    {day}
+                                </span>
+                                <span className={`${isOpenDay ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                                    {isOpenDay ? (isTwentyFourHours ? '24 Hours' : `${openDisplay} - ${closeDisplay}`) : 'Closed'}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }, [merchant.businessHours, formatMinutesToDisplay]);
+
     const availabilityBadge = React.useMemo(() => {
         const businessHours = merchant.businessHours;
         if (!businessHours?.open || !businessHours?.close) return null;
@@ -44,14 +116,6 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
             }
             if (hours >= 24 || minutes >= 60) return null;
             return hours * 60 + minutes;
-        };
-        const formatMinutesToDisplay = (value: number) => {
-            const normalizedValue = ((value % 1440) + 1440) % 1440;
-            let hours = Math.floor(normalizedValue / 60);
-            const minutes = normalizedValue % 60;
-            const period = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
-            return `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
         };
         const openMinutes = parseTimeToMinutes(businessHours.open);
         const closeMinutes = parseTimeToMinutes(businessHours.close);
@@ -105,7 +169,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
             label: `CLOSED. OPENS AT ${openDisplay}`,
             className: 'border-rose-200 bg-rose-500/10 text-rose-600'
         };
-    }, [merchant.businessHours]);
+    }, [merchant.businessHours, formatMinutesToDisplay]);
 
     return (
         <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
@@ -162,14 +226,22 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                         </Tooltip>
                                     </TooltipProvider>
                                 )}
-                                {availabilityBadge && (
-                                    <div className={`inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wide ${availabilityBadge.className.includes('emerald')
-                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                            : 'bg-rose-50 text-rose-700 border border-rose-200'
-                                        }`}>
-                                        <Clock className="h-3 w-3" />
-                                        {availabilityBadge.label}
-                                    </div>
+                                {availabilityBadge && weeklyScheduleTooltip && (
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <div className={`inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wide cursor-pointer transition-all hover:shadow-md ${availabilityBadge.className.includes('emerald')
+                                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
+                                                : 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100'
+                                                }`}>
+                                                <Clock className="h-3 w-3" />
+                                                {availabilityBadge.label}
+                                                <ChevronDown className="h-3 w-3 opacity-70" />
+                                            </div>
+                                        </PopoverTrigger>
+                                        <PopoverContent side="bottom" className="max-w-xs">
+                                            {weeklyScheduleTooltip}
+                                        </PopoverContent>
+                                    </Popover>
                                 )}
                             </h1>
                             {merchant.customOffer ? (
@@ -186,10 +258,10 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                         return (
                                             <div
                                                 key={item.key}
-                                                className={`${item.activeClass} flex items-center gap-0 sm:gap-0.5 rounded-full px-1 sm:px-1.5 py-0 sm:py-0.5 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider shadow-sm`}
+                                                className={`${item.activeClass} flex items-center gap-1 sm:gap-1.5 rounded-full px-1.5 sm:px-2 py-0.5 sm:py-1 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider shadow-sm`}
                                             >
                                                 <IconComponent className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
-                                                <span className="hidden sm:inline">{item.label}</span>
+                                                <span>{item.label}</span>
                                             </div>
                                         );
                                     })}
