@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, CreditCard, Check } from 'lucide-react';
+import { Star, MapPin, CreditCard, Check, Clock } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import type { Merchant } from '../types';
@@ -27,6 +27,85 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
 }) => {
     const galleryImages = merchant.storeImages ?? [];
     const offerCount = merchant.offlineDiscount?.length ?? 0;
+    const availabilityBadge = React.useMemo(() => {
+        const businessHours = merchant.businessHours;
+        if (!businessHours?.open || !businessHours?.close) return null;
+        const parseTimeToMinutes = (time: string) => {
+            const trimmed = time.trim();
+            const match = trimmed.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+            if (!match) return null;
+            let hours = parseInt(match[1], 10);
+            const minutes = parseInt(match[2], 10);
+            const meridiem = match[3]?.toUpperCase();
+            if (meridiem === 'AM') {
+                if (hours === 12) hours = 0;
+            } else if (meridiem === 'PM') {
+                if (hours !== 12) hours += 12;
+            }
+            if (hours >= 24 || minutes >= 60) return null;
+            return hours * 60 + minutes;
+        };
+        const formatMinutesToDisplay = (value: number) => {
+            const normalizedValue = ((value % 1440) + 1440) % 1440;
+            let hours = Math.floor(normalizedValue / 60);
+            const minutes = normalizedValue % 60;
+            const period = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
+            return `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+        };
+        const openMinutes = parseTimeToMinutes(businessHours.open);
+        const closeMinutes = parseTimeToMinutes(businessHours.close);
+        if (openMinutes === null || closeMinutes === null) return null;
+        const openDisplay = formatMinutesToDisplay(openMinutes);
+        const closeDisplay = formatMinutesToDisplay(closeMinutes);
+        const days = businessHours.days ?? [];
+        const normalizedDays = days.map((day) => day.toLowerCase());
+        const now = new Date();
+        const minutesNow = now.getHours() * 60 + now.getMinutes();
+        const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const todayIndex = now.getDay();
+        const today = weekDays[todayIndex].toLowerCase();
+        const previousDay = weekDays[(todayIndex + 6) % 7].toLowerCase();
+        const operatesAllWeek = normalizedDays.length === 0;
+        const isOpenToday = operatesAllWeek || normalizedDays.includes(today);
+        const wasOpenYesterday = operatesAllWeek || normalizedDays.includes(previousDay);
+        const spansMidnight = closeMinutes < openMinutes;
+        const isTwentyFourHours = closeMinutes === openMinutes;
+        let isCurrentlyOpen = false;
+        if (isTwentyFourHours) {
+            isCurrentlyOpen = isOpenToday;
+        } else if (spansMidnight) {
+            if (minutesNow >= openMinutes) {
+                isCurrentlyOpen = isOpenToday;
+            } else {
+                isCurrentlyOpen = wasOpenYesterday && minutesNow < closeMinutes;
+            }
+        } else {
+            isCurrentlyOpen = isOpenToday && minutesNow >= openMinutes && minutesNow < closeMinutes;
+        }
+        if (isCurrentlyOpen) {
+            if (isTwentyFourHours) {
+                return {
+                    label: `OPEN 24 HOURS`,
+                    className: 'border-emerald-200 bg-emerald-500/10 text-emerald-600'
+                };
+            }
+            return {
+                label: `OPEN ${openDisplay} - ${closeDisplay}`,
+                className: 'border-emerald-200 bg-emerald-500/10 text-emerald-600'
+            };
+        }
+        if (isTwentyFourHours) {
+            return {
+                label: `CLOSED 24 HOURS`,
+                className: 'border-rose-200 bg-rose-500/10 text-rose-600'
+            };
+        }
+        return {
+            label: `CLOSED. OPENS AT ${openDisplay}`,
+            className: 'border-rose-200 bg-rose-500/10 text-rose-600'
+        };
+    }, [merchant.businessHours]);
 
     return (
         <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
@@ -82,6 +161,15 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                             <TooltipContent>Verified seller</TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>
+                                )}
+                                {availabilityBadge && (
+                                    <div className={`inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wide ${availabilityBadge.className.includes('emerald')
+                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                            : 'bg-rose-50 text-rose-700 border border-rose-200'
+                                        }`}>
+                                        <Clock className="h-3 w-3" />
+                                        {availabilityBadge.label}
+                                    </div>
                                 )}
                             </h1>
                             {merchant.customOffer ? (

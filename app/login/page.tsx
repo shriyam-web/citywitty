@@ -16,6 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
 // export const metadata: Metadata = {
 //   title: "Login - CityWitty | Access Your Discount Card Account",
@@ -61,6 +62,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const [error, setError] = useState('');
+  const [showNavigationDialog, setShowNavigationDialog] = useState(false);
+  const [loginRole, setLoginRole] = useState('');
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -79,11 +82,11 @@ export default function LoginPage() {
     setError('');
 
     try {
-      // ✅ use login() from auth-context
       const success = await login(email, password, role);
 
       if (success) {
-        router.push(`/dashboard/${role}`);
+        setLoginRole(role);
+        setShowNavigationDialog(true);
       } else {
         setError('Invalid email, password, or account type.');
       }
@@ -93,6 +96,16 @@ export default function LoginPage() {
     }
 
     setIsLoading(false);
+  };
+
+  const handleNavigateToDashboard = () => {
+    setShowNavigationDialog(false);
+    router.push('/');
+  };
+
+  const handleExploreProducts = () => {
+    setShowNavigationDialog(false);
+    router.push('/products');
   };
 
 
@@ -260,7 +273,7 @@ export default function LoginPage() {
               type="button"
               variant="outline"
               className="w-full max-w-xs flex items-center justify-center gap-2"
-              onClick={() => signIn("google", { callbackUrl: "/dashboard/user" })}
+              onClick={() => signIn("google", { callbackUrl: "/" })}
             >
               <img
                 src="https://www.svgrepo.com/show/355037/google.svg"
@@ -275,6 +288,38 @@ export default function LoginPage() {
 
         </Card>
       </div>
+
+      <Dialog open={showNavigationDialog} onOpenChange={() => {}}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Login Successful</DialogTitle>
+            <DialogDescription>
+              What would you like to do next?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-gray-600">
+              You have successfully logged in to your CityWitty account.
+            </p>
+          </div>
+          <DialogFooter className="flex gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleExploreProducts}
+            >
+              Explore Products
+            </Button>
+            <Button
+              type="button"
+              onClick={handleNavigateToDashboard}
+            >
+              Go to Home
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </>
   );
