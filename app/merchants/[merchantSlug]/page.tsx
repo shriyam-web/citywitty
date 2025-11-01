@@ -196,7 +196,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             {/* Right Column - Sidebar */}
                             <div className="space-y-8">
                                 <ContactInformation merchant={merchant} ensureHttps={ensureHttps} />
-                                {getBusinessHoursData() && (
+                                {/* {getBusinessHoursData() && (
                                     <BusinessHoursSection
                                         merchant={merchant}
                                         isOpenAllWeek={getBusinessHoursData()!.isOpenAllWeek}
@@ -204,7 +204,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                         openingTime={getBusinessHoursData()!.openingTime}
                                         closingTime={getBusinessHoursData()!.closingTime}
                                     />
-                                )}
+                                )} */}
                                 <PaymentMethodsSection paymentMethods={merchant.paymentMethodAccepted ?? []} />
                             </div>
                         </div>

@@ -263,7 +263,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             <FAQSection faqs={merchant.faqs ?? []} />
 
                             {/* Contact & Business Hours Grid */}
-                            <div className="grid gap-6 lg:grid-cols-2">
+                            {/* <div className="grid gap-6 lg:grid-cols-2">
                                 <ContactInformation merchant={merchant} ensureHttps={ensureHttps} />
                                 <BusinessHoursSection
                                     merchant={merchant}
@@ -272,7 +272,7 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                                     openingTime={openingTime}
                                     closingTime={closingTime}
                                 />
-                            </div>
+                            </div> */}
 
                             {/* Payment Methods */}
                             <PaymentMethodsSection paymentMethods={paymentMethods} />
