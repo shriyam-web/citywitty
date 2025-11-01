@@ -66,7 +66,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
                             <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-400">Address</div>
                             <div className="mt-3 flex items-start gap-2">
                                 <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-indigo-600" />
-                                <p className="text-sm text-slate-700 leading-relaxed">{merchant.streetAddress}</p>
+                                <p className="text-sm text-slate-700 leading-relaxed">
+                                    {merchant.streetAddress}
+                                    {merchant.city && `, ${merchant.city}`}
+                                </p>
                             </div>
                         </div>
                     )}
