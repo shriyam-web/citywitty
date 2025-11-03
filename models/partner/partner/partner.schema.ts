@@ -112,7 +112,17 @@ const PartnerSchema = new Schema<IPartner>({
   podcastLog: [PodcastLogSchema],
   minimumOrderValue: { type: Number },
   offlineDiscount: [OfflineDiscountSchema],
-  branchLocations: [BranchLocationSchema]
+  offlineProducts: [ProductSchema],
+  branchLocations: [BranchLocationSchema],
+
+  // Google Reviews Integration
+  googlePlaceId: { type: String },
+  googleReviews: {
+    rating: { type: Number },
+    userRatingsTotal: { type: Number },
+    reviews: [{ type: Schema.Types.Mixed }],
+    lastFetched: { type: Date }
+  }
 }, { timestamps: true }
 );
 

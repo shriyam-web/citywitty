@@ -17,14 +17,28 @@ interface Merchant {
   logo?: string;
   averageRating?: number;
   offlineDiscount?: {
+    originalPrice: number;
+    discountValue: number;
     discountPercent: number;
   }[];
   customOffer?: string;
   citywittyAssured?: boolean;
-  premiumSeller?: boolean;
-  verified?: boolean;
-  trust?: boolean;
+  isPremiumSeller?: boolean;
+  isVerified?: boolean;
 }
+
+// Helper function to calculate discount percentage
+const calculateDiscountPercent = (offer: { originalPrice: number; discountValue: number; discountPercent: number }) => {
+  if (offer.discountPercent && offer.discountPercent > 0) {
+    return offer.discountPercent;
+  }
+  // Calculate from originalPrice and discountValue
+  if (offer.originalPrice && offer.originalPrice > 0 && offer.discountValue) {
+    return Math.round((offer.discountValue / offer.originalPrice) * 100);
+  }
+  // Fallback: use discountValue as the display value
+  return offer.discountValue || 0;
+};
 
 export function FeaturedMerchants() {
   const [merchants, setMerchants] = useState<Merchant[]>([]);
@@ -77,13 +91,15 @@ export function FeaturedMerchants() {
                     alt={merchant.displayName}
                     className="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
-                    <span className="bg-orange-500 text-white px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-semibold">
-                      {merchant.offlineDiscount && merchant.offlineDiscount.length > 0
-                        ? `${merchant.offlineDiscount[0].discountPercent}% OFF`
-                        : merchant.customOffer || ""}
-                    </span>
-                  </div>
+                  {((merchant.offlineDiscount && merchant.offlineDiscount.length > 0 && calculateDiscountPercent(merchant.offlineDiscount[0]) > 0) || merchant.customOffer) && (
+                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+                      <span className="bg-orange-500 text-white px-2 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-semibold">
+                        {merchant.offlineDiscount && merchant.offlineDiscount.length > 0 && calculateDiscountPercent(merchant.offlineDiscount[0]) > 0
+                          ? `${calculateDiscountPercent(merchant.offlineDiscount[0])}% OFF`
+                          : merchant.customOffer || ""}
+                      </span>
+                    </div>
+                  )}
                   <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
                     <span className="bg-black/70 text-white px-2 py-1 rounded text-xs sm:text-sm">
                       {merchant.category}
@@ -98,7 +114,7 @@ export function FeaturedMerchants() {
                         Assured
                       </Badge>
                     )}
-                    {merchant.premiumSeller && (
+                    {merchant.isPremiumSeller && (
                       <Badge
                         variant="default"
                         className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white text-xs px-2 py-0.5 shadow-lg"
@@ -106,21 +122,12 @@ export function FeaturedMerchants() {
                         Premium
                       </Badge>
                     )}
-                    {merchant.verified && (
+                    {merchant.isVerified && (
                       <Badge
                         variant="default"
                         className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white text-xs px-2 py-0.5 shadow-lg"
                       >
                         Verified
-                      </Badge>
-                    )}
-                    {merchant.trust && (
-                      <Badge
-                        variant="default"
-                        className="bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 text-white text-xs px-2 py-0.5 shadow-lg"
-                      >
-                        <Shield className="h-3 w-3 mr-0.5" />
-                        Trust
                       </Badge>
                     )}
                   </div>

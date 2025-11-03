@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     }
 
     const partners = await query.select(
-      "merchantSlug displayName category city description logo averageRating ratings offlineDiscount customOffer"
+      "merchantSlug displayName category city description logo averageRating ratings offlineDiscount customOffer citywittyAssured isPremiumSeller isVerified"
     );
 
     return NextResponse.json(partners);

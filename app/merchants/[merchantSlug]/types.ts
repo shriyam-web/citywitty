@@ -88,6 +88,7 @@ export interface Merchant {
     category: string;
     offerTitle: string;
     offerDescription: string;
+    originalPrice: number;
     discountValue: number;
     discountPercent: number;
     status: "Active" | "Inactive";
@@ -122,4 +123,14 @@ export interface Merchant {
     longitude: number;
   }[];
   products?: MerchantProduct[];
+  offlineProducts?: MerchantProduct[];
+
+  // Google Reviews Integration
+  googlePlaceId?: string;
+  googleReviews?: {
+    rating: number;
+    userRatingsTotal: number;
+    reviews: any[];
+    lastFetched: Date;
+  };
 }

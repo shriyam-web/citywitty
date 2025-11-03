@@ -150,6 +150,7 @@ export interface IPartner extends Document {
         status: "Active" | "Inactive";
         validUpto: Date;
     }[];
+    offlineProducts?: IProduct[];
     branchLocations?: {
         branchName: string;
         city: string;
@@ -162,4 +163,13 @@ export interface IPartner extends Document {
         latitude?: number;
         longitude?: number;
     }[];
+
+    // Google Reviews Integration
+    googlePlaceId?: string;
+    googleReviews?: {
+        rating: number;
+        userRatingsTotal: number;
+        reviews: any[];
+        lastFetched: Date;
+    };
 }
