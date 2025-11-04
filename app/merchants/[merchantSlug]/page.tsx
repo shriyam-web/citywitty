@@ -27,6 +27,13 @@ import {
     GoogleReviewsSection
 } from './components';
 
+const toTitleCase = (value?: string) => {
+    if (!value) {
+        return value;
+    }
+    return value.replace(/\b\w+/g, word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+};
+
 export default function MerchantProfilePage({ params }: { params: { merchantSlug?: string } }) {
     const merchantSlug = params?.merchantSlug ?? notFound();
     const [merchant, setMerchant] = useState<Merchant | null>(null);
@@ -51,6 +58,9 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                 };
                 const normalizedMerchant: Merchant = {
                     ...data,
+                    displayName: toTitleCase(data.displayName) ?? data.displayName,
+                    streetAddress: toTitleCase(data.streetAddress) ?? data.streetAddress,
+                    city: toTitleCase(data.city) ?? data.city,
                     verified: data.verified ?? data.isVerified ?? false,
                     premiumSeller: data.premiumSeller ?? data.isPremiumSeller ?? false,
                     topRated: data.topRated ?? data.isTopMerchant ?? false,

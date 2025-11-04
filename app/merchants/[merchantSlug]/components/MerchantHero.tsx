@@ -9,6 +9,7 @@ import { Star, MapPin, CreditCard, Check, Clock, ChevronDown, X, ChevronLeft, Ch
 import { SiWhatsapp } from 'react-icons/si';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { getCategoryIcon } from '@/lib/categoryIcons';
 import type { Merchant } from '../types';
 
 interface MerchantHeroProps {
@@ -33,6 +34,11 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
     const [isGalleryOpen, setIsGalleryOpen] = React.useState(false);
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
     const [mounted, setMounted] = React.useState(false);
+    const merchantSymbolIcons = React.useMemo(() => [Star, MapPin, CreditCard, Check, Clock], []);
+    const watermarkPattern = React.useMemo(() => {
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='54'><text x='10' y='30' font-family='Inter,Arial,sans-serif' font-size='14' fill='rgba(148,163,184,0.15)' letter-spacing='8'>CityWitty</text></svg>`;
+        return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+    }, []);
 
     React.useEffect(() => {
         setMounted(true);
@@ -262,79 +268,46 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
             )}
 
             <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
-                <div className="relative h-40 w-full sm:h-52 lg:h-64 flex gap-1">
+                <div className="relative h-40 w-full sm:h-52 lg:h-64">
                     {galleryImages.length > 0 ? (
-                        <>
-                            {/* Main Image - 60% width (or 100% if only one image) */}
-                            <div
-                                className={`relative h-full cursor-pointer overflow-hidden group ${galleryImages.length === 1 ? 'w-full' : 'w-[60%]'}`}
-                                onClick={() => openGallery(0)}
-                            >
-                                <img
-                                    src={galleryImages[0]}
-                                    alt={merchant.displayName}
-                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                            </div>
-
-                            {/* Side Images Grid - 40% width */}
-                            {galleryImages.length > 1 && (
-                                <div className="w-[40%] h-full grid grid-rows-2 gap-1">
-                                    {/* Second image */}
-                                    {galleryImages[1] && (
-                                        <div
-                                            className="relative h-full cursor-pointer overflow-hidden group"
-                                            onClick={() => openGallery(1)}
-                                        >
-                                            <img
-                                                src={galleryImages[1]}
-                                                alt={`${merchant.displayName} - 2`}
-                                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                            />
-                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                                        </div>
-                                    )}
-
-                                    {/* Third image or +N overlay */}
-                                    {galleryImages.length > 2 && (
-                                        <div
-                                            className="relative h-full cursor-pointer overflow-hidden group"
-                                            onClick={() => openGallery(2)}
-                                        >
-                                            <img
-                                                src={galleryImages[2]}
-                                                alt={`${merchant.displayName} - 3`}
-                                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                            />
-                                            {galleryImages.length > 3 && (
-                                                <div className="absolute inset-0 bg-black/60 hover:bg-black/70 flex items-center justify-center transition-all duration-300">
-                                                    <span className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold">
-                                                        +{galleryImages.length - 3}
-                                                    </span>
-                                                </div>
-                                            )}
-                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </>
+                        <div className="relative h-full w-full overflow-hidden">
+                            <img
+                                src={galleryImages[0]}
+                                alt={merchant.displayName}
+                                className="h-full w-full object-cover"
+                            />
+                        </div>
                     ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm font-semibold uppercase tracking-wider text-slate-500">
-                            Citywitty Merchant
+                        <div className="relative h-full w-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                            <div
+                                className="absolute inset-0"
+                                style={{ backgroundImage: watermarkPattern, backgroundRepeat: 'repeat', backgroundSize: '200px 60px' }}
+                            />
+                            <div className="flex items-center justify-center">
+                                {React.createElement(getCategoryIcon(merchant.category), {
+                                    className: "w-16 h-16 text-gray-400"
+                                })}
+                            </div>
                         </div>
                     )}
                 </div>
                 <div className="grid gap-2 p-3 sm:p-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
                     <div className="flex flex-col gap-2 sm:gap-2">
                         <div className="flex items-start gap-2.5 sm:gap-3">
-                            <div className="hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0">
-                                <img
-                                    src={merchant.logo || "https://via.placeholder.com/120x120?text=No+Logo"}
-                                    alt={merchant.displayName}
-                                    className="h-full w-full object-cover"
-                                />
+                            <div className="hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
+                                {merchant.logo ? (
+                                    <img
+                                        src={merchant.logo}
+                                        alt={merchant.displayName}
+                                        className="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                                        {React.createElement(getCategoryIcon(merchant.category), {
+                                            className: "w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-slate-400"
+                                        })}
+                                    </div>
+                                )}
                             </div>
                             <div className="space-y-1.5 sm:space-y-2">
                                 <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -353,7 +326,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                     </div>
                                 </div>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight flex flex-wrap items-center gap-2">
-                                    {merchant.displayName}
+                                    {merchant.displayName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
                                     {merchant.verified && (
                                         <TooltipProvider>
                                             <Tooltip>

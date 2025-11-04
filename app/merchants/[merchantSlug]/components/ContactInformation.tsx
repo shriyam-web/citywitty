@@ -68,7 +68,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
                                 <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-indigo-600" />
                                 <p className="text-sm text-slate-700 leading-relaxed">
                                     {merchant.streetAddress}
-                                    {merchant.city && `, ${merchant.city}`}
+                                    {merchant.city && `, ${merchant.city.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}`}
                                 </p>
                             </div>
                         </div>

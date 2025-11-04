@@ -1,15 +1,12 @@
-# TODO: Make Featured Merchants Page Responsive
+# MerchantHero Simplification Tasks
 
-## Tasks
-- [x] Update grid layout with more breakpoints (1 col mobile, 2 sm, 3 lg, 4 xl)
-- [x] Make image heights responsive (smaller on mobile)
-- [x] Adjust badge sizes and positioning for mobile to prevent overlaps
-- [x] Reduce grid gap for better mobile layout
-- [x] Tweak text sizes for mobile readability
+## Plan Approved
+- Redesign cover photo only: single-column structure with proper spacing
+- Switch to light theme (white, light grays), remove dark gradients
+- Add subtle "CityWitty" watermark as background pattern
+- Keep all other component features unchanged
 
-## Dependent Files
-- components/home/featured-merchants.tsx
-
-## Followup Steps
-- Test responsiveness on different screen sizes
-- Run the app to verify changes
+## Steps to Complete
+- [x] Edit MerchantHero.tsx cover photo section only
+- [x] Test component rendering (dev server running on port 3001)
+- [x] Ensure responsiveness and professional appearance
