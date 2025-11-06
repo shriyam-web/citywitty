@@ -2,7 +2,7 @@ import React from "react";
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Star, Shield, Building2, Utensils, Hotel, ShoppingBag, Scissors, Gamepad2 } from 'lucide-react';
+import { MapPin, Star, Shield, Building2, Utensils, Hotel, ShoppingBag, Scissors, Gamepad2, CheckCircle } from 'lucide-react';
 import dbConnect from '@/lib/mongodb';
 import Partner from '@/models/partner/partner';
 
@@ -115,6 +115,17 @@ const getCategoryIcon = (category: string) => {
         return <Gamepad2 className="h-16 w-16 text-gray-400" />;
     }
     return <Building2 className="h-16 w-16 text-gray-400" />;
+};
+
+const toTitleCase = (value?: string): string => {
+    if (!value) return value ?? '';
+    return value.replace(/\b\w+/g, word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+};
+
+const getRandomDistance = (): string => {
+    // Generate random distance between 0.5 and 15 km
+    const distance = (Math.random() * 14.5 + 0.5).toFixed(1);
+    return `${distance} Km away`;
 };
 
 export async function FeaturedMerchantsServer() {
@@ -233,7 +244,7 @@ export async function FeaturedMerchantsServer() {
 
                                         {/* Offer Badge */}
                                         <div className="absolute top-3 right-3">
-                                            <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                            <span className="bg-gradient-to-br from-red-500 to-orange-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg border border-white/20 backdrop-blur-sm">
                                                 {merchant.offlineDiscount && merchant.offlineDiscount.length > 0
                                                     ? `${calculateDiscountPercent(merchant.offlineDiscount[0])}% OFF`
                                                     : merchant.customOffer || "OFFER"}
@@ -254,11 +265,7 @@ export async function FeaturedMerchantsServer() {
                                                     Premium
                                                 </Badge>
                                             )}
-                                            {merchant.isVerified && (
-                                                <Badge className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[10px] px-1.5 py-0.5 shadow-md">
-                                                    Verified
-                                                </Badge>
-                                            )}
+
                                             {merchant.citywittyAssured && (
                                                 <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] px-1.5 py-0.5 shadow-md">
                                                     Assured
@@ -270,8 +277,11 @@ export async function FeaturedMerchantsServer() {
                                     {/* Content */}
                                     <div className="p-5 flex-1 flex flex-col space-y-3">
                                         <div className="flex-1">
-                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                                                {merchant.displayName}
+                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 flex items-center gap-2">
+                                                {toTitleCase(merchant.displayName)}
+                                                {merchant.isVerified && (
+                                                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                                                )}
                                             </h3>
                                             <p className="text-gray-600 text-sm line-clamp-2 mt-1">
                                                 {merchant.description}
@@ -282,7 +292,7 @@ export async function FeaturedMerchantsServer() {
                                         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                                             <div className="flex items-center space-x-1 text-gray-600">
                                                 <MapPin className="h-4 w-4 flex-shrink-0" />
-                                                <span className="text-xs font-medium">{merchant.city}</span>
+                                                <span className="text-xs font-medium">{getRandomDistance()}</span>
                                             </div>
                                             {merchant.averageRating && (
                                                 <div className="flex items-center space-x-1">
