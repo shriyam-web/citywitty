@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { Award, Star, ThumbsUp } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { ReviewsSection } from '@/components/merchant/ReviewsSection';
 import { BranchLocationsMap } from '@/components/merchant/BranchLocationsMap';
@@ -29,7 +27,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 type HighlightBadge = {
     key: keyof Pick<Merchant, "premiumSeller" | "verified" | "citywittyAssured" | "topRated">;
     label: string;
-    icon: LucideIcon;
+    iconName: 'crown' | 'thumbsup' | 'star';
     activeClass: string;
 };
 
@@ -129,19 +127,19 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
         {
             key: 'premiumSeller',
             label: 'Premium Seller',
-            icon: Award,
+            iconName: 'crown',
             activeClass: 'bg-white text-amber-700 border border-amber-200 shadow-sm',
         },
         {
             key: 'citywittyAssured',
             label: 'Assured',
-            icon: ThumbsUp,
+            iconName: 'thumbsup',
             activeClass: 'bg-white text-blue-600 border border-blue-200 shadow-sm',
         },
         {
             key: 'topRated',
             label: 'Top Seller',
-            icon: Star,
+            iconName: 'star',
             activeClass: 'bg-white text-indigo-600 border border-indigo-200 shadow-sm',
         }
     ];
@@ -240,7 +238,6 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                             {/* Offline Discounts */}
                             <OfflineDiscountsSection
                                 merchant={merchant}
-                                isOfferExpired={isOfferExpired}
                             />
 
                             {/* Products */}

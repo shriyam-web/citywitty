@@ -3,6 +3,7 @@ import { IProduct } from "./product/product.interface";
 import { IPartnerRating } from "./partnerRating.interface";
 
 export interface IPartner extends Document {
+    updatedAt: any;
     merchantId: string;
     username?: string;
     legalName: string;

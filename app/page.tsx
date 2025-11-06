@@ -2,7 +2,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { HeroSection } from '@/components/home/hero-section';
 import { MerchantCarousel } from '@/components/home/merchant-carousel';
-import { FeaturedMerchants } from '@/components/home/featured-merchants';
+import { FeaturedMerchantsServer } from '@/components/home/featured-merchants-server';
 import { TestimonialsCarousel } from '@/components/home/testimonials-carousel';
 import { CategoriesSection } from '@/components/home/categories-section';
 import { CitiesPresence } from '@/components/home/cities-presence';
@@ -78,7 +78,7 @@ export default function HomePage() {
       <HeroSection /> <br />
       <BannerCarousel />
       {/* <MerchantCarousel /> */}
-      <FeaturedMerchants />
+      <FeaturedMerchantsServer />
       <TestimonialsCarousel />
       <CategoriesSection />
       <CitiesPresence />

@@ -6,12 +6,18 @@ import type { Merchant } from '../types';
 
 interface OfflineDiscountsSectionProps {
     merchant: Merchant;
-    isOfferExpired: (validUpto: Date | string) => boolean;
+}
+
+/**
+ * Utility function to check if an offer has expired
+ */
+function isOfferExpired(validUpto: Date | string): boolean {
+    const expiryDate = new Date(validUpto);
+    return expiryDate < new Date();
 }
 
 export const OfflineDiscountsSection: React.FC<OfflineDiscountsSectionProps> = ({
-    merchant,
-    isOfferExpired
+    merchant
 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const OFFERS_PER_VIEW = 2;

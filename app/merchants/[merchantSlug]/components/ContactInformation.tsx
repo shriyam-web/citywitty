@@ -5,20 +5,35 @@ import { Phone, Mail, Globe, MapPin } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import type { Merchant } from '../types';
 
+/**
+ * ContactInformation component - Displays merchant contact details
+ * SEO-optimized with proper semantic structure and accessibility
+ * Server-rendered for better SEO performance
+ */
+
 interface ContactInformationProps {
     merchant: Merchant;
-    ensureHttps: (url: string | undefined) => string;
+}
+
+/**
+ * Utility function to ensure URL has https protocol
+ */
+function ensureHttps(url: string | undefined): string {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+    return `https://${url}`;
 }
 
 export const ContactInformation: React.FC<ContactInformationProps> = ({
-    merchant,
-    ensureHttps
+    merchant
 }) => {
     return (
         <Card className="border-0 bg-white shadow-xl ring-1 ring-slate-200/60">
             <CardHeader className="space-y-2">
                 <CardTitle className="text-xl font-semibold text-slate-900 sm:text-2xl">Stay Connected</CardTitle>
-                <p className="text-xs font-medium text-slate-500 sm:text-sm">Your go-to contact details.</p>
+                <p className="text-xs font-medium text-slate-500 sm:text-sm">Contact {merchant.displayName} directly through multiple channels.</p>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-3">
@@ -26,13 +41,21 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
                         <div className="rounded-2xl border border-slate-200 bg-white px-3 py-3 sm:px-4 sm:py-4 shadow-sm">
                             <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-400">Contact</div>
                             <div className="mt-3 space-y-2">
-                                <a href={`tel:${merchant.phone}`} className="flex items-center gap-2 text-sm text-slate-700 hover:text-indigo-600 transition-colors">
-                                    <Phone className="h-4 w-4" />
+                                <a
+                                    href={`tel:${merchant.phone}`}
+                                    className="flex items-center gap-2 text-sm text-slate-700 hover:text-indigo-600 transition-colors"
+                                    aria-label={`Call ${merchant.displayName} at ${merchant.phone}`}
+                                >
+                                    <Phone className="h-4 w-4" aria-hidden="true" />
                                     <span>{merchant.phone}</span>
                                 </a>
                                 {merchant.email && (
-                                    <a href={`mailto:${merchant.email}`} className="flex items-center gap-2 text-sm text-slate-700 hover:text-indigo-600 transition-colors">
-                                        <Mail className="h-4 w-4" />
+                                    <a
+                                        href={`mailto:${merchant.email}`}
+                                        className="flex items-center gap-2 text-sm text-slate-700 hover:text-indigo-600 transition-colors"
+                                        aria-label={`Email ${merchant.displayName} at ${merchant.email}`}
+                                    >
+                                        <Mail className="h-4 w-4" aria-hidden="true" />
                                         <span className="truncate">{merchant.email}</span>
                                     </a>
                                 )}
@@ -42,8 +65,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-sm text-slate-700 hover:text-indigo-600 transition-colors"
+                                        aria-label={`Visit ${merchant.displayName} website`}
                                     >
-                                        <Globe className="h-4 w-4" />
+                                        <Globe className="h-4 w-4" aria-hidden="true" />
                                         <span className="truncate">{merchant.website}</span>
                                     </a>
                                 )}
@@ -53,8 +77,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-sm text-slate-700 hover:text-green-600 transition-colors"
+                                        aria-label={`Contact ${merchant.displayName} on WhatsApp`}
                                     >
-                                        <SiWhatsapp className="h-4 w-4" />
+                                        <SiWhatsapp className="h-4 w-4" aria-hidden="true" />
                                         <span>{merchant.whatsapp}</span>
                                     </a>
                                 )}

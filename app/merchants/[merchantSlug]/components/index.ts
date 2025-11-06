@@ -10,3 +10,4 @@ export { ProductsSection } from './ProductsSection';
 export { RelatedSearches } from './RelatedSearches';
 export { OfflinePurchaseModal } from './OfflinePurchaseModal';
 export { GoogleReviewsSection } from './GoogleReviewsSection';
+export { BreadcrumbNavigation } from './BreadcrumbNavigation';

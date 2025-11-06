@@ -1,28 +1,47 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { createPortal } from 'react-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, CreditCard, Check, Clock, ChevronDown, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, MapPin, CreditCard, Check, Clock, ChevronDown, X, ChevronLeft, ChevronRight, Crown, ThumbsUp } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { getCategoryIcon } from '@/lib/categoryIcons';
 import type { Merchant } from '../types';
 
+/**
+ * MerchantHero component - Client component for interactive features
+ * Contains gallery modal, business hours popover, and purchase modal trigger
+ * SEO-optimized with proper alt text and semantic structure
+ */
+
 interface MerchantHeroProps {
     merchant: Merchant;
-    distance: string | null;
-    activeStatusBadges: Array<{
+    distance?: string | null;
+    activeStatusBadges?: Array<{
         key: keyof Pick<Merchant, "premiumSeller" | "verified" | "citywittyAssured" | "topRated">;
         label: string;
-        icon: React.ComponentType<{ className?: string }>;
+        iconName: 'crown' | 'thumbsup' | 'star';
         activeClass: string;
     }>;
-    onPurchaseClick: () => void;
+    onPurchaseClick?: () => void;
 }
+
+/**
+ * Map icon names to Lucide icon components
+ */
+const getIconComponent = (iconName: 'crown' | 'thumbsup' | 'star'): React.ComponentType<{ className?: string }> => {
+    const iconMap = {
+        crown: Crown,
+        thumbsup: ThumbsUp,
+        star: Star
+    };
+    return iconMap[iconName];
+};
 
 export const MerchantHero: React.FC<MerchantHeroProps> = ({
     merchant,
@@ -253,13 +272,17 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                         </>
                     )}
 
-                    <div className="relative max-w-7xl max-h-[90vh] mx-4">
-                        <img
-                            src={galleryImages[currentImageIndex]}
-                            alt={`${merchant.displayName} - Image ${currentImageIndex + 1}`}
-                            className="max-w-full max-h-[90vh] object-contain"
-                        />
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
+                    <div className="relative max-w-7xl w-full mx-4">
+                        <div className="relative mx-auto h-[60vh] min-h-[360px] w-full max-w-[90vw]">
+                            <Image
+                                src={galleryImages[currentImageIndex]}
+                                alt={`${merchant.displayName} - Image ${currentImageIndex + 1}`}
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 768px) 100vw, 70vw"
+                            />
+                        </div>
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 text-sm text-white rounded-full">
                             {currentImageIndex + 1} / {galleryImages.length}
                         </div>
                     </div>
@@ -271,10 +294,13 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                 <div className="relative h-40 w-full sm:h-52 lg:h-64">
                     {galleryImages.length > 0 ? (
                         <div className="relative h-full w-full overflow-hidden">
-                            <img
+                            <Image
                                 src={galleryImages[0]}
-                                alt={merchant.displayName}
-                                className="h-full w-full object-cover"
+                                alt={`${merchant.displayName} - Store front view`}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 1024px) 100vw, 1200px"
+                                priority
                             />
                         </div>
                     ) : (
@@ -282,10 +308,12 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                             <div
                                 className="absolute inset-0"
                                 style={{ backgroundImage: watermarkPattern, backgroundRepeat: 'repeat', backgroundSize: '200px 60px' }}
+                                aria-hidden="true"
                             />
                             <div className="flex items-center justify-center">
                                 {React.createElement(getCategoryIcon(merchant.category), {
-                                    className: "w-16 h-16 text-gray-400"
+                                    className: "w-16 h-16 text-gray-400",
+                                    "aria-label": `${merchant.category} category icon`
                                 })}
                             </div>
                         </div>
@@ -294,17 +322,20 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                 <div className="grid gap-2 p-3 sm:p-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
                     <div className="flex flex-col gap-2 sm:gap-2">
                         <div className="flex items-start gap-2.5 sm:gap-3">
-                            <div className="hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
+                            <div className="relative hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
                                 {merchant.logo ? (
-                                    <img
+                                    <Image
                                         src={merchant.logo}
-                                        alt={merchant.displayName}
-                                        className="h-full w-full object-cover"
+                                        alt={`${merchant.displayName} logo`}
+                                        fill
+                                        className="object-cover"
+                                        sizes="96px"
                                     />
                                 ) : (
                                     <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
                                         {React.createElement(getCategoryIcon(merchant.category), {
-                                            className: "w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-slate-400"
+                                            className: "w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-slate-400",
+                                            "aria-label": `${merchant.category} category icon for ${merchant.displayName}`
                                         })}
                                     </div>
                                 )}
@@ -326,13 +357,16 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                     </div>
                                 </div>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight flex flex-wrap items-center gap-2">
-                                    {merchant.displayName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                                    <span>{merchant.displayName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</span>
                                     {merchant.verified && (
                                         <TooltipProvider>
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
-                                                    <div className="flex items-center justify-center rounded-full bg-blue-500 p-1 cursor-pointer hover:scale-110 transition-all duration-300">
-                                                        <Check className="h-3 w-3 text-white font-bold" strokeWidth={3} />
+                                                    <div
+                                                        className="flex items-center justify-center rounded-full bg-blue-500 p-1 cursor-pointer hover:scale-110 transition-all duration-300"
+                                                        aria-label="Verified seller badge"
+                                                    >
+                                                        <Check className="h-3 w-3 text-white font-bold" strokeWidth={3} aria-hidden="true" />
                                                     </div>
                                                 </TooltipTrigger>
                                                 <TooltipContent>Verified seller</TooltipContent>
@@ -342,13 +376,16 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                     {availabilityBadge && weeklyScheduleTooltip && (
                                         <Popover>
                                             <PopoverTrigger asChild>
-                                                <div className={`inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wide cursor-pointer transition-all hover:shadow-md ${availabilityBadge.className.includes('emerald')
-                                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                                                    : 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100'
-                                                    }`}>
-                                                    <Clock className="h-3 w-3" />
-                                                    {availabilityBadge.label}
-                                                    <ChevronDown className="h-3 w-3 opacity-70" />
+                                                <div
+                                                    className={`inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wide cursor-pointer transition-all hover:shadow-md ${availabilityBadge.className.includes('emerald')
+                                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
+                                                        : 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100'
+                                                        }`}
+                                                    aria-label={`Business hours: ${availabilityBadge.label}`}
+                                                >
+                                                    <Clock className="h-3 w-3" aria-hidden="true" />
+                                                    <span>{availabilityBadge.label}</span>
+                                                    <ChevronDown className="h-3 w-3 opacity-70" aria-hidden="true" />
                                                 </div>
                                             </PopoverTrigger>
                                             <PopoverContent side="bottom" className="max-w-xs">
@@ -364,10 +401,10 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                         Premium {merchant.category.toLowerCase()} experiences curated for Citywitty shoppers.
                                     </p>
                                 )}
-                                {activeStatusBadges.length > 0 && (
+                                {activeStatusBadges && activeStatusBadges.length > 0 && (
                                     <div className="flex flex-wrap gap-1.5 pt-0.5">
                                         {activeStatusBadges.map((item) => {
-                                            const IconComponent = item.icon;
+                                            const IconComponent = getIconComponent(item.iconName);
                                             return (
                                                 <div
                                                     key={item.key}

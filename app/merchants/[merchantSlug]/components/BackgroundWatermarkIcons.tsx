@@ -21,9 +21,18 @@ import {
     FaMusic,
 } from "react-icons/fa";
 
+/**
+ * Background watermark icons for visual decoration
+ * Server-rendered component with proper accessibility attributes
+ * aria-hidden ensures screen readers ignore decorative elements
+ */
 export const BackgroundWatermarkIcons: React.FC = () => {
     return (
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+        <div
+            className="fixed inset-0 overflow-hidden pointer-events-none z-0"
+            aria-hidden="true"
+            role="presentation"
+        >
             {/* Large icon - Top Left */}
             <FaUtensils
                 className="absolute text-slate-400"
