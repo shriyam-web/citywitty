@@ -219,32 +219,7 @@ export async function generateMetadata(
   };
 }
 
-/**
- * Static parameters generation for dynamic routes
- * This helps Next.js optimize build time for popular merchants
- */
-export async function generateStaticParams() {
-  // You can fetch popular merchants from your API
-  // This is optional but recommended for better SEO
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/api/merchants?limit=50`, {
-      next: { revalidate: 3600 },
-    });
 
-    if (!response.ok) {
-      return [];
-    }
-
-    const merchants = (await response.json()) as Array<{ merchantSlug: string }>;
-    return merchants.map((merchant) => ({
-      merchantSlug: merchant.merchantSlug,
-    }));
-  } catch (error) {
-    console.error('Failed to generate static params:', error);
-    return [];
-  }
-}
 
 export default function MerchantLayout({ children }: Props) {
   return (

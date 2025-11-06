@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic';
+
 /**
  * API Route: /api/google-reviews
  * Fetches Google Place Details including reviews, rating, and review count
  */
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const placeId = searchParams.get('placeId');
 
     if (!placeId) {

@@ -273,9 +273,12 @@ async function getMerchantData(merchantSlug: string): Promise<{
             if (productsResponse.ok) {
                 const productsData = await productsResponse.json();
                 offlineProducts = productsData.products || [];
+            } else {
+                console.warn('Failed to fetch offline products: HTTP', productsResponse.status);
             }
         } catch (error) {
             console.warn('Failed to fetch offline products:', error);
+            // Continue with empty products array during build/static generation
         }
 
         return {
