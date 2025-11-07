@@ -2,11 +2,10 @@
 'use client';
 import { useAuth } from '@/lib/auth-context';
 import { useState, useEffect } from 'react';
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, CreditCard, Sparkles, Zap, Gift, Play, CheckCircle, TrendingUp } from 'lucide-react';
-import { AnimatePresence } from "framer-motion";
 
 
 const cityIcons = [
@@ -248,7 +247,7 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, [memberCount]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -256,19 +255,19 @@ export function HeroSection() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } }
   };
 
-  const floatingVariants = {
+  const floatingVariants: Variants = {
     animate: {
       y: [0, -20, 0],
       transition: { duration: 6, repeat: Infinity, ease: "easeInOut" }
     }
   };
 
-  const pulseVariants = {
+  const pulseVariants: Variants = {
     animate: {
       scale: [1, 1.05, 1],
       transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
@@ -288,25 +287,25 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 opacity-60" />
 
-      <motion.div 
+      <motion.div
         className="absolute -top-40 -right-40 w-[800px] h-[800px] bg-gradient-to-br from-blue-200/30 via-blue-100/15 to-transparent rounded-full blur-3xl"
-        animate={{ 
+        animate={{
           x: [0, 50, 0],
           y: [0, 40, 0]
         }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute -bottom-40 -left-40 w-[700px] h-[700px] bg-gradient-to-tr from-orange-200/20 via-orange-100/10 to-transparent rounded-full blur-3xl"
-        animate={{ 
+        animate={{
           x: [0, -50, 0],
           y: [0, -40, 0]
         }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-b from-purple-200/15 via-transparent to-transparent rounded-full blur-3xl"
-        animate={{ 
+        animate={{
           x: [0, 30, -30, 0],
           y: [0, -30, 30, 0]
         }}
@@ -380,7 +379,7 @@ export function HeroSection() {
                 <motion.div variants={itemVariants} className="flex items-center gap-3 pt-1">
                   <div className="flex -space-x-3">
                     {[...Array(3)].map((_, i) => (
-                      <div 
+                      <div
                         key={i}
                         className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold"
                       >
