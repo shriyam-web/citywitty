@@ -2,7 +2,7 @@
 'use client';
 import { useAuth } from '@/lib/auth-context';
 import { useState, useEffect } from 'react';
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, easeInOut, easeOut } from "framer-motion";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, CreditCard, Sparkles, Zap, Gift, Play, CheckCircle, TrendingUp } from 'lucide-react';
@@ -257,20 +257,20 @@ export function HeroSection() {
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: easeOut } }
   };
 
   const floatingVariants: Variants = {
     animate: {
       y: [0, -20, 0],
-      transition: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 6, repeat: Infinity, ease: easeInOut }
     }
   };
 
   const pulseVariants: Variants = {
     animate: {
       scale: [1, 1.05, 1],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 3, repeat: Infinity, ease: easeInOut }
     }
   };
 
