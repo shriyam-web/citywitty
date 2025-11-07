@@ -19,23 +19,47 @@ export async function GET() {
             .exec();
 
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://citywitty.com';
+        const currentDate = new Date().toISOString().split('T')[0];
+        const staticPages = [
+            { path: '', changefreq: 'daily', priority: '1.0' },
+            { path: 'about', changefreq: 'monthly', priority: '0.7' },
+            { path: 'activate-track', changefreq: 'monthly', priority: '0.6' },
+            { path: 'admin-signup', changefreq: 'monthly', priority: '0.6' },
+            { path: 'careers', changefreq: 'weekly', priority: '0.7' },
+            { path: 'contact', changefreq: 'monthly', priority: '0.7' },
+            { path: 'cookies', changefreq: 'yearly', priority: '0.4' },
+            { path: 'get-card', changefreq: 'monthly', priority: '0.7' },
+            { path: 'login', changefreq: 'monthly', priority: '0.5' },
+            { path: 'merchants', changefreq: 'daily', priority: '0.8' },
+            { path: 'privacy', changefreq: 'yearly', priority: '0.5' },
+            { path: 'register', changefreq: 'monthly', priority: '0.7' },
+            { path: 'store', changefreq: 'weekly', priority: '0.7' },
+            { path: 'terms', changefreq: 'yearly', priority: '0.5' },
+        ];
 
-        // Generate sitemap XML
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
         xml += ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"';
         xml += ' xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">\n';
 
-        // Add merchant URLs
+        staticPages.forEach(({ path, changefreq, priority }) => {
+            const url = path ? `${baseUrl}/${path}` : baseUrl;
+            xml += '  <url>\n';
+            xml += `    <loc>${url}</loc>\n`;
+            xml += `    <lastmod>${currentDate}</lastmod>\n`;
+            xml += `    <changefreq>${changefreq}</changefreq>\n`;
+            xml += `    <priority>${priority}</priority>\n`;
+            xml += '  </url>\n';
+        });
+
         merchants.forEach((merchant: any) => {
-            // Priority based on merchant quality
             const isPremium = merchant.premiumSeller || merchant.topRated || merchant.verified;
             const priority = isPremium ? '0.9' : '0.7';
             const changeFreq = isPremium ? 'weekly' : 'monthly';
 
             const lastMod = merchant.updatedAt
                 ? new Date(merchant.updatedAt).toISOString().split('T')[0]
-                : new Date().toISOString().split('T')[0];
+                : currentDate;
 
             xml += '  <url>\n';
             xml += `    <loc>${baseUrl}/merchants/${merchant.merchantSlug}</loc>\n`;
@@ -44,14 +68,6 @@ export async function GET() {
             xml += `    <priority>${priority}</priority>\n`;
             xml += '  </url>\n';
         });
-
-        // Add main merchants page
-        xml += '  <url>\n';
-        xml += `    <loc>${baseUrl}/merchants</loc>\n`;
-        xml += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
-        xml += '    <changefreq>daily</changefreq>\n';
-        xml += '    <priority>0.8</priority>\n';
-        xml += '  </url>\n';
 
         xml += '</urlset>';
 

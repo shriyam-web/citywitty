@@ -4,9 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
+import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogIn, UserPlus, Menu, User, LogOut, ChevronDown, Sparkles, MapPin, RefreshCcw } from 'lucide-react';
+import { LogIn, UserPlus, Menu, User, LogOut, ChevronDown, Sparkles, MapPin, RefreshCcw, ShoppingCart } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import useAccurateLocation from '@/lib/useAccurateLocation';
 import citiesData from '@/data/allCities.json';
@@ -101,6 +102,7 @@ function LocationDropdown({ manualLocation, setManualLocation, location, loading
 // --------------------- Header Component ---------------------
 export function Header() {
   const { user, logout } = useAuth();
+  const { getTotalItems } = useCart();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -169,6 +171,18 @@ export function Header() {
                 refetchLocation={handleAutoDetect}
               />
             </div>
+
+            {/* Cart Icon */}
+            <Link href="/cart" className="relative">
+              <Button variant="ghost" className="flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5" />
+                {getTotalItems() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                    {getTotalItems()}
+                  </span>
+                )}
+              </Button>
+            </Link>
 
             {/* Desktop Login/Register */}
             {!user && (
@@ -244,6 +258,14 @@ export function Header() {
                     loading={loading}
                     refetchLocation={handleAutoDetect}
                   />
+                </div>
+
+                {/* Mobile Cart */}
+                <div className="mb-4">
+                  <Link href="/cart" className="flex items-center gap-3 text-gray-700 hover:text-blue-600 font-medium text-base px-4 py-2 rounded-lg hover:bg-blue-50 transition-all">
+                    <ShoppingCart className="h-5 w-5" />
+                    <span>Cart {getTotalItems() > 0 && `(${getTotalItems()})`}</span>
+                  </Link>
                 </div>
 
                 {/* Navigation Links */}

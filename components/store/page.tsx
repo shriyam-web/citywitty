@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { toast } from "react-hot-toast";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../ui/card";
+import { useCart } from "@/lib/cart-context";
 
 interface Product {
   _id: string;
@@ -275,6 +278,11 @@ const applyQuickFilter = (products: Product[], filter: QuickFilterKey) => {
 };
 
 const CWStore: React.FC = () => {
+  const { addToCart } = useCart();
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    toast.success(`${product.name} added to cart`);
+  };
   const [activeCategoryKey, setActiveCategoryKey] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [quickFilter, setQuickFilter] = useState<QuickFilterKey>("all");
@@ -792,7 +800,12 @@ const CWStore: React.FC = () => {
                                     </div>
                                   </CardContent>
                                   <CardFooter className="flex flex-col gap-3 px-5 pb-5 sm:flex-row">
-                                    <button className="w-full rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white transition duration-300 hover:bg-indigo-600 sm:flex-1">Add to cart</button>
+                                    <button
+                                      onClick={() => handleAddToCart(product)}
+                                      className="w-full rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white transition duration-300 hover:bg-indigo-600 sm:flex-1"
+                                    >
+                                      Add to cart
+                                    </button>
                                     <a
                                       href={`/${product.merchantSlug}`}
                                       className="w-full rounded-2xl border border-slate-300 px-5 py-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition duration-300 hover:border-indigo-300 hover:text-indigo-600 sm:w-auto"
