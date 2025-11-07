@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Star, Shield, Building2, Utensils, Hotel, ShoppingBag, Scissors, Gamepad2, CheckCircle } from 'lucide-react';
+import { unstable_cache } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Partner from '@/models/partner/partner';
 
@@ -30,62 +31,70 @@ interface Merchant {
     };
 }
 
-async function fetchFilterOptions(): Promise<{ categories: string[], cities: string[] }> {
-    try {
-        await dbConnect();
-        const categories = await Partner.distinct('category', { status: 'active' });
-        const cities = await Partner.distinct('city', { status: 'active' });
+const fetchFilterOptions = unstable_cache(
+    async (): Promise<{ categories: string[], cities: string[] }> => {
+        try {
+            await dbConnect();
+            const categories = await Partner.distinct('category', { status: 'active' });
+            const cities = await Partner.distinct('city', { status: 'active' });
 
-        // Normalize cities to title case and remove duplicates
-        const normalizedCities = cities
-            .filter(Boolean)
-            .map(city => city.trim())
-            .filter(city => city.length > 0)
-            .map(city => city.charAt(0).toUpperCase() + city.slice(1).toLowerCase())
-            .filter((city, index, arr) => arr.indexOf(city) === index) // Remove duplicates
-            .sort();
+            // Normalize cities to title case and remove duplicates
+            const normalizedCities = cities
+                .filter(Boolean)
+                .map(city => city.trim())
+                .filter(city => city.length > 0)
+                .map(city => city.charAt(0).toUpperCase() + city.slice(1).toLowerCase())
+                .filter((city, index, arr) => arr.indexOf(city) === index) // Remove duplicates
+                .sort();
 
-        return {
-            categories: categories.filter(Boolean).sort(),
-            cities: normalizedCities
-        };
-    } catch (error) {
-        console.error('Error fetching filter options:', error);
-        return { categories: [], cities: [] };
-    }
-}
+            return {
+                categories: categories.filter(Boolean).sort(),
+                cities: normalizedCities
+            };
+        } catch (error) {
+            console.error('Error fetching filter options:', error);
+            return { categories: [], cities: [] };
+        }
+    },
+    ['filter-options'],
+    { revalidate: 3600 } // Cache for 1 hour
+);
 
-async function fetchFeaturedMerchants(): Promise<Merchant[]> {
-    try {
-        await dbConnect();
-        const merchants = await Partner.aggregate([
-            { $match: { status: 'active' } },
-            { $sample: { size: 6 } },
-            {
-                $project: {
-                    merchantSlug: 1,
-                    displayName: 1,
-                    category: 1,
-                    city: 1,
-                    description: 1,
-                    logo: 1,
-                    averageRating: 1,
-                    offlineDiscount: 1,
-                    customOffer: 1,
-                    citywittyAssured: 1,
-                    isPremiumSeller: 1,
-                    isVerified: 1,
-                    trust: 1,
-                    businessHours: 1
+const fetchFeaturedMerchants = unstable_cache(
+    async (): Promise<Merchant[]> => {
+        try {
+            await dbConnect();
+            const merchants = await Partner.aggregate([
+                { $match: { status: 'active' } },
+                { $sample: { size: 6 } },
+                {
+                    $project: {
+                        merchantSlug: 1,
+                        displayName: 1,
+                        category: 1,
+                        city: 1,
+                        description: 1,
+                        logo: 1,
+                        averageRating: 1,
+                        offlineDiscount: 1,
+                        customOffer: 1,
+                        citywittyAssured: 1,
+                        isPremiumSeller: 1,
+                        isVerified: 1,
+                        trust: 1,
+                        businessHours: 1
+                    }
                 }
-            }
-        ]).exec() as Merchant[];
-        return merchants || [];
-    } catch (error) {
-        console.error('Error fetching featured merchants:', error);
-        return [];
-    }
-}
+            ]).exec() as Merchant[];
+            return merchants || [];
+        } catch (error) {
+            console.error('Error fetching featured merchants:', error);
+            return [];
+        }
+    },
+    ['featured-merchants'],
+    { revalidate: 300 } // Cache for 5 minutes to allow some rotation
+);
 
 const calculateDiscountPercent = (offer: { discountPercent?: number; discountValue?: number; originalPrice?: number }): number => {
     if (offer.discountPercent && offer.discountPercent > 0) {

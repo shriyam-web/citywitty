@@ -6,10 +6,7 @@ import { motion } from "framer-motion";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, CreditCard, Sparkles, Zap, Gift, Play, CheckCircle, TrendingUp } from 'lucide-react';
-// import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-// import { Button } from "@/components/ui/button";
-// import PremiumCard from "@/components/PremiumCard";
 
 
 const cityIcons = [
@@ -19,16 +16,7 @@ const cityIcons = [
   "/icons/hawa-mahal.png",
   "/icons/charminar.png",
   "/icons/victoria.png",
-  // "/icons/india-gate.png",
-  // "/icons/mysore-palace.png",
-  // "/icons/statue-unity.png",
-  // "/icons/marina.png",
 ];
-// Rotating live offers
-
-// import Link from 'next/link';
-
-// const { user } = useAuth();
 
 const rotatingOffers = [
   { merchant: 'Royal Palace Hotel', discount: '30% OFF', category: 'Hotels', color: 'from-blue-500 to-cyan-400' },
@@ -37,7 +25,6 @@ const rotatingOffers = [
   { merchant: 'Fashion Forward', discount: '35% OFF', category: 'Fashion', color: 'from-orange-500 to-yellow-400' }
 ];
 
-// Floating background icons
 const floatingElements = [
   { icon: Gift, delay: '0s', position: 'top-40 left-[30%]' },
   { icon: Zap, delay: '1s', position: 'top-32 right-[15%]' },
@@ -50,7 +37,6 @@ export default function PremiumCard() {
   const [isDragging, setIsDragging] = useState(false);
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
 
-  // --- Desktop Mouse Drag ---
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setLastPos({ x: e.clientX, y: e.clientY });
@@ -70,7 +56,6 @@ export default function PremiumCard() {
 
   const handleMouseUp = () => setIsDragging(false);
 
-  // --- Mobile Touch Drag ---
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     const touch = e.touches[0];
     setIsDragging(true);
@@ -112,27 +97,19 @@ export default function PremiumCard() {
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
         >
 
-          {/* FRONT */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden 
           bg-gradient-to-br from-gray-800 via-gray-900 to-gray-700 border border-gray-600
           [backface-visibility:hidden]">
 
-            {/* Metallic Texture */}
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')] opacity-15 mix-blend-overlay" />
 
-            {/* Watermark */}
             <div className="absolute inset-0 flex items-center justify-center text-[5rem] sm:text-[7rem] font-extrabold text-gray-700/10 tracking-widest rotate-[-20deg]">
               SAVINGS
             </div>
 
-            {/* Content */}
-            {/* <div className="relative p-6 flex flex-col justify-between h-full text-white"> change 1 */}
             <div className="relative p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col justify-between h-full text-white">
 
               <div className="flex justify-between items-center">
-                {/* <div className="text-2xl sm:text-3xl font-extrabold tracking-wide">
-                  City<span className="text-orange-400">Witty</span>
-                </div> */}
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <div className="relative">
                     <img
@@ -160,11 +137,6 @@ export default function PremiumCard() {
                 </div>
               </div>
 
-              {/* <div className="font-mono text-xl sm:text-2xl md:text-3xl tracking-widest">
-                **** **** **** 1234
-              </div>
-
-              <div className="flex justify-between items-end text-sm sm:text-base"> change 2 */}
               <div className="font-mono text-base sm:text-xl md:text-2xl tracking-widest">
                 **** **** **** 1234
               </div>
@@ -181,26 +153,17 @@ export default function PremiumCard() {
             </div>
           </div>
 
-          {/* BACK */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden 
           bg-gradient-to-br from-gray-900 via-black to-gray-800 border border-gray-600 
           [transform:rotateY(180deg)] [backface-visibility:hidden]">
 
-            {/* Metallic Texture */}
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/metallic-fabric.png')] opacity-10 mix-blend-overlay" />
 
-            {/* Content */}
             <div className="relative p-6 flex flex-col justify-between h-full text-white">
-              {/* Chip */}
               <div className="w-16 h-12 bg-gradient-to-br from-yellow-300 via-yellow-500 to-yellow-600 
               rounded-md mx-auto shadow-md border border-yellow-400" />
 
-              {/* Branding */}
               <div className="flex flex-col items-center space-y-2">
-                {/* <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide 
-                bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">
-                  City<span className="text-orange-500">Witty</span> Privilege Card
-                </h2> */}
                 <div className="flex items-center space-x-3">
                   <div className="relative">
 
@@ -222,17 +185,13 @@ export default function PremiumCard() {
                 </p>
               </div>
 
-              {/* Strip */}
               <div className="w-full h-2 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600 rounded-full opacity-80" />
             </div>
           </div>
 
-
-
         </motion.div >
 
       </div >
-      {/* Controls under the card */}
       <div className="mt-4 flex justify-center gap-3">
         <Button
           size="sm"
@@ -257,13 +216,12 @@ export default function PremiumCard() {
 }
 
 
-// Hero Section Page
-
-
-
 export function HeroSection() {
   const [currentCity, setCurrentCity] = useState(0);
-  const { user } = useAuth(); // <-- add this lin
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [memberCount, setMemberCount] = useState(0);
+  const { user } = useAuth();
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCity((prev) => (prev + 1) % cityIcons.length);
@@ -271,149 +229,229 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (memberCount >= 25000) return;
+    const interval = setInterval(() => {
+      setMemberCount((prev) => {
+        const newCount = prev + Math.floor(Math.random() * 50) + 10;
+        return newCount > 25000 ? 25000 : newCount;
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [memberCount]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } }
+  };
+
+  const floatingVariants = {
+    animate: {
+      y: [0, -20, 0],
+      transition: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+    }
+  };
+
+  const pulseVariants = {
+    animate: {
+      scale: [1, 1.05, 1],
+      transition: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+    }
+  };
+
   return (
-    <section className="relative w-full py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden px-4 sm:px-10 lg:px-20">
-      {/* Background Glow */}
-      <div className="absolute top-20 left-5 w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-gradient-to-tr from-orange-300/40 to-blue-200/30 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-16 right-0 w-28 h-28 sm:w-44 sm:h-44 md:w-52 md:h-52 bg-gradient-to-tr from-blue-300/40 to-orange-200/20 rounded-full blur-3xl animate-pulse delay-1000" />
+    <section className="relative w-full overflow-hidden bg-white">
+      <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.08 }}>
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="gray" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
 
-      {/* ✅ Adjusted grid for tablets */}
-      <div className="container mx-auto relative z-10 grid grid-cols-1 md:grid-cols-[1fr_minmax(340px,520px)] gap-8 sm:gap-12 lg:gap-20 items-start">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 opacity-60" />
 
+      <motion.div 
+        className="absolute -top-40 -right-40 w-[800px] h-[800px] bg-gradient-to-br from-blue-200/30 via-blue-100/15 to-transparent rounded-full blur-3xl"
+        animate={{ 
+          x: [0, 50, 0],
+          y: [0, 40, 0]
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute -bottom-40 -left-40 w-[700px] h-[700px] bg-gradient-to-tr from-orange-200/20 via-orange-100/10 to-transparent rounded-full blur-3xl"
+        animate={{ 
+          x: [0, -50, 0],
+          y: [0, -40, 0]
+        }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-b from-purple-200/15 via-transparent to-transparent rounded-full blur-3xl"
+        animate={{ 
+          x: [0, 30, -30, 0],
+          y: [0, -30, 30, 0]
+        }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-
-
-
-        {/* LEFT CONTENT */}
-        <motion.div
-          className="space-y-5 sm:space-y-7 md:space-y-8 text-center md:text-left"
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          {/* Badge */}
+      <div className="relative z-10">
+        <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-20 lg:pt-24 pb-6 md:pb-8 lg:pb-12">
           <motion.div
-            className="inline-flex items-center space-x-2 sm:space-x-3 bg-gradient-to-r from-orange-100 to-blue-100 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold border border-gray-200 shadow-sm mt-3 sm:mt-0"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="w-full max-w-7xl"
           >
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            <span className="text-gray-700">India's #1 Premium Discount Platform</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center">
+              {/* Left Content */}
+              <motion.div className="space-y-3 flex flex-col justify-center order-1 lg:order-1">
+                {/* Main Heading - Clean */}
+                <motion.div variants={itemVariants} className="pt-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
+                    Earn Rewards &amp; Save More
+                  </h1>
+                </motion.div>
+
+                {/* Description - Focused */}
+                <motion.div variants={itemVariants} className="max-w-2xl">
+                  <p className="text-sm lg:text-base text-gray-700 leading-relaxed">
+                    Get up to 35% discounts, cashback rewards, and exclusive deals on 500+ premium brands across fashion, dining, travel, and more.
+                  </p>
+                </motion.div>
+
+                {/* Stats - Minimal */}
+                <motion.div variants={itemVariants} className="flex gap-6 pt-2">
+                  <div>
+                    <div className="text-xl sm:text-2xl font-black text-gray-900">500+</div>
+                    <div className="text-xs text-gray-600 font-medium">Partner Brands</div>
+                  </div>
+                  <div>
+                    <div className="text-xl sm:text-2xl font-black text-gray-900">35%</div>
+                    <div className="text-xs text-gray-600 font-medium">Max Discount</div>
+                  </div>
+                  <div>
+                    <div className="text-xl sm:text-2xl font-black text-gray-900">25k+</div>
+                    <div className="text-xs text-gray-600 font-medium">Active Users</div>
+                  </div>
+                </motion.div>
+
+                {/* CTA Section */}
+                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-2">
+                  <Button
+                    asChild
+                    className="w-full sm:w-auto px-8 sm:px-12 py-3 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 shadow-sm hover:shadow-md"
+                  >
+                    <Link href={user ? "/get-card" : "/register"} className="flex items-center gap-2 justify-center">
+                      <span>Get Card Now</span>
+                      <ArrowRight size={18} />
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    className="w-full sm:w-auto px-8 sm:px-12 py-3 text-sm font-semibold bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-lg transition-all duration-300"
+                  >
+                    <Link href="/merchants" className="flex items-center gap-2 justify-center">
+                      <span>Browse Deals</span>
+                      <Sparkles size={18} />
+                    </Link>
+                  </Button>
+                </motion.div>
+
+                {/* Trust Section - Simple */}
+                <motion.div variants={itemVariants} className="flex items-center gap-3 pt-1">
+                  <div className="flex -space-x-3">
+                    {[...Array(3)].map((_, i) => (
+                      <div 
+                        key={i}
+                        className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold"
+                      >
+                        👤
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-xs sm:text-sm">
+                    <div className="font-semibold text-gray-900">Trusted by {memberCount.toLocaleString()}+</div>
+                    <div className="text-xs text-gray-600">Active members</div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Right Content - Enhanced Card */}
+              <motion.div
+                variants={itemVariants}
+                className="flex justify-center lg:justify-end items-center order-2 lg:order-2"
+              >
+                <motion.div
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.1 }}
+                  className="relative w-full max-w-lg"
+                >
+                  <motion.div
+                    className="absolute -inset-8 bg-gradient-to-br from-white/60 via-white/30 to-transparent rounded-3xl blur-3xl"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <motion.div
+                    className="absolute -inset-6 bg-gradient-to-tr from-white/50 to-transparent rounded-3xl blur-2xl"
+                    animate={{ x: [0, 20, -20, 0], y: [0, -15, 15, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <motion.div
+                    className="absolute -inset-10 bg-gradient-to-b from-white/40 to-transparent rounded-3xl blur-3xl"
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                  />
+                  <div className="relative z-10">
+                    <PremiumCard />
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
-
-
-          {/* Headings */}
-          <div className="space-y-2 sm:space-y-4 max-w-2xl mx-auto md:mx-0">
-            <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <span className="bg-gradient-to-r from-orange-500 via-blue-600 to-orange-500 bg-[length:300%_300%] bg-clip-text text-transparent animate-gradient">
-                Your City,
-              </span>
-              <span className="block text-gray-900 dark:text-white">
-                Your Lifestyle.
-              </span>
-            </motion.h1>
-
-            <motion.h2
-              className="text-base sm:text-lg md:text-xl lg:text-3xl font-semibold text-gray-700 dark:text-gray-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              Unlock <span className="text-orange-500">exclusive deals</span> with every purchase.
-            </motion.h2>
-
-            <motion.p
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              A <span className="font-semibold text-blue-600">premium advantage</span> that makes
-              living smarter, simpler & more rewarding.
-            </motion.p>
-          </div>
-
-          {/* Trust Line */}
-          <motion.p
-            className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-500 font-medium text-center md:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3 }}
-          >
-            Trusted by <span className="text-orange-500 font-semibold">25,000+ members</span> across India – saving on food, fashion & travel every day.
-          </motion.p>
-
-
-          {/* ✅ CTA Buttons center aligned on md */}
-          <motion.div
-            className="flex flex-col sm:flex-row justify-center md:justify-center lg:justify-start gap-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-          >
-            <Button className="bg-gradient-to-r from-orange-500 to-blue-600 hover:from-orange-600 hover:to-blue-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg shadow-xl rounded-xl transition-transform hover:scale-105">
-              <Link href={user ? "/get-card" : "/register"}>🚀 Get Your Card Now</Link>
-            </Button>
-
-            <Button
-              variant="outline"
-              className="border-2 border-gray-300 text-gray-800 hover:bg-gray-100 hover:text-gray-900 font-bold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg rounded-xl transition-transform hover:scale-105"
-            >
-              <Link href="/merchants">🔍 Explore Merchants</Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        {/* RIGHT CONTENT - Premium Card */}
-        {/* RIGHT CONTENT - Premium Card */}
-        {/* RIGHT CONTENT - Premium Card */}
-        <motion.div
-          className="flex justify-center md:justify-end"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.6 }}
-        >
-          <motion.div
-            className="w-full max-w-[520px]"  // ⬅️ increased size
-            whileHover={{ rotate: -2, scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            <PremiumCard />
-          </motion.div>
-        </motion.div>
-
-
+        </div>
       </div>
 
-      {/* ✅ Rotating City Skyline - adjusted heights */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+      {/* Animated Bottom Bar */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden z-0 h-20 sm:h-24 md:h-32">
         <motion.div
-          className="flex w-max"
+          className="flex w-max gap-8"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 100, ease: "linear" }}
         >
-          {[...Array(20)].map((_, i) => (
-            <img
+          {[...Array(30)].map((_, i) => (
+            <div
               key={i}
-              src="/cities1.png"
-              alt="City Skyline"
-              className="h-12 sm:h-16 md:h-20 lg:h-24 object-cover flex-shrink-0"
-
-            />
+              className="relative flex-shrink-0 h-full flex items-end justify-center group"
+            >
+              <motion.img
+                src="/cities1.png"
+                alt="City Skyline"
+                className="h-full object-cover opacity-10 group-hover:opacity-20 grayscale transition-opacity duration-300"
+              />
+            </div>
           ))}
         </motion.div>
       </div>
     </section>
   );
 }
-
-
-
-
-

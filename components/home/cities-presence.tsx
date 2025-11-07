@@ -5,45 +5,52 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin, Search } from 'lucide-react';
 import allCitiesRaw from '@/data/allCities.json';
 
+type CityRecord = {
+  name: string;
+  state: string;
+  merchants: number;
+};
+
+const TOP_CITIES = [
+  'Delhi',
+  'Mumbai',
+  'Lucknow',
+  'Agra',
+  'Prayagraj (Allahabad)',
+  'Kolkata',
+  'Noida',
+  'Greater Noida',
+];
+
+const TOP_CITY_SET = new Set(TOP_CITIES);
+
+const ALL_CITIES: CityRecord[] = allCitiesRaw.map((city: string) => ({
+  name: city,
+  state: '',
+  merchants: 0,
+}));
+
+const HIGHLIGHT_CITIES = ALL_CITIES.filter((city) => TOP_CITY_SET.has(city.name));
+const OTHER_CITIES = ALL_CITIES.filter((city) => !TOP_CITY_SET.has(city.name));
+
 export function CitiesPresence() {
   const [visibleCount, setVisibleCount] = useState(24);
   const [search, setSearch] = useState('');
 
-  // Convert string array into object array
-  const allCities = allCitiesRaw.map((city: string) => ({
-    name: city,
-    state: '', // placeholder
-    merchants: 0, // placeholder
-  }));
-
-  // ✅ Manually define top 8 highlighted cities
-  const topCities = [
-    'Delhi',
-    'Mumbai',
-    'Lucknow',
-    'Agra',
-    'Prayagraj (Allahabad)',
-    'Kolkata',
-    'Noida',
-    'Greater Noida',
-  ];
-
-  const highlightCities = allCities.filter((c) =>
-    topCities.includes(c.name)
-  );
-
-  // Rest of the cities
-  const otherCities = allCities.filter(
-    (c) => !topCities.includes(c.name)
-  );
-
-  // Filter logic for search
   const filteredCities = useMemo(() => {
-    if (!search) return otherCities;
-    return otherCities.filter((city) =>
-      city.name.toLowerCase().includes(search.toLowerCase())
+    if (!search) return OTHER_CITIES;
+    const term = search.toLowerCase();
+    return OTHER_CITIES.filter((city) =>
+      city.name.toLowerCase().includes(term)
     );
-  }, [search, otherCities]);
+  }, [search]);
+
+  const displayedCities = useMemo(
+    () => filteredCities.slice(0, visibleCount),
+    [filteredCities, visibleCount]
+  );
+
+  const hasMoreCities = !search && visibleCount < OTHER_CITIES.length;
 
   return (
     <section className="py-20 relative bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -56,7 +63,7 @@ export function CitiesPresence() {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Proudly connecting customers & merchants across{' '}
             <span className="font-semibold text-blue-600">
-              {allCities.length}+
+              {ALL_CITIES.length}+
             </span>{' '}
             cities 🎉
           </p>
@@ -64,7 +71,7 @@ export function CitiesPresence() {
 
         {/* Highlighted Top Cities */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {highlightCities.map((city, index) => (
+          {HIGHLIGHT_CITIES.map((city, index) => (
             <div
               key={`${city.name}-${index}`}
               className={`p-6 rounded-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer ${index < 4
@@ -128,7 +135,7 @@ export function CitiesPresence() {
 
           {/* Cities Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {filteredCities.slice(0, visibleCount).map((city, index) => (
+            {displayedCities.map((city, index) => (
               <div
                 key={`${city.name}-${index}`}
                 className="text-center p-4 bg-gray-50 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer"
@@ -144,7 +151,7 @@ export function CitiesPresence() {
           </div>
 
           {/* Load More */}
-          {visibleCount < filteredCities.length && !search && (
+          {hasMoreCities && (
             <div className="text-center mt-8">
               <button
                 onClick={() => setVisibleCount(visibleCount + 24)}

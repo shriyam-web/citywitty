@@ -8,8 +8,11 @@ import { CategoriesSection } from '@/components/home/categories-section';
 import { CitiesPresence } from '@/components/home/cities-presence';
 import { CallToActionSection } from '@/components/home/call-to-action';
 import type { Metadata } from "next";
+import dynamic from 'next/dynamic';
 
-import CWStore from '@/components/store/page';
+const CWStore = dynamic(() => import('@/components/store/page'), {
+  loading: () => <div className="min-h-[400px] flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div></div>
+});
 
 export const metadata: Metadata = {
   title: "CityWitty - Premium Discount Card Platform",
