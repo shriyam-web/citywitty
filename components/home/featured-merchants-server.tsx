@@ -60,41 +60,37 @@ const fetchFilterOptions = unstable_cache(
     { revalidate: 3600 } // Cache for 1 hour
 );
 
-const fetchFeaturedMerchants = unstable_cache(
-    async (): Promise<Merchant[]> => {
-        try {
-            await dbConnect();
-            const merchants = await Partner.aggregate([
-                { $match: { status: 'active' } },
-                { $sample: { size: 6 } },
-                {
-                    $project: {
-                        merchantSlug: 1,
-                        displayName: 1,
-                        category: 1,
-                        city: 1,
-                        description: 1,
-                        logo: 1,
-                        averageRating: 1,
-                        offlineDiscount: 1,
-                        customOffer: 1,
-                        citywittyAssured: 1,
-                        isPremiumSeller: 1,
-                        isVerified: 1,
-                        trust: 1,
-                        businessHours: 1
-                    }
+const fetchFeaturedMerchants = async (): Promise<Merchant[]> => {
+    try {
+        await dbConnect();
+        const merchants = await Partner.aggregate([
+            { $match: { status: 'active' } },
+            { $sample: { size: 6 } },
+            {
+                $project: {
+                    merchantSlug: 1,
+                    displayName: 1,
+                    category: 1,
+                    city: 1,
+                    description: 1,
+                    logo: 1,
+                    averageRating: 1,
+                    offlineDiscount: 1,
+                    customOffer: 1,
+                    citywittyAssured: 1,
+                    isPremiumSeller: 1,
+                    isVerified: 1,
+                    trust: 1,
+                    businessHours: 1
                 }
-            ]).exec() as Merchant[];
-            return merchants || [];
-        } catch (error) {
-            console.error('Error fetching featured merchants:', error);
-            return [];
-        }
-    },
-    ['featured-merchants'],
-    { revalidate: 0 } // Disable caching completely
-);
+            }
+        ]).exec() as Merchant[];
+        return merchants || [];
+    } catch (error) {
+        console.error('Error fetching featured merchants:', error);
+        return [];
+    }
+};
 
 const calculateDiscountPercent = (offer: { discountPercent?: number; discountValue?: number; originalPrice?: number }): number => {
     if (offer.discountPercent && offer.discountPercent > 0) {
