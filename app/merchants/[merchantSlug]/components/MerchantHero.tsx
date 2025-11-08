@@ -292,27 +292,9 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
 
             <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
                 {galleryImages.length > 0 ? (
-                    <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] h-40 sm:h-52 lg:h-64">
-                        {/* Left Sidebar - Thumbnails */}
-                        <div className="hidden lg:flex flex-col gap-1 p-2 bg-slate-50">
-                            {galleryImages.slice(1, 5).map((image, index) => (
-                                <div
-                                    key={index}
-                                    className="relative flex-1 overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
-                                    onClick={() => openGallery(index + 1)}
-                                >
-                                    <Image
-                                        src={image}
-                                        alt={`${merchant.displayName} - Image ${index + 2}`}
-                                        fill
-                                        className="object-cover"
-                                        sizes="160px"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                        {/* Main Image - 60% width on desktop */}
-                        <div className="relative h-full w-full overflow-hidden">
+                    <div className="flex flex-col lg:flex-row h-40 sm:h-52 lg:h-64">
+                        {/* Main Image - Takes 60% on desktop, full width on mobile */}
+                        <div className="relative lg:w-3/5 h-full overflow-hidden">
                             <Image
                                 src={galleryImages[0]}
                                 alt={`${merchant.displayName} - Store front view`}
@@ -323,12 +305,12 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                 onClick={() => openGallery(0)}
                             />
                         </div>
-                        {/* Mobile Thumbnails - Below main image */}
-                        <div className="lg:hidden flex gap-1 p-2 bg-slate-50 overflow-x-auto">
+                        {/* Thumbnails - Right side on desktop, below on mobile */}
+                        <div className="lg:w-2/5 flex flex-row lg:flex-col gap-1 p-1 bg-slate-50 overflow-x-auto lg:overflow-x-visible lg:h-full">
                             {galleryImages.slice(1, 5).map((image, index) => (
                                 <div
                                     key={index}
-                                    className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
+                                    className="relative flex-1 w-20 h-20 lg:w-full lg:h-full overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
                                     onClick={() => openGallery(index + 1)}
                                 >
                                     <Image
@@ -336,7 +318,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                         alt={`${merchant.displayName} - Image ${index + 2}`}
                                         fill
                                         className="object-cover"
-                                        sizes="80px"
+                                        sizes="(max-width: 1024px) 80px, 160px"
                                     />
                                 </div>
                             ))}
