@@ -291,38 +291,76 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
             )}
 
             <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
-                <div className="relative h-40 w-full sm:h-52 lg:h-64">
-                    {galleryImages.length > 0 ? (
+                {galleryImages.length > 0 ? (
+                    <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] h-40 sm:h-52 lg:h-64">
+                        {/* Left Sidebar - Thumbnails */}
+                        <div className="hidden lg:flex flex-col gap-1 p-2 bg-slate-50">
+                            {galleryImages.slice(1, 5).map((image, index) => (
+                                <div
+                                    key={index}
+                                    className="relative flex-1 overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
+                                    onClick={() => openGallery(index + 1)}
+                                >
+                                    <Image
+                                        src={image}
+                                        alt={`${merchant.displayName} - Image ${index + 2}`}
+                                        fill
+                                        className="object-cover"
+                                        sizes="160px"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        {/* Main Image - 60% width on desktop */}
                         <div className="relative h-full w-full overflow-hidden">
                             <Image
                                 src={galleryImages[0]}
                                 alt={`${merchant.displayName} - Store front view`}
                                 fill
-                                className="object-cover"
-                                sizes="(max-width: 1024px) 100vw, 1200px"
+                                className="object-cover cursor-pointer"
+                                sizes="(max-width: 1024px) 100vw, 720px"
                                 priority
+                                onClick={() => openGallery(0)}
                             />
                         </div>
-                    ) : (
-                        <div className="relative h-full w-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                            <div
-                                className="absolute inset-0"
-                                style={{ backgroundImage: watermarkPattern, backgroundRepeat: 'repeat', backgroundSize: '200px 60px' }}
-                                aria-hidden="true"
-                            />
-                            <div className="flex items-center justify-center">
-                                {React.createElement(getCategoryIcon(merchant.category), {
-                                    className: "w-16 h-16 text-gray-400",
-                                    "aria-label": `${merchant.category} category icon`
-                                })}
-                            </div>
+                        {/* Mobile Thumbnails - Below main image */}
+                        <div className="lg:hidden flex gap-1 p-2 bg-slate-50 overflow-x-auto">
+                            {galleryImages.slice(1, 5).map((image, index) => (
+                                <div
+                                    key={index}
+                                    className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
+                                    onClick={() => openGallery(index + 1)}
+                                >
+                                    <Image
+                                        src={image}
+                                        alt={`${merchant.displayName} - Image ${index + 2}`}
+                                        fill
+                                        className="object-cover"
+                                        sizes="80px"
+                                    />
+                                </div>
+                            ))}
                         </div>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <div className="relative h-40 w-full sm:h-52 lg:h-64 overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div
+                            className="absolute inset-0"
+                            style={{ backgroundImage: watermarkPattern, backgroundRepeat: 'repeat', backgroundSize: '200px 60px' }}
+                            aria-hidden="true"
+                        />
+                        <div className="flex items-center justify-center">
+                            {React.createElement(getCategoryIcon(merchant.category), {
+                                className: "w-16 h-16 text-gray-400",
+                                "aria-label": `${merchant.category} category icon`
+                            })}
+                        </div>
+                    </div>
+                )}
                 <div className="grid gap-2 p-3 sm:p-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
                     <div className="flex flex-col gap-2 sm:gap-2">
                         <div className="flex items-start gap-2.5 sm:gap-3">
-                            <div className="relative hidden h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:block sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
+                            <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
                                 {merchant.logo ? (
                                     <Image
                                         src={merchant.logo}
