@@ -259,23 +259,23 @@ async function getMerchantData(merchantSlug: string): Promise<{
             return null;
         }
 
-        // Fetch offline products separately
+        // Fetch offline products directly from database (avoids HTTP calls during build)
         let offlineProducts: any[] = [];
         try {
-            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-            const productsResponse = await fetch(
-                `${baseUrl}/api/merchants/${merchantSlug}/offline-products`,
-                {
-                    next: { revalidate: 3600 }, // ISR: revalidate every hour
-                }
-            );
+            const merchantIdStr = merchant.merchantId;
+            const objectIdStr = merchant._id?.toString();
 
-            if (productsResponse.ok) {
-                const productsData = await productsResponse.json();
-                offlineProducts = productsData.products || [];
-            } else {
-                console.warn('Failed to fetch offline products: HTTP', productsResponse.status);
-            }
+            offlineProducts = await (
+                await import('@/models/OfflineProduct')
+            ).default.find({
+                $or: [
+                    { merchantId: merchantIdStr },
+                    { merchantId: objectIdStr }
+                ],
+                status: "active"
+            }).sort({ createdAt: -1 }).lean();
+
+            offlineProducts = offlineProducts || [];
         } catch (error) {
             console.warn('Failed to fetch offline products:', error);
             // Continue with empty products array during build/static generation
