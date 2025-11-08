@@ -51,8 +51,8 @@ function LocationDropdown({ manualLocation, setManualLocation, location, loading
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
-          className="flex items-center gap-2 border-gray-300 hover:border-blue-500 hover:text-blue-600"
+          variant="ghost"
+          className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 hover:text-blue-600"
         >
           <MapPin className="h-4 w-4 text-blue-500" />
           {loading ? 'Detecting...' : manualLocation || location?.city || 'Choose City'}
@@ -173,16 +173,16 @@ export function Header() {
             </div>
 
             {/* Cart Icon */}
-            <Link href="/cart" className="relative">
-              <Button variant="ghost" className="flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5" />
-                {getTotalItems() > 0 && (
+            {getTotalItems() > 0 && (
+              <Link href="/cart" className="relative">
+                <Button variant="ghost" className="flex items-center gap-2">
+                  <ShoppingCart className="h-5 w-5" />
                   <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                     {getTotalItems()}
                   </span>
-                )}
-              </Button>
-            </Link>
+                </Button>
+              </Link>
+            )}
 
             {/* Desktop Login/Register */}
             {!user && (
@@ -261,12 +261,14 @@ export function Header() {
                 </div>
 
                 {/* Mobile Cart */}
-                <div className="mb-4">
-                  <Link href="/cart" className="flex items-center gap-3 text-gray-700 hover:text-blue-600 font-medium text-base px-4 py-2 rounded-lg hover:bg-blue-50 transition-all">
-                    <ShoppingCart className="h-5 w-5" />
-                    <span>Cart {getTotalItems() > 0 && `(${getTotalItems()})`}</span>
-                  </Link>
-                </div>
+                {getTotalItems() > 0 && (
+                  <div className="mb-4">
+                    <Link href="/cart" className="flex items-center gap-3 text-gray-700 hover:text-blue-600 font-medium text-base px-4 py-2 rounded-lg hover:bg-blue-50 transition-all">
+                      <ShoppingCart className="h-5 w-5" />
+                      <span>Cart ({getTotalItems()})</span>
+                    </Link>
+                  </div>
+                )}
 
                 {/* Navigation Links */}
                 <div className="flex flex-col space-y-4 mt-10">

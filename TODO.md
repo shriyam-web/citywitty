@@ -1,7 +1,5 @@
-# TODO: Integrate E-Commerce Store into Home Page
+# TODO: Header Component Modifications
 
-## Steps to Complete
-- [ ] Import CWStore component in app/page.tsx
-- [ ] Add CWStore component to HomePage JSX after CallToActionSection
-- [ ] Run development server to test integration
-- [ ] Verify store appears and functions correctly on home page
+- [x] Update LocationDropdown button to remove border and make it distinct (change variant to "ghost", remove border-gray-300, add bg-blue-50)
+- [x] Conditionally render desktop cart button only when getTotalItems() > 0
+- [x] Conditionally render mobile cart button only when getTotalItems() > 0
