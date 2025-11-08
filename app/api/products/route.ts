@@ -1,12 +1,12 @@
 import dbConnect from "@/lib/mongodb";
 import Partner from "@/models/partner/partner";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
     try {
         await dbConnect();
 
-        const { searchParams } = new URL(request.url);
+        const { searchParams } = request.nextUrl;
         const category = searchParams.get('category');
         const merchantSlug = searchParams.get('merchantSlug');
 
