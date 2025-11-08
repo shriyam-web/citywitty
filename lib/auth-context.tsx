@@ -210,6 +210,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // NextAuth session (Google etc.)
   const { data: session, status } = useSession();
 
+  // Show toast when Google login succeeds
+  useEffect(() => {
+    if (status === "authenticated" && session?.user && !localUser) {
+      toast.success(`Welcome back, ${session.user.name || 'User'}! 🎉`);
+    }
+  }, [status, session, localUser]);
+
   // Load saved user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem('citywitty_user');
