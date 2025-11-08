@@ -273,7 +273,7 @@ export default function LoginPage() {
               type="button"
               variant="outline"
               className="w-full max-w-xs flex items-center justify-center gap-2"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
+              onClick={() => signIn("google")}
             >
               <img
                 src="https://www.svgrepo.com/show/355037/google.svg"
@@ -289,7 +289,7 @@ export default function LoginPage() {
         </Card>
       </div>
 
-      <Dialog open={showNavigationDialog} onOpenChange={() => {}}>
+      <Dialog open={showNavigationDialog} onOpenChange={() => { }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Login Successful</DialogTitle>
