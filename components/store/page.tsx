@@ -350,7 +350,7 @@ const CWStore: React.FC = () => {
   const totalResults = visibleGroups.reduce((acc, category) => acc + category.filteredProducts.length, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-100 to-amber-100">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-100 to-amber-100 pt-16 sm:pt-20">
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-transparent bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white">
         <div className="absolute inset-0">
