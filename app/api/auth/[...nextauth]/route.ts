@@ -65,6 +65,7 @@ const handler = NextAuth({
         (session.user as any).id = dbUser._id.toString();
         (session.user as any).role = dbUser.role;
         (session.user as any).provider = dbUser.provider;
+        (session.user as any).isCardExist = dbUser.isCardExist;
       }
       return session;
     },
