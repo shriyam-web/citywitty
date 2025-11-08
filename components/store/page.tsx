@@ -350,7 +350,7 @@ const CWStore: React.FC = () => {
   const totalResults = visibleGroups.reduce((acc, category) => acc + category.filteredProducts.length, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-100 to-amber-100 pt-16 sm:pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-pink-100 to-amber-100">
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-transparent bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white">
         <div className="absolute inset-0">
@@ -360,7 +360,7 @@ const CWStore: React.FC = () => {
         <div className="relative mx-auto max-w-7xl px-3 py-0 sm:px-4 sm:py-0 lg:px-6 lg:py-0.5">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex w-full max-w-2xl flex-col items-center gap-4 text-center lg:items-start lg:text-left">
-              <div className="flex flex-col items-center gap-4 text-center lg:items-start lg:text-left">
+              <div className="flex flex-col items-center gap-4 text-center lg:items-start lg:text-left pt-4">
                 <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide backdrop-blur-sm ring-1 ring-white/30">India ka apna supermarket</span>
                 <div className="space-y-1">
                   <h1 className="text-xl font-bold leading-tight sm:text-5xl">Help India grow with every purchase</h1>
