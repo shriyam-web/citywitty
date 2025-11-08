@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
       username: user.name,
       role: user.role,
       provider: user.provider,
+      isCardExist: user.isCardExist,
     });
   } catch (err) {
     console.error("🔥 User login error:", err);
