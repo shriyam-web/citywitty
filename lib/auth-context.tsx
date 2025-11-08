@@ -189,6 +189,7 @@ interface User {
   name: string;
   role: 'admin' | 'merchant' | 'franchise' | 'it' | 'user';
   provider?: 'credentials' | 'google';
+  isCardExist?: boolean;
 }
 
 interface AuthContextType {
@@ -224,6 +225,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       name: session.user.name || '',
       role: (session.user as any).role || 'user',
       provider: (session.user as any).provider || 'google',
+      isCardExist: (session.user as any).isCardExist || false,
     }
     : localUser;
 
@@ -257,7 +259,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email: data.email,
         name: data.username,
         role: data.role,
-        provider: data.provider || "credentials"
+        provider: data.provider || "credentials",
+        isCardExist: data.isCardExist
       };
 
       setLocalUser(loggedInUser);
@@ -314,7 +317,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         name,
         role: role as User['role'],
-        provider: "credentials"
+        provider: "credentials",
+        isCardExist: data.user?.isCardExist || false
       };
 
       setLocalUser(newUser);
