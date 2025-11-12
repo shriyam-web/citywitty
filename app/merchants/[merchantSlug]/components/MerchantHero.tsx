@@ -280,6 +280,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                 fill
                                 className="object-contain"
                                 sizes="(max-width: 768px) 100vw, 70vw"
+                                quality={100}
                             />
                         </div>
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 text-sm text-white rounded-full">
@@ -301,6 +302,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                 fill
                                 className="object-cover cursor-pointer"
                                 sizes="(max-width: 1024px) 100vw, 720px"
+                                quality={100}
                                 priority
                                 onClick={() => openGallery(0)}
                             />
@@ -320,6 +322,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 1024px) 80px, 160px"
+                                            quality={100}
                                         />
                                     </div>
                                 ))}
@@ -352,6 +355,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                         fill
                                         className="object-cover"
                                         sizes="96px"
+                                        quality={100}
                                     />
                                 ) : (
                                     <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
