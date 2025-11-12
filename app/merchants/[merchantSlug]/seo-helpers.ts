@@ -38,6 +38,12 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
     alternateName: merchant.displayName.split(' ').join(''),
     description: merchant.description || `${merchant.displayName} - Premium ${merchant.category} in ${merchant.city}${merchant.tags && merchant.tags.length > 0 ? `. Specializing in: ${merchant.tags.slice(0, 3).join(', ')}` : ''}`,
     url: `${baseUrl}/merchants/${merchant.merchantSlug}`,
+    parentOrganization: {
+      '@type': 'Organization',
+      '@id': baseUrl,
+      name: 'CityWitty',
+      url: baseUrl,
+    },
     image: merchant.storeImages?.length ? merchant.storeImages : [merchant.logo || `${baseUrl}/og-image.png`],
     logo: {
       '@type': 'ImageObject',

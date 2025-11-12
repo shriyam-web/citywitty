@@ -112,14 +112,13 @@ export async function generateMetadata(
   const ratingValue = merchant.averageRating ? merchant.averageRating.toFixed(1) : null;
   const ratingCount = merchant.ratings?.length ?? 0;
   const metaDescription =
-    `${merchant.displayName} in ${merchant.city} - ${merchant.category}. `
+    `${merchant.displayName} is a verified merchant listed on CityWitty. ${merchant.category} in ${merchant.city}. `
     + (ratingValue ? `${ratingValue}/5 stars (${ratingCount} reviews). ` : '')
     + (merchant.offlineDiscount?.length ? `${merchant.offlineDiscount.length} exclusive deals. ` : '')
     + `Contact: ${merchant.phone}. ${merchant.description?.substring(0, 80)}...`;
   const metaTitle =
-    `${merchant.displayName} - ${merchant.category} in ${merchant.city} | CityWitty`
-    + (merchant.topRated ? ' | Top Rated' : '')
-    + (merchant.isVerified ? ' | Verified' : '');
+    `${merchant.displayName} | Verified on CityWitty – ${merchant.category} in ${merchant.city}`
+    + (merchant.topRated ? ' | Top Rated' : '');
   const primaryImage = merchant.storeImages?.[0] || merchant.logo || '';
   const resolvedImage = primaryImage ? new URL(primaryImage, baseUrl).toString() : undefined;
   const tags = merchant.tags?.map((tag) => tag?.trim()).filter((tag): tag is string => Boolean(tag)) ?? [];
@@ -148,7 +147,7 @@ export async function generateMetadata(
     classification: merchant.category,
     publisher: 'CityWitty',
     alternates: {
-      canonical: canonicalUrl,
+      canonical: merchant.website || canonicalUrl,
       languages: {
         'en-IN': canonicalUrl,
         'en': canonicalUrl,
