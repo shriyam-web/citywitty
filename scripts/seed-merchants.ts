@@ -45,10 +45,9 @@ const demoMerchants = [
         visibility: true,
         joinedSince: new Date("2019-01-01"),
         citywittyAssured: true,
-        premiumSeller: true,
-        verified: true,
-        trust: true,
-        topRated: true,
+        isPremiumSeller: true,
+        isVerified: true,
+        isTopMerchant: true,
         ratings: [
             {
                 userId: "user1",

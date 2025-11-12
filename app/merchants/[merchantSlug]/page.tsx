@@ -206,8 +206,8 @@ export async function generateStaticParams() {
             Partner.find({
                 status: 'active',
                 $or: [
-                    { verified: true, premiumSeller: true },
-                    { topRated: true },
+                    { isVerified: true, isPremiumSeller: true },
+                    { isTopMerchant: true },
                     { averageRating: { $gte: 4.5 } }
                 ]
             })
@@ -345,7 +345,7 @@ function getActiveStatusBadges(merchant: Merchant) {
             iconName: 'star' as const,
             activeClass: 'bg-purple-500/10 text-purple-600'
         }
-    ].filter(badge => merchant[badge.key]);
+    ].filter(badge => merchant[badge.key] === true);
 }
 
 /**
@@ -373,11 +373,16 @@ export default async function MerchantProfilePage({
     const { merchant: rawMerchant, offlineProducts } = data;
 
     // Normalize merchant data
+    const rawMerchantAny = rawMerchant as any;
     const merchant: Merchant = {
         ...rawMerchant,
         displayName: toTitleCase(rawMerchant.displayName) ?? rawMerchant.displayName,
         streetAddress: toTitleCase(rawMerchant.streetAddress) ?? rawMerchant.streetAddress,
         city: toTitleCase(rawMerchant.city) ?? rawMerchant.city,
+        isVerified: rawMerchant.isVerified,
+        premiumSeller: rawMerchantAny.isPremiumSeller,
+        topRated: rawMerchantAny.isTopMerchant,
+        citywittyAssured: rawMerchantAny.citywittyAssured,
     };
 
     const aboutStats = [

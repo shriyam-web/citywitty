@@ -107,7 +107,7 @@ export interface Merchant {
   longitude?: number;
   citywittyAssured?: boolean;
   premiumSeller?: boolean;
-  verified?: boolean;
+  isVerified?: boolean;
   trust?: boolean;
   topRated?: boolean;
   branchLocations?: {

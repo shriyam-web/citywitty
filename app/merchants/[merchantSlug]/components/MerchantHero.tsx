@@ -23,7 +23,7 @@ interface MerchantHeroProps {
     merchant: Merchant;
     distance?: string | null;
     activeStatusBadges?: Array<{
-        key: keyof Pick<Merchant, "premiumSeller" | "verified" | "citywittyAssured" | "topRated">;
+        key: keyof Pick<Merchant, "premiumSeller" | "isVerified" | "citywittyAssured" | "topRated">;
         label: string;
         iconName: 'crown' | 'thumbsup' | 'star';
         activeClass: string;
@@ -293,8 +293,8 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
             <div className="relative z-10 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_30px_55px_-30px_rgba(15,23,42,0.25)]">
                 {galleryImages.length > 0 ? (
                     <div className="flex flex-col lg:flex-row h-40 sm:h-52 lg:h-64">
-                        {/* Main Image - Takes 60% on desktop, full width on mobile */}
-                        <div className="relative lg:w-3/5 h-full overflow-hidden">
+                        {/* Main Image - Takes 100% on desktop if only one photo, 60% otherwise, full width on mobile */}
+                        <div className={`relative h-full overflow-hidden ${galleryImages.length === 1 ? 'lg:w-full' : 'lg:w-3/5'}`}>
                             <Image
                                 src={galleryImages[0]}
                                 alt={`${merchant.displayName} - Store front view`}
@@ -305,24 +305,26 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                 onClick={() => openGallery(0)}
                             />
                         </div>
-                        {/* Thumbnails - Right side on desktop, below on mobile */}
-                        <div className="lg:w-2/5 flex flex-row lg:flex-col gap-1 p-1 bg-slate-50 overflow-x-auto lg:overflow-x-visible lg:h-full">
-                            {galleryImages.slice(1, 5).map((image, index) => (
-                                <div
-                                    key={index}
-                                    className="relative flex-1 w-20 h-20 lg:w-full lg:h-full overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
-                                    onClick={() => openGallery(index + 1)}
-                                >
-                                    <Image
-                                        src={image}
-                                        alt={`${merchant.displayName} - Image ${index + 2}`}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 1024px) 80px, 160px"
-                                    />
-                                </div>
-                            ))}
-                        </div>
+                        {/* Thumbnails - Right side on desktop, below on mobile - Only show if more than one image */}
+                        {galleryImages.length > 1 && (
+                            <div className="lg:w-2/5 flex flex-row lg:flex-col gap-1 p-1 bg-slate-50 overflow-x-auto lg:overflow-x-visible lg:h-full">
+                                {galleryImages.slice(1, 5).map((image, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative flex-1 w-20 h-20 lg:w-full lg:h-full overflow-hidden rounded-lg cursor-pointer border border-slate-200 hover:border-slate-300 transition-all"
+                                        onClick={() => openGallery(index + 1)}
+                                    >
+                                        <Image
+                                            src={image}
+                                            alt={`${merchant.displayName} - Image ${index + 2}`}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 1024px) 80px, 160px"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="relative h-40 w-full sm:h-52 lg:h-64 overflow-hidden bg-gray-100 flex items-center justify-center">
@@ -378,7 +380,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                                 </div>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight flex flex-wrap items-center gap-2">
                                     <span>{merchant.displayName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</span>
-                                    {merchant.verified && (
+                                    {merchant.isVerified && (
                                         <TooltipProvider>
                                             <Tooltip>
                                                 <TooltipTrigger asChild>
