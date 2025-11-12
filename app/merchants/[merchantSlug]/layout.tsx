@@ -119,7 +119,7 @@ export async function generateMetadata(
   const metaTitle =
     `${merchant.displayName} - ${merchant.category} in ${merchant.city} | CityWitty`
     + (merchant.topRated ? ' | Top Rated' : '')
-    + (merchant.verified ? ' | Verified' : '');
+    + (merchant.isVerified ? ' | Verified' : '');
   const primaryImage = merchant.storeImages?.[0] || merchant.logo || '';
   const resolvedImage = primaryImage ? new URL(primaryImage, baseUrl).toString() : undefined;
   const tags = merchant.tags?.map((tag) => tag?.trim()).filter((tag): tag is string => Boolean(tag)) ?? [];
