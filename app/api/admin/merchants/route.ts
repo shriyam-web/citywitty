@@ -14,7 +14,7 @@ export async function GET() {
 
     // Transform the data for the frontend
     const transformedMerchants = merchants.map(merchant => ({
-      _id: merchant._id.toString(),
+      _id: (merchant._id as any).toString(),
       merchantId: merchant.merchantId,
       displayName: merchant.displayName,
       merchantSlug: merchant.merchantSlug,
