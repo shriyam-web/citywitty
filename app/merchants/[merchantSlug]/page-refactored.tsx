@@ -25,7 +25,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 type HighlightBadge = {
-    key: keyof Pick<Merchant, "premiumSeller" | "verified" | "citywittyAssured" | "topRated">;
+    key: keyof Pick<Merchant, "premiumSeller" | "isVerified" | "citywittyAssured" | "topRated">;
     label: string;
     iconName: 'crown' | 'thumbsup' | 'star';
     activeClass: string;
@@ -52,9 +52,9 @@ export default function MerchantProfilePage({ params }: { params: { merchantSlug
                 };
                 const normalizedMerchant: Merchant = {
                     ...data,
-                    verified: data.verified ?? data.isVerified ?? false,
-                    premiumSeller: data.premiumSeller ?? data.isPremiumSeller ?? false,
-                    topRated: data.topRated ?? data.isTopMerchant ?? false,
+                    isVerified: data.isVerified ?? false,
+                    premiumSeller: data.premiumSeller ?? false,
+                    topRated: data.topRated ?? false,
                 };
                 setMerchant(normalizedMerchant);
             } catch (error) {
