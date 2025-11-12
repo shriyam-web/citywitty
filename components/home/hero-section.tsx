@@ -219,6 +219,7 @@ export function HeroSection() {
   const [currentCity, setCurrentCity] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [memberCount, setMemberCount] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -234,6 +235,15 @@ export function HeroSection() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
@@ -435,9 +445,10 @@ export function HeroSection() {
         <motion.div
           className="flex w-max gap-8"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 100, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: isMobile ? 200 : 150, ease: "linear" }}
         >
-          {[...Array(30)].map((_, i) => (
+          {/* Reduce number of elements on mobile for better performance */}
+          {[...Array(isMobile ? 12 : 30)].map((_, i) => (
             <div
               key={i}
               className="relative flex-shrink-0 h-full flex items-end justify-center group"
