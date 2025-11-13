@@ -220,7 +220,7 @@ export default function PremiumCard() {
 
 export function HeroSection() {
   const [currentCity, setCurrentCity] = useState(0);
-  const [memberCount, setMemberCount] = useState(0);
+  const [memberCount, setMemberCount] = useState(15000);
   const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuth();
 
@@ -290,7 +290,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-white">
+    <section className="relative w-full overflow-x-hidden overflow-y-visible bg-white pb-0">
       <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.08 }}>
         <defs>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -305,7 +305,7 @@ export function HeroSection() {
       {/* Background animations disabled on mobile for performance */}
 
       <div className="relative z-10">
-        <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-20 lg:pt-24 pb-6 md:pb-8 lg:pb-12">
+        <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 lg:pt-20 pb-0">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -416,7 +416,7 @@ export function HeroSection() {
 
       {/* Animated Bottom Bar - Optimized for performance */}
       {!isMobile && (
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden z-0 h-16 sm:h-20">
+        <div className="relative w-full overflow-hidden z-0">
           <motion.div
             className="flex w-max gap-4"
             animate={{ x: ["0%", "-50%"] }}
@@ -425,12 +425,12 @@ export function HeroSection() {
             {[...Array(15)].map((_, i) => (
               <div
                 key={i}
-                className="relative flex-shrink-0 h-full flex items-end justify-center"
+                className="relative flex-shrink-0 h-20 sm:h-24 flex items-end justify-center"
               >
                 <img
                   src="/cities1.png"
                   alt="City Skyline"
-                  className="h-full object-cover opacity-6 grayscale"
+                  className="h-full object-contain opacity-60 grayscale"
                   loading="lazy"
                 />
               </div>
