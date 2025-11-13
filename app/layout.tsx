@@ -10,6 +10,7 @@ import Script from "next/script";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://citywitty.com'),
   title: 'CityWitty - Premium Discount Card Platform',
   description: 'Get exclusive offers from partnered merchants across various categories and cities with CityWitty discount card.',
   keywords: 'discount card, offers, merchants, city deals, exclusive discounts',
