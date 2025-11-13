@@ -101,9 +101,22 @@ export default function useAccurateLocation() {
         );
     }, []);
 
-    // Initial fetch
+    // Initial fetch with caching
     useEffect(() => {
-        fetchLocation();
+        const cachedLocation = localStorage.getItem('autoLocation');
+        const cacheTimestamp = localStorage.getItem('locationTimestamp');
+        const isCacheValid = cacheTimestamp && (Date.now() - parseInt(cacheTimestamp)) < 24 * 60 * 60 * 1000; // 24 hours
+
+        if (cachedLocation && isCacheValid) {
+            try {
+                setLocation(JSON.parse(cachedLocation));
+                setLoading(false);
+            } catch {
+                fetchLocation();
+            }
+        } else {
+            fetchLocation();
+        }
     }, [fetchLocation]);
 
     return { location, loading, error, setManualLocation, refetch: fetchLocation };

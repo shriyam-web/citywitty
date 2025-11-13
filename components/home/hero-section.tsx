@@ -24,25 +24,27 @@ const rotatingOffers = [
   { merchant: 'Fashion Forward', discount: '35% OFF', category: 'Fashion', color: 'from-orange-500 to-yellow-400' }
 ];
 
-const floatingElements = [
-  { icon: Gift, delay: '0s', position: 'top-40 left-[30%]' },
-  { icon: Zap, delay: '1s', position: 'top-32 right-[15%]' },
-  { icon: Sparkles, delay: '2s', position: 'bottom-32 left-[20%]' },
-  { icon: Star, delay: '3s', position: 'bottom-20 right-[10%]' }
-];
+// Floating elements disabled on mobile for performance
+const floatingElements = [];
 
 export default function PremiumCard() {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
     setIsDragging(true);
     setLastPos({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
+    if (!isDragging || isMobile) return;
     const dx = e.clientX - lastPos.x;
     const dy = e.clientY - lastPos.y;
     setLastPos({ x: e.clientX, y: e.clientY });
@@ -56,13 +58,14 @@ export default function PremiumCard() {
   const handleMouseUp = () => setIsDragging(false);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isMobile) return;
     const touch = e.touches[0];
     setIsDragging(true);
     setLastPos({ x: touch.clientX, y: touch.clientY });
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
+    if (!isDragging || isMobile) return;
     const touch = e.touches[0];
     const dx = touch.clientX - lastPos.x;
     const dy = touch.clientY - lastPos.y;
@@ -89,11 +92,11 @@ export default function PremiumCard() {
         <motion.div
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
-          className="relative w-[90vw] max-w-[640px] aspect-[16/9] 
-    rounded-3xl shadow-2xl border border-gray-700 cursor-grab active:cursor-grabbing"
-          style={{ transformStyle: "preserve-3d" }}
-          animate={{ rotateX: rotation.x, rotateY: rotation.y }}
-          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+          className={`relative w-[90vw] max-w-[640px] aspect-[16/9]
+    rounded-3xl shadow-2xl border border-gray-700 ${isMobile ? '' : 'cursor-grab active:cursor-grabbing'}`}
+          style={isMobile ? {} : { transformStyle: "preserve-3d" }}
+          animate={isMobile ? {} : { rotateX: rotation.x, rotateY: rotation.y }}
+          transition={isMobile ? {} : { type: "spring", stiffness: 120, damping: 20 }}
         >
 
           <div className="absolute inset-0 rounded-3xl overflow-hidden 
@@ -217,7 +220,6 @@ export default function PremiumCard() {
 
 export function HeroSection() {
   const [currentCity, setCurrentCity] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [memberCount, setMemberCount] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuth();
@@ -227,14 +229,6 @@ export function HeroSection() {
       setCurrentCity((prev) => (prev + 1) % cityIcons.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   useEffect(() => {
@@ -250,35 +244,46 @@ export function HeroSection() {
     if (memberCount >= 25000) return;
     const interval = setInterval(() => {
       setMemberCount((prev) => {
-        const newCount = prev + Math.floor(Math.random() * 50) + 10;
+        const increment = Math.floor(Math.random() * 30) + 5; // Smaller increments
+        const newCount = prev + increment;
         return newCount > 25000 ? 25000 : newCount;
       });
-    }, 100);
+    }, isMobile ? 500 : 300); // Slower on mobile for better performance
     return () => clearInterval(interval);
-  }, [memberCount]);
+  }, [memberCount, isMobile]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+      transition: {
+        staggerChildren: isMobile ? 0.1 : 0.15,
+        delayChildren: isMobile ? 0.1 : 0.2
+      }
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: easeOut } }
+    hidden: { opacity: 0, y: isMobile ? 20 : 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.6 : 0.9,
+        ease: easeOut
+      }
+    }
   };
 
   const floatingVariants: Variants = {
-    animate: {
+    animate: isMobile ? {} : {
       y: [0, -20, 0],
       transition: { duration: 6, repeat: Infinity, ease: easeInOut }
     }
   };
 
   const pulseVariants: Variants = {
-    animate: {
+    animate: isMobile ? {} : {
       scale: [1, 1.05, 1],
       transition: { duration: 3, repeat: Infinity, ease: easeInOut }
     }
@@ -297,30 +302,7 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 opacity-60" />
 
-      <motion.div
-        className="absolute -top-40 -right-40 w-[800px] h-[800px] bg-gradient-to-br from-blue-200/30 via-blue-100/15 to-transparent rounded-full blur-3xl"
-        animate={{
-          x: [0, 50, 0],
-          y: [0, 40, 0]
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute -bottom-40 -left-40 w-[700px] h-[700px] bg-gradient-to-tr from-orange-200/20 via-orange-100/10 to-transparent rounded-full blur-3xl"
-        animate={{
-          x: [0, -50, 0],
-          y: [0, -40, 0]
-        }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-b from-purple-200/15 via-transparent to-transparent rounded-full blur-3xl"
-        animate={{
-          x: [0, 30, -30, 0],
-          y: [0, -30, 30, 0]
-        }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Background animations disabled on mobile for performance */}
 
       <div className="relative z-10">
         <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 md:pt-20 lg:pt-24 pb-6 md:pb-8 lg:pb-12">
@@ -410,26 +392,18 @@ export function HeroSection() {
                 className="flex justify-center lg:justify-end items-center order-2 lg:order-2"
               >
                 <motion.div
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  whileHover={{ scale: 1.1 }}
+                  animate={isMobile ? {} : { y: [0, -5, 0] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  whileHover={isMobile ? {} : { scale: 1.02 }}
                   className="relative w-full max-w-lg"
                 >
-                  <motion.div
-                    className="absolute -inset-8 bg-gradient-to-br from-white/60 via-white/30 to-transparent rounded-3xl blur-3xl"
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  <motion.div
-                    className="absolute -inset-6 bg-gradient-to-tr from-white/50 to-transparent rounded-3xl blur-2xl"
-                    animate={{ x: [0, 20, -20, 0], y: [0, -15, 15, 0] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  <motion.div
-                    className="absolute -inset-10 bg-gradient-to-b from-white/40 to-transparent rounded-3xl blur-3xl"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                  />
+                  {!isMobile && (
+                    <motion.div
+                      className="absolute -inset-4 bg-gradient-to-br from-white/30 via-white/15 to-transparent rounded-3xl blur-xl"
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+                      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  )}
                   <div className="relative z-10">
                     <PremiumCard />
                   </div>
@@ -440,28 +414,30 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Animated Bottom Bar */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden z-0 h-20 sm:h-24 md:h-32">
-        <motion.div
-          className="flex w-max gap-8"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: isMobile ? 200 : 150, ease: "linear" }}
-        >
-          {/* Reduce number of elements on mobile for better performance */}
-          {[...Array(isMobile ? 12 : 30)].map((_, i) => (
-            <div
-              key={i}
-              className="relative flex-shrink-0 h-full flex items-end justify-center group"
-            >
-              <motion.img
-                src="/cities1.png"
-                alt="City Skyline"
-                className="h-full object-cover opacity-10 group-hover:opacity-20 grayscale transition-opacity duration-300"
-              />
-            </div>
-          ))}
-        </motion.div>
-      </div>
+      {/* Animated Bottom Bar - Optimized for performance */}
+      {!isMobile && (
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden z-0 h-16 sm:h-20">
+          <motion.div
+            className="flex w-max gap-4"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, duration: 300, ease: "linear" }}
+          >
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={i}
+                className="relative flex-shrink-0 h-full flex items-end justify-center"
+              >
+                <img
+                  src="/cities1.png"
+                  alt="City Skyline"
+                  className="h-full object-cover opacity-6 grayscale"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }

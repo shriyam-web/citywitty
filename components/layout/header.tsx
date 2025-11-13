@@ -58,7 +58,7 @@ function LocationDropdown({ manualLocation, setManualLocation, location, loading
           {loading ? 'Detecting...' : manualLocation || location?.city || 'Choose City'}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-64 bg-white/95 backdrop-blur-xl border-0 shadow-xl p-2">
+      <DropdownMenuContent className="w-64 bg-white/95 backdrop-blur-md border-0 shadow-xl p-2">
         <div className="flex items-center justify-between mb-2">
           <input
             type="text"
@@ -112,23 +112,33 @@ export function Header() {
     typeof window !== 'undefined' ? localStorage.getItem('manualLocation') : null
   );
 
-  // Accurate location hook
+  // Accurate location hook with better caching
   const { location, loading, refetch } = useAccurateLocation();
 
-  // Cache location after first fetch
+  // Cache location after first fetch with timestamp
   useEffect(() => {
     if (location && !manualLocation) {
       localStorage.setItem('autoLocation', JSON.stringify(location));
+      localStorage.setItem('locationTimestamp', Date.now().toString());
     }
   }, [location, manualLocation]);
 
   const cachedLocation = typeof window !== 'undefined' ? localStorage.getItem('autoLocation') : null;
   const displayLocation = manualLocation || (cachedLocation ? JSON.parse(cachedLocation) : location);
 
-  // Scroll effect
+  // Scroll effect with debouncing for better performance
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -149,7 +159,7 @@ export function Header() {
   };
 
   return (
-    <header className={`fixed top-0 z-50 w-full transition-all duration-500 ${isScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-200' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 z-50 w-full transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 items-center justify-between px-1 sm:px-2 md:px-4 lg:px-6">
 
@@ -219,7 +229,7 @@ export function Header() {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-white/95 backdrop-blur-xl border-0 shadow-xl">
+                <DropdownMenuContent align="end" className="w-48 bg-white/95 backdrop-blur-md border-0 shadow-xl">
                   <DropdownMenuItem asChild>
                     <Link href={getDashboardUrl(user.role)} className="flex items-center text-sm">
                       <Sparkles className="mr-2 h-4 w-4" />Dashboard
@@ -246,7 +256,7 @@ export function Header() {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[280px] bg-white/95 backdrop-blur-xl border-0 shadow-2xl animate-slide-in">
+              <SheetContent side="right" className="w-[280px] bg-white/95 backdrop-blur-md border-0 shadow-2xl animate-slide-in">
 
                 {/* Mobile Location Dropdown */}
                 <br />
