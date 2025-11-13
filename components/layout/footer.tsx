@@ -493,7 +493,7 @@ export function Footer() {
                 className="w-full"
               >
                 <div className="px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-medium hover:scale-105 transition text-center">
-                  CW Merchant Hub
+                  CityWitty Merchant Hub
                 </div>
               </a>
 
@@ -504,7 +504,7 @@ export function Footer() {
                 className="w-full"
               >
                 <div className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-sm font-medium hover:scale-105 transition text-center">
-                  CW Franchise Portal
+                  CityWitty Franchise Hub
                 </div>
               </a>
             </div>
@@ -554,6 +554,25 @@ export function Footer() {
               <div className="text-green-400 font-bold text-sm">24/7 Support Available</div>
               <div className="text-green-300 text-xs mt-1">We're here to help you anytime</div>
             </div>
+
+            {/* Website Visits Counter */}
+            <div className="bg-gradient-to-r from-blue-600/20 to-indigo-600/20 border border-blue-500/30 rounded-xl p-4 text-center">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 via-indigo-500 to-sky-400 shadow-[0_12px_28px_rgba(56,189,248,0.35)]">
+                    <Zap className="h-5 w-5 text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-blue-300 font-bold text-sm">Live Visits</div>
+                    <div className="text-blue-400 text-lg font-bold">{formattedVisitCount}</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <span className="flex h-2 w-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+                  <span className="text-emerald-300 text-[10px] uppercase tracking-wider">Live</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -598,34 +617,6 @@ export function Footer() {
               <p className="mt-4 text-gray-400 text-xs">
                 Made with ❤️ in India | <b>Launch Version 1.01</b>
               </p>
-              <div className="mt-6 w-full flex flex-col items-center sm:items-start gap-3">
-                <span className="tracking-[0.35em] uppercase text-[10px] text-gray-500">Website Visits</span>
-                <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-[0_24px_46px_rgba(8,12,30,0.55)] backdrop-blur">
-                  <div className="pointer-events-none absolute -top-16 right-10 h-24 w-24 rounded-full bg-blue-500/40 blur-3xl" />
-                  <div className="pointer-events-none absolute -bottom-12 left-8 h-28 w-28 rounded-full bg-orange-500/30 blur-3xl" />
-                  <div className="relative flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 via-indigo-500 to-sky-400 shadow-[0_12px_28px_rgba(56,189,248,0.35)]">
-                        <Zap className="h-5 w-5 text-white" />
-                      </div>
-                      <div>
-                        <span className="text-[11px] uppercase tracking-[0.3em] text-blue-100/80">Total Visits</span>
-                        <span className="mt-1 block text-3xl font-bold text-white sm:text-4xl">{formattedVisitCount}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className="flex h-[7px] w-[7px] animate-pulse rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-emerald-300/80">Live</span>
-                    </div>
-                  </div>
-                  <div className="relative mt-5 h-px w-full overflow-hidden rounded-full">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-300 to-orange-400 opacity-70" />
-                    <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
-                  </div>
-                  <p className="relative z-10 mt-5 text-[11px] text-gray-300/90">Every refresh reflects the latest verified visit count.</p>
-                  <p className="relative z-10 mt-2 text-[11px] text-gray-400/80">Autoupdates whenever someone discovers CityWitty online.</p>
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">

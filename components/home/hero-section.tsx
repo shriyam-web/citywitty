@@ -305,7 +305,7 @@ export function HeroSection() {
       {/* Background animations disabled on mobile for performance */}
 
       <div className="relative z-10">
-        <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 lg:pt-20 pb-0">
+        <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-0">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -318,26 +318,26 @@ export function HeroSection() {
                 {/* Main Heading - Clean */}
                 <motion.div variants={itemVariants} className="pt-2">
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
-                    Earn Rewards &amp; Save More
+                    Shop More, Spend Less!
                   </h1>
                 </motion.div>
 
                 {/* Description - Focused */}
                 <motion.div variants={itemVariants} className="max-w-2xl">
                   <p className="text-sm lg:text-base text-gray-700 leading-relaxed">
-                    Get up to 35% discounts, cashback rewards, and exclusive deals on 500+ premium brands across fashion, dining, travel, and more.
+                    <b>India's #1 Discount Card: </b>Unbeatable deals up to 70% off in fashion, dining, travel, wellness, and more—wherever you are in India.
                   </p>
                 </motion.div>
 
                 {/* Stats - Minimal */}
                 <motion.div variants={itemVariants} className="flex gap-6 pt-2">
                   <div>
-                    <div className="text-xl sm:text-2xl font-black text-gray-900">500+</div>
+                    <div className="text-xl sm:text-2xl font-black text-gray-900">Thousand+</div>
                     <div className="text-xs text-gray-600 font-medium">Partner Brands</div>
                   </div>
                   <div>
-                    <div className="text-xl sm:text-2xl font-black text-gray-900">35%</div>
-                    <div className="text-xs text-gray-600 font-medium">Max Discount</div>
+                    <div className="text-xl sm:text-2xl font-black text-gray-900">70%</div>
+                    <div className="text-xs text-gray-600 font-medium">Discount Upto</div>
                   </div>
                   <div>
                     <div className="text-xl sm:text-2xl font-black text-gray-900">25k+</div>
