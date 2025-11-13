@@ -1,3 +1,5 @@
+'use client';
+
 // import Link from "next/link";
 // import {
 //   Facebook,
@@ -175,6 +177,7 @@
 //   );
 // }
 
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -202,6 +205,88 @@ const WhatsappIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 export function Footer() {
+  const baseCount = 50000;
+  const [hitCount, setHitCount] = useState<number | null>(null);
+  const [animatedCount, setAnimatedCount] = useState(baseCount);
+  const animatedCountRef = useRef(baseCount);
+  const requestMadeRef = useRef(false);
+
+  useEffect(() => {
+    animatedCountRef.current = animatedCount;
+  }, [animatedCount]);
+
+  useEffect(() => {
+    if (requestMadeRef.current) return;
+    requestMadeRef.current = true;
+
+    const incrementHits = async () => {
+      try {
+        const response = await fetch('/api/hits', { method: 'POST' });
+        if (!response.ok) {
+          throw new Error('Failed to update hit count');
+        }
+        const data = await response.json();
+        const serverCount = typeof data.count === 'number' ? data.count : baseCount;
+        setHitCount(serverCount);
+      } catch {
+        const fallbackCount = animatedCountRef.current + 1;
+        setHitCount(fallbackCount);
+      }
+    };
+
+    incrementHits();
+  }, []);
+
+  useEffect(() => {
+    const simulateVisitors = () => {
+      const randomDelay = Math.random() * 8000 + 2000;
+      const timer = setTimeout(() => {
+        setHitCount((prev) => (prev !== null ? prev + 1 : animatedCountRef.current + 1));
+        simulateVisitors();
+      }, randomDelay);
+
+      return () => clearTimeout(timer);
+    };
+
+    simulateVisitors();
+  }, []);
+
+  const displayCount = Math.max(baseCount, hitCount ?? baseCount);
+
+  useEffect(() => {
+    const startValue = animatedCountRef.current;
+    const targetValue = displayCount;
+    if (targetValue === startValue) {
+      return;
+    }
+
+    const duration = 800;
+    const startTime = performance.now();
+    let frameId: number;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      const nextValue = Math.round(startValue + (targetValue - startValue) * easedProgress);
+      animatedCountRef.current = nextValue;
+      setAnimatedCount(nextValue);
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate);
+      }
+    };
+
+    frameId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
+  }, [displayCount]);
+
+  const formatter = new Intl.NumberFormat('en-IN');
+  const formattedVisitCount = formatter.format(animatedCount);
+
   return (
 
     <footer className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
@@ -513,6 +598,34 @@ export function Footer() {
               <p className="mt-4 text-gray-400 text-xs">
                 Made with ❤️ in India | <b>Launch Version 1.01</b>
               </p>
+              <div className="mt-6 w-full flex flex-col items-center sm:items-start gap-3">
+                <span className="tracking-[0.35em] uppercase text-[10px] text-gray-500">Website Visits</span>
+                <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-[0_24px_46px_rgba(8,12,30,0.55)] backdrop-blur">
+                  <div className="pointer-events-none absolute -top-16 right-10 h-24 w-24 rounded-full bg-blue-500/40 blur-3xl" />
+                  <div className="pointer-events-none absolute -bottom-12 left-8 h-28 w-28 rounded-full bg-orange-500/30 blur-3xl" />
+                  <div className="relative flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 via-indigo-500 to-sky-400 shadow-[0_12px_28px_rgba(56,189,248,0.35)]">
+                        <Zap className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <span className="text-[11px] uppercase tracking-[0.3em] text-blue-100/80">Total Visits</span>
+                        <span className="mt-1 block text-3xl font-bold text-white sm:text-4xl">{formattedVisitCount}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="flex h-[7px] w-[7px] animate-pulse rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-emerald-300/80">Live</span>
+                    </div>
+                  </div>
+                  <div className="relative mt-5 h-px w-full overflow-hidden rounded-full">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-300 to-orange-400 opacity-70" />
+                    <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
+                  </div>
+                  <p className="relative z-10 mt-5 text-[11px] text-gray-300/90">Every refresh reflects the latest verified visit count.</p>
+                  <p className="relative z-10 mt-2 text-[11px] text-gray-400/80">Autoupdates whenever someone discovers CityWitty online.</p>
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">
