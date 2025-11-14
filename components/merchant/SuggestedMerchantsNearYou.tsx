@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Star, Sparkles, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import { getCategoryIcon } from '@/lib/categoryIcons';
 
 interface Merchant {
     _id: string;
@@ -36,6 +37,7 @@ export function SuggestedMerchantsNearYou({ city, excludeId }: SuggestedMerchant
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovering, setIsHovering] = useState(false);
     const [logoColors, setLogoColors] = useState<Record<string, string>>({});
+    const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
     const defaultLogoColor = '#0f172a';
 
     useEffect(() => {
@@ -128,6 +130,7 @@ export function SuggestedMerchantsNearYou({ city, excludeId }: SuggestedMerchant
 
     const handleImageError = (merchantId: string) => {
         updateLogoColor(merchantId, defaultLogoColor);
+        setFailedImages((prev) => new Set(prev).add(merchantId));
     };
 
     const getVisibleMerchants = () => {
@@ -252,16 +255,25 @@ export function SuggestedMerchantsNearYou({ city, excludeId }: SuggestedMerchant
                                             className="flex h-20 sm:h-24 lg:h-28 w-full items-center justify-center overflow-hidden rounded-t-xl bg-slate-900 transition-colors duration-300"
                                             style={{ backgroundColor: logoColors[merchant._id] ?? defaultLogoColor }}
                                         >
-                                            <img
-                                                src={merchant.logo || "https://via.placeholder.com/300x150?text=No+Image"}
-                                                alt={merchant.displayName}
-                                                className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                                                crossOrigin="anonymous"
-                                                loading="lazy"
-                                                onLoad={(event) => handleImageLoad(event.currentTarget, merchant._id)}
-                                                onError={() => handleImageError(merchant._id)}
-                                                referrerPolicy="no-referrer"
-                                            />
+                                            {!failedImages.has(merchant._id) && merchant.logo ? (
+                                                <img
+                                                    src={merchant.logo}
+                                                    alt={merchant.displayName}
+                                                    className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                                                    crossOrigin="anonymous"
+                                                    loading="lazy"
+                                                    onLoad={(event) => handleImageLoad(event.currentTarget, merchant._id)}
+                                                    onError={() => handleImageError(merchant._id)}
+                                                    referrerPolicy="no-referrer"
+                                                />
+                                            ) : (
+                                                <div className="flex items-center justify-center">
+                                                    {React.createElement(getCategoryIcon(merchant.category), {
+                                                        className: "w-8 h-8 sm:w-10 sm:h-10 text-slate-400",
+                                                        "aria-label": `${merchant.category} category icon`
+                                                    })}
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="absolute top-2 right-2">
                                             {(merchant.offlineDiscount && merchant.offlineDiscount.length > 0 || merchant.customOffer) && (
