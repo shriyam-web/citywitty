@@ -58,14 +58,14 @@ export default function PremiumCard() {
   const handleMouseUp = () => setIsDragging(false);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (isMobile) return;
     const touch = e.touches[0];
     setIsDragging(true);
     setLastPos({ x: touch.clientX, y: touch.clientY });
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging || isMobile) return;
+    if (!isDragging) return;
+    e.preventDefault();
     const touch = e.touches[0];
     const dx = touch.clientX - lastPos.x;
     const dy = touch.clientY - lastPos.y;
@@ -86,6 +86,7 @@ export default function PremiumCard() {
         style={{ perspective: "1200px" }}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
@@ -93,10 +94,10 @@ export default function PremiumCard() {
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           className={`relative w-[90vw] max-w-[640px] aspect-[16/9]
-    rounded-3xl shadow-2xl border border-gray-700 ${isMobile ? '' : 'cursor-grab active:cursor-grabbing'}`}
-          style={isMobile ? {} : { transformStyle: "preserve-3d" }}
-          animate={isMobile ? {} : { rotateX: rotation.x, rotateY: rotation.y }}
-          transition={isMobile ? {} : { type: "spring", stiffness: 120, damping: 20 }}
+    rounded-3xl shadow-2xl border border-gray-700 ${isMobile ? 'cursor-grab active:cursor-grabbing' : 'cursor-grab active:cursor-grabbing'}`}
+          style={{ transformStyle: "preserve-3d" }}
+          animate={{ rotateX: rotation.x, rotateY: rotation.y }}
+          transition={{ type: "spring", stiffness: 120, damping: 20 }}
         >
 
           <div className="absolute inset-0 rounded-3xl overflow-hidden 
@@ -430,7 +431,8 @@ export function HeroSection() {
                 <img
                   src="/cities1.png"
                   alt="City Skyline"
-                  className="h-full object-contain opacity-60 grayscale"
+                  className="h-full object-contain opacity-60"
+                  style={{ filter: "grayscale(100%) brightness(0.8)" }}
                   loading="lazy"
                 />
               </div>
