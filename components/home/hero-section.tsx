@@ -316,7 +316,7 @@ export function HeroSection() {
               {/* Left Content */}
               <motion.div className="space-y-3 flex flex-col justify-center order-1 lg:order-1">
                 {/* Main Heading - Clean */}
-                <motion.div variants={itemVariants} className="pt-6 sm:pt-4 md:pt-2">
+                <motion.div variants={itemVariants} className="pt-12 sm:pt-6 md:pt-2">
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
                     Shop More, Spend Less!
                   </h1>
