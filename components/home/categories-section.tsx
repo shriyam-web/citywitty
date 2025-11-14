@@ -14,11 +14,27 @@ import {
   Gift,
   Heart
 } from 'lucide-react';
+import { CategoriesCarousel } from './categories-carousel';
+
+const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
+  Hotel,
+  Scissors,
+  Smartphone,
+  ShirtIcon,
+  UtensilsCrossed,
+  Car,
+  Dumbbell,
+  GraduationCap,
+  Building2,
+  Plane,
+  Gift,
+  Heart
+};
 
 const categories = [
   {
     name: 'Hotels & Resorts',
-    icon: Hotel,
+    iconName: 'Hotel',
     count: 245,
     available: true,
     color: 'bg-blue-100 text-blue-700',
@@ -26,7 +42,7 @@ const categories = [
   },
   {
     name: 'Salon & Spa',
-    icon: Scissors,
+    iconName: 'Scissors',
     count: 189,
     available: true,
     color: 'bg-pink-100 text-pink-700',
@@ -34,7 +50,7 @@ const categories = [
   },
   {
     name: 'Electronics',
-    icon: Smartphone,
+    iconName: 'Smartphone',
     count: 156,
     available: true,
     color: 'bg-purple-100 text-purple-700',
@@ -42,7 +58,7 @@ const categories = [
   },
   {
     name: 'Fashion & Apparel',
-    icon: ShirtIcon,
+    iconName: 'ShirtIcon',
     count: 201,
     available: true,
     color: 'bg-orange-100 text-orange-700',
@@ -50,7 +66,7 @@ const categories = [
   },
   {
     name: 'Restaurants & Dining',
-    icon: UtensilsCrossed,
+    iconName: 'UtensilsCrossed',
     count: 167,
     available: true,
     color: 'bg-green-100 text-green-700',
@@ -58,7 +74,7 @@ const categories = [
   },
   {
     name: 'Automotive',
-    icon: Car,
+    iconName: 'Car',
     count: 170,
     available: true,
     color: 'bg-red-100 text-red-600',
@@ -66,7 +82,7 @@ const categories = [
   },
   {
     name: 'Fitness & Gym',
-    icon: Dumbbell,
+    iconName: 'Dumbbell',
     count: 862,
     available: true,
     color: 'bg-green-100 text-green-600',
@@ -74,7 +90,7 @@ const categories = [
   },
   {
     name: 'Education',
-    icon: GraduationCap,
+    iconName: 'GraduationCap',
     count: 1253,
     available: true,
     color: 'bg-blue-100 text-blue-600',
@@ -82,7 +98,7 @@ const categories = [
   },
   {
     name: 'Real Estate',
-    icon: Building2,
+    iconName: 'Building2',
     count: 147,
     available: true,
     color: 'bg-yellow-100 text-yellow-600',
@@ -90,7 +106,7 @@ const categories = [
   },
   {
     name: 'Travel & Tourism',
-    icon: Plane,
+    iconName: 'Plane',
     count: 63,
     available: true,
     color: 'bg-purple-100 text-purple-600',
@@ -98,7 +114,7 @@ const categories = [
   },
   {
     name: 'Gifts & Events',
-    icon: Gift,
+    iconName: 'Gift',
     count: 86,
     available: true,
     color: 'bg-pink-100 text-pink-600',
@@ -106,7 +122,7 @@ const categories = [
   },
   {
     name: 'Healthcare',
-    icon: Heart,
+    iconName: 'Heart',
     count: 670,
     available: true,
     color: 'bg-teal-100 text-teal-600',
@@ -116,6 +132,46 @@ const categories = [
 ];
 
 export function CategoriesSection() {
+  const renderCategoryCard = (category: typeof categories[0]) => {
+    const IconComponent = iconMap[category.iconName];
+    return (
+      <Card
+        key={category.name}
+        className={`group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${category.available ? 'hover:bg-blue-50' : 'opacity-60'
+          }`}
+      >
+        <CardContent className="p-3 sm:p-4 md:p-6 text-center space-y-2 sm:space-y-3 md:space-y-4">
+          <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full ${category.color} group-hover:scale-110 transition-transform duration-300`}>
+            {IconComponent && <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />}
+          </div>
+
+          <div>
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">
+              {category.name}
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 hidden sm:block">
+              {category.description}
+            </p>
+
+            <div className="flex items-center justify-center space-x-2">
+              {category.available ? (
+                <>
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 text-xs md:text-sm">
+                    {category.count} merchants
+                  </Badge>
+                </>
+              ) : (
+                <Badge variant="secondary" className="bg-orange-100 text-orange-700">
+                  {/* Coming Soon */}
+                </Badge>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,46 +184,12 @@ export function CategoriesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {categories.map((category) => {
-            const IconComponent = category.icon;
-            return (
-              <Card
-                key={category.name}
-                className={`group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${category.available ? 'hover:bg-blue-50' : 'opacity-60'
-                  }`}
-              >
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${category.color} group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="h-8 w-8" />
-                  </div>
+        <div className="hidden lg:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+          {categories.map((category) => renderCategoryCard(category))}
+        </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-3">
-                      {category.description}
-                    </p>
-
-                    <div className="flex items-center justify-center space-x-2">
-                      {category.available ? (
-                        <>
-                          <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-                            {category.count} merchants
-                          </Badge>
-                        </>
-                      ) : (
-                        <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                          {/* Coming Soon */}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+        <div className="lg:hidden">
+          <CategoriesCarousel categories={categories} />
         </div>
 
         <div className="text-center mt-12">

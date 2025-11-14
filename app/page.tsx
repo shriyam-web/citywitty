@@ -83,11 +83,12 @@ export default function HomePage() {
       <CWStore />
       {/* <MerchantCarousel /> */}
 
-      <TestimonialsCarousel />
+
       <CategoriesSection />
       <CitiesPresence />
       <CallToActionSection />
       <FeaturedMerchantsServer />
+      <TestimonialsCarousel />
       <Footer />
     </main>
   );
