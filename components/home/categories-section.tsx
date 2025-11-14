@@ -184,13 +184,7 @@ export function CategoriesSection() {
           </p>
         </div>
 
-        <div className="hidden lg:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {categories.map((category) => renderCategoryCard(category))}
-        </div>
-
-        <div className="lg:hidden">
-          <CategoriesCarousel categories={categories} />
-        </div>
+        <CategoriesCarousel categories={categories} />
 
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-4">
