@@ -80,16 +80,6 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Header />
       <HeroSection />
-
-      <CWStore />
-      {/* <MerchantCarousel /> */}
-
-
-      <CategoriesSection />
-      <CitiesPresence />
-      <CallToActionSection />
-      <FeaturedMerchantsServer />
-      <TestimonialsCarousel />
       <section className="bg-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-gray-900 mb-6">CityWitty - Premium Discount Card Platform</h1>
@@ -119,6 +109,15 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+      <CWStore />
+      {/* <MerchantCarousel /> */}
+
+
+      <CategoriesSection />
+      <CitiesPresence />
+      <CallToActionSection />
+      <FeaturedMerchantsServer />
+      <TestimonialsCarousel />
       <Footer />
     </main>
   );
