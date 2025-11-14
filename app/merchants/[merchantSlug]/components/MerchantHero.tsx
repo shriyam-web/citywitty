@@ -53,6 +53,7 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
     const [isGalleryOpen, setIsGalleryOpen] = React.useState(false);
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
     const [mounted, setMounted] = React.useState(false);
+    const [isLogoExpanded, setIsLogoExpanded] = React.useState(false);
     const merchantSymbolIcons = React.useMemo(() => [Star, MapPin, CreditCard, Check, Clock], []);
     const watermarkPattern = React.useMemo(() => {
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='54'><text x='10' y='30' font-family='Inter,Arial,sans-serif' font-size='14' fill='rgba(148,163,184,0.15)' letter-spacing='8'>CityWitty</text></svg>`;
@@ -242,6 +243,31 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
 
     return (
         <>
+            {/* Logo Expansion Modal - Rendered via Portal */}
+            {mounted && isLogoExpanded && merchant.logo && createPortal(
+                <div className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center" onClick={() => setIsLogoExpanded(false)}>
+                    <button
+                        onClick={() => setIsLogoExpanded(false)}
+                        className="absolute top-4 right-4 z-[100000] p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all"
+                        aria-label="Close logo"
+                    >
+                        <X className="h-6 w-6" />
+                    </button>
+                    <div className="relative max-w-4xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+                        <Image
+                            src={merchant.logo}
+                            alt={`${merchant.displayName} logo - expanded`}
+                            width={600}
+                            height={600}
+                            className="w-full h-auto object-contain rounded-lg"
+                            quality={100}
+                            priority
+                        />
+                    </div>
+                </div>,
+                document.body
+            )}
+
             {/* Full Screen Gallery Modal - Rendered via Portal */}
             {mounted && isGalleryOpen && createPortal(
                 <div className="fixed inset-0 z-[99999] bg-black/95 flex items-center justify-center">
@@ -347,14 +373,24 @@ export const MerchantHero: React.FC<MerchantHeroProps> = ({
                 <div className="grid gap-2 p-3 sm:p-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
                     <div className="flex flex-col gap-2 sm:gap-2">
                         <div className="flex items-start gap-2.5 sm:gap-3">
-                            <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center">
+                            <div 
+                                className="relative h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm sm:h-28 sm:w-28 lg:h-32 lg:w-32 flex-shrink-0 flex items-center justify-center cursor-pointer hover:shadow-md hover:border-slate-300 transition-all duration-200 group"
+                                onClick={() => merchant.logo && setIsLogoExpanded(true)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        merchant.logo && setIsLogoExpanded(true);
+                                    }
+                                }}
+                            >
                                 {merchant.logo ? (
                                     <Image
                                         src={merchant.logo}
                                         alt={`${merchant.displayName} logo`}
-                                        fill
-                                        className="object-cover"
-                                        sizes="96px"
+                                        width={128}
+                                        height={128}
+                                        className="object-contain group-hover:scale-110 transition-transform duration-200"
                                         quality={100}
                                     />
                                 ) : (
