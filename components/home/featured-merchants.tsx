@@ -5,9 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-import { MapPin, Star, Shield, Crown, CheckCircle, Award } from 'lucide-react';
+import { MapPin, Star, Shield, Crown, CheckCircle, Award, Building2, Utensils, Hotel, ShoppingBag, Scissors, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
-import { getCategoryIcon } from '@/lib/categoryIcons';
 
 interface Merchant {
   _id: string;
@@ -48,6 +47,26 @@ const calculateDiscountPercent = (offer: { originalPrice: number; discountValue:
   }
   // Fallback: use discountValue as the display value
   return offer.discountValue || 0;
+};
+
+const getCategoryIcon = (category: string) => {
+  const lowerCategory = category.toLowerCase();
+  if (lowerCategory.includes('restaurant') || lowerCategory.includes('food') || lowerCategory.includes('cafe')) {
+    return Utensils;
+  }
+  if (lowerCategory.includes('hotel') || lowerCategory.includes('resort') || lowerCategory.includes('stay')) {
+    return Hotel;
+  }
+  if (lowerCategory.includes('shopping') || lowerCategory.includes('store') || lowerCategory.includes('mall')) {
+    return ShoppingBag;
+  }
+  if (lowerCategory.includes('salon') || lowerCategory.includes('spa') || lowerCategory.includes('beauty')) {
+    return Scissors;
+  }
+  if (lowerCategory.includes('entertainment') || lowerCategory.includes('game') || lowerCategory.includes('movie')) {
+    return Gamepad2;
+  }
+  return Building2;
 };
 
 // Shuffle array function
@@ -118,24 +137,26 @@ export function FeaturedMerchants() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
-          {merchants.map((merchant) => (
+          {merchants.map((merchant) => {
+            const [showFallback, setShowFallback] = useState(!merchant.logo);
+            const Icon = getCategoryIcon(merchant.category);
+            
+            return (
             <Card key={merchant._id} className="group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 bg-white rounded-2xl">
               <CardContent className="p-0">
                 <div className="relative">
                   <div className="w-full h-40 sm:h-48 lg:h-56 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    {(() => {
-                      const Icon = getCategoryIcon(merchant.category);
-                      return <Icon className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 text-slate-400" />;
-                    })()}
+                    {showFallback && (
+                      <Icon className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 text-slate-400" />
+                    )}
                   </div>
                   {merchant.logo && (
                     <img
                       src={merchant.logo}
                       alt={merchant.displayName}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      style={{ display: 'none' }}
-                      onLoad={(e) => { e.currentTarget.style.display = 'block'; }}
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      onLoad={() => setShowFallback(false)}
+                      onError={() => setShowFallback(true)}
                     />
                   )}
                   {((merchant.offlineDiscount && merchant.offlineDiscount.length > 0 && calculateDiscountPercent(merchant.offlineDiscount[0]) > 0) || merchant.customOffer) && (
@@ -216,7 +237,8 @@ export function FeaturedMerchants() {
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
 
         <div className="text-center">

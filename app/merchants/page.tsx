@@ -11,6 +11,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { MerchantsStructuredData } from './merchants-structured-data';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { MerchantCardImage } from './merchant-card-image';
 
 interface Merchant {
     _id: string;
@@ -376,16 +377,11 @@ export default async function MerchantsPage({ searchParams }: { searchParams: { 
                                 <Card key={merchant._id} className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                                     <CardContent className="p-0">
                                         <div className="relative h-56 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
-                                            {merchant.logo ? (
-                                                <img
-                                                    src={merchant.logo}
-                                                    alt={`${merchant.displayName} - ${merchant.category}`}
-                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    loading="lazy"
-                                                />
-                                            ) : (
-                                                getCategoryIcon(merchant.category)
-                                            )}
+                                            <MerchantCardImage
+                                                logo={merchant.logo}
+                                                displayName={merchant.displayName}
+                                                category={merchant.category}
+                                            />
                                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                                             <div className="absolute top-4 right-4">
                                                 <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
