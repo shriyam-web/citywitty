@@ -48,10 +48,7 @@ export function CitiesPresence() {
             {topCities.map((city) => (
               <div
                 key={city}
-                className={`rounded-lg p-3 text-center hover:shadow-md transition-all cursor-pointer transform hover:scale-105 border ${IMPORTANT_CITIES.includes(city)
-                  ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white border-blue-400'
-                  : 'bg-gradient-to-br from-amber-400 to-orange-500 text-white border-amber-300'
-                  }`}
+                className="rounded-lg p-3 text-center hover:shadow-md transition-all cursor-pointer transform hover:scale-105 border bg-gradient-to-br from-blue-500 to-purple-600 text-white border-blue-400"
               >
                 <MapPin className="h-4 w-4 mx-auto mb-1 opacity-90" />
                 <div className="text-xs sm:text-sm font-semibold truncate">{city}</div>
