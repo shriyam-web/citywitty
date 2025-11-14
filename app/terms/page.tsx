@@ -3,21 +3,21 @@ import { Footer } from '@/components/layout/footer';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Terms & Conditions | CityWitty Privilege Card',
+    title: 'Terms & Conditions | CityWitty',
     description:
-        'Read the official Terms & Conditions for CityWitty Merchant Registration. Understand eligibility, responsibilities, payments, liabilities, and legal compliance before joining CityWitty Privilege Card.',
+        'Read the official Terms & Conditions for CityWitty. Understand your rights, responsibilities, and the rules for using our platform to discover deals and discounts from local merchants.',
     keywords: [
         'CityWitty Terms and Conditions',
-        'Merchant Registration Terms',
-        'CityWitty Privilege Card',
-        'Merchant Responsibilities',
-        'Business Agreement',
-        'CityWitty Legal',
+        'User Terms',
+        'CityWitty',
+        'Terms of Service',
+        'User Responsibilities',
+        'Service Agreement',
     ],
     openGraph: {
-        title: 'Terms & Conditions | CityWitty Privilege Card',
+        title: 'Terms & Conditions | CityWitty',
         description:
-            'Official Terms & Conditions for CityWitty merchant partners. Covering eligibility, responsibilities, payments, liabilities, and governing law.',
+            'Official Terms & Conditions for using CityWitty. Covering user rights, responsibilities, prohibited activities, and legal disclaimers.',
         url: 'https://citywitty.com/terms',
         siteName: 'CityWitty',
         images: [
@@ -33,72 +33,108 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Terms & Conditions | CityWitty Privilege Card',
+        title: 'Terms & Conditions | CityWitty',
         description:
-            'Review CityWitty’s Terms & Conditions for merchant registration and business compliance.',
+            "Review CityWitty's Terms & Conditions for using our platform and services.",
         images: ['https://citywitty.com/og-image.png'],
     },
     alternates: {
         canonical: 'https://citywitty.com/terms',
     },
 };
+
 export default function TermsPage() {
     return (
         <main className="min-h-screen bg-gray-50">
             <Header />
             <br />
-            <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h1 className="text-4xl font-bold mb-8">Terms & Conditions – Merchant Registration</h1>
+            <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-5xl">
+                <h1 className="text-4xl font-bold mb-8">Terms & Conditions</h1>
 
                 <p className="mb-6">
-                    Welcome to CityWitty Privilege Card. By registering as a merchant partner, you agree to comply with the following terms and conditions. Please read these carefully before proceeding with your registration.
+                    Welcome to CityWitty. By accessing and using this platform to browse merchants, access deals, and make purchases, you agree to comply with the following terms and conditions. Please read these carefully before proceeding with your use of our services.
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-4">1. Eligibility</h2>
+                <h2 className="text-2xl font-semibold mb-4">1. Use of Platform</h2>
                 <p className="mb-4">
-                    To register as a merchant, you must have a legally recognized business entity, valid GST and PAN numbers, and operate within the regions supported by CityWitty. By registering, you confirm that all information provided is accurate and truthful.
+                    CityWitty provides a platform for users to discover, compare, and access deals and discounts from local merchants across India. By using our platform, you agree to use it only for lawful purposes and in a way that does not infringe upon the rights of others or restrict their use and enjoyment of the platform.
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-4">2. Account Registration</h2>
+                <h2 className="text-2xl font-semibold mb-4">2. User Account</h2>
                 <p className="mb-4">
-                    You must complete the registration form with accurate details, including business name, owner name, contact information, GST and PAN numbers, and any other requested information. Providing false or misleading information may result in immediate termination of your registration.
+                    To access certain features of CityWitty, you may need to create a user account. You are responsible for maintaining the confidentiality of your account information and password. You agree to accept responsibility for all activities that occur under your account. You must immediately notify us of any unauthorized use of your account or any other breach of security.
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-4">3. Merchant Responsibilities</h2>
-                <ul className="list-disc list-inside mb-4">
-                    <li>Offer valid discounts as agreed upon during registration.</li>
-                    <li>Ensure products and services meet quality and safety standards.</li>
-                    <li>Maintain accurate and up-to-date contact and business information.</li>
-                    <li>Comply with all applicable laws, regulations, and taxation requirements.</li>
+                <h2 className="text-2xl font-semibold mb-4">3. User Responsibilities</h2>
+                <ul className="list-disc list-inside mb-6">
+                    <li>Provide accurate and complete information when creating an account.</li>
+                    <li>Use the platform only for personal, non-commercial purposes.</li>
+                    <li>Not engage in any activity that disrupts or impairs the functioning of the platform.</li>
+                    <li>Not attempt to gain unauthorized access to any part of the platform.</li>
+                    <li>Not post, transmit, or display abusive, vulgar, hateful, or defamatory content.</li>
+                    <li>Not misuse deals or engage in fraudulent transactions.</li>
+                    <li>Comply with all applicable laws and regulations.</li>
                 </ul>
 
-                <h2 className="text-2xl font-semibold mb-4">4. Payment and Fees</h2>
+                <h2 className="text-2xl font-semibold mb-4">4. Deals and Discounts</h2>
                 <p className="mb-4">
-                    CityWitty may charge service fees, commissions, or other agreed-upon charges. Payments will be processed securely and in accordance with the agreed schedule. Delayed or non-compliant services may result in payment withholding.
+                    The deals and discounts displayed on CityWitty are subject to the terms and conditions of each individual merchant. CityWitty is not responsible for:
+                </p>
+                <ul className="list-disc list-inside mb-6">
+                    <li>The accuracy or authenticity of deal information provided by merchants.</li>
+                    <li>Merchants' failure to honor deals or provide advertised services.</li>
+                    <li>Quality issues with products or services purchased through offers on our platform.</li>
+                    <li>Any disputes between you and merchants regarding deals or services.</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-4">5. Payments and Transactions</h2>
+                <p className="mb-4">
+                    All payment transactions are processed through secure payment gateways. By making a payment, you authorize the payment processor to charge your account. CityWitty is not responsible for payment processing errors, declined transactions, or charges by third-party payment providers. Review all transaction details carefully before confirming payment.
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-4">5. Content and Marketing</h2>
+                <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
                 <p className="mb-4">
-                    By partnering with CityWitty, you allow your business information, promotions, and offers to be displayed on our platform and marketing materials. All marketing content must be truthful, not infringe on third-party rights, and comply with applicable laws.
-                </p>
-
-                <h2 className="text-2xl font-semibold mb-4">6. Termination</h2>
-                <p className="mb-4">
-                    CityWitty reserves the right to suspend or terminate any merchant account at its discretion, including for non-compliance with these terms, fraudulent activities, or failure to maintain agreed standards. Termination may occur with or without prior notice.
+                    All content on CityWitty, including logos, designs, text, graphics, and software, are the intellectual property of CityWitty or third-party licensors. You may not reproduce, distribute, or transmit any content without prior written permission. Unauthorized use of our intellectual property is strictly prohibited.
                 </p>
 
                 <h2 className="text-2xl font-semibold mb-4">7. Limitation of Liability</h2>
                 <p className="mb-4">
-                    CityWitty is not liable for any indirect, incidental, or consequential damages arising from your participation in the program, including lost revenue or reputational damage. Your sole remedy is limited to the termination of the partnership in accordance with these terms.
+                    To the fullest extent permitted by law, CityWitty shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the platform, including but not limited to:
+                </p>
+                <ul className="list-disc list-inside mb-6">
+                    <li>Loss of revenue or profits.</li>
+                    <li>Loss of data or information.</li>
+                    <li>Business interruption.</li>
+                    <li>Any other loss or damage, even if CityWitty has been advised of the possibility thereof.</li>
+                </ul>
+
+                <h2 className="text-2xl font-semibold mb-4">8. Disclaimer of Warranties</h2>
+                <p className="mb-4">
+                    CityWitty provides the platform "as-is" and "as available" without warranties of any kind, express or implied. We make no warranty that the platform will meet your requirements, be uninterrupted, timely, or error-free. To the fullest extent permitted by law, CityWitty disclaims all warranties, including those of merchantability and fitness for a particular purpose.
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-4">8. Governing Law</h2>
+                <h2 className="text-2xl font-semibold mb-4">9. Termination of Access</h2>
                 <p className="mb-4">
-                    These terms and your registration are governed by the laws of India. Any disputes shall be subject to the jurisdiction of the competent courts in Noida, Uttar Pradesh.
+                    CityWitty reserves the right to suspend or terminate your access to the platform at its sole discretion, including for violation of these terms, fraudulent activities, or any other reason deemed necessary. Termination may occur with or without prior notice.
+                </p>
+
+                <h2 className="text-2xl font-semibold mb-4">10. Governing Law</h2>
+                <p className="mb-4">
+                    These Terms & Conditions are governed by the laws of India. Any disputes arising from your use of CityWitty shall be subject to the exclusive jurisdiction of the competent courts in Noida, Uttar Pradesh.
+                </p>
+
+                <h2 className="text-2xl font-semibold mb-4">11. Changes to Terms</h2>
+                <p className="mb-4">
+                    CityWitty reserves the right to modify these Terms & Conditions at any time. Changes will be effective upon posting to the platform. Your continued use of the platform following such modifications constitutes your acceptance of the updated terms.
+                </p>
+
+                <h2 className="text-2xl font-semibold mb-4">12. Contact Us</h2>
+                <p className="mb-4">
+                    If you have any questions or concerns about these Terms & Conditions, please contact our support team at <a href="mailto:support@citywitty.com" className="text-blue-600 underline">support@citywitty.com</a>.
                 </p>
 
                 <p className="text-gray-600 mt-8">
-                    By completing the merchant registration, you acknowledge that you have read, understood, and agree to abide by these Terms & Conditions.
+                    By using CityWitty, you acknowledge that you have read, understood, and agree to be bound by these Terms & Conditions.
                 </p>
             </section>
 

@@ -1,24 +1,22 @@
-// app/privacy/page.tsx
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-// import { Metadata } from 'next';
+
 export const metadata: Metadata = {
-    title: 'Privacy Policy | CityWitty Privilege Card',
+    title: 'Privacy Policy | CityWitty',
     description:
-        'Read CityWitty’s Privacy Policy for merchants and users. Learn how we collect, use, store, and protect your personal and business information in compliance with data protection laws.',
+        "Read CityWitty's Privacy Policy. Learn how we collect, use, store, and protect your personal information when you use our platform to discover deals and discounts from local merchants.",
     keywords: [
         'CityWitty Privacy Policy',
-        'Merchant Data Protection',
-        'CityWitty Privilege Card',
-        'Business Privacy Policy',
+        'User Data Protection',
+        'Privacy',
         'Data Security',
-        'Information Collection',
+        'Information Protection',
     ],
     openGraph: {
-        title: 'Privacy Policy | CityWitty Privilege Card',
+        title: 'Privacy Policy | CityWitty',
         description:
-            'Detailed Privacy Policy outlining how CityWitty collects, uses, and safeguards merchant and user data in compliance with legal standards.',
+            'Detailed Privacy Policy outlining how CityWitty collects, uses, and safeguards your personal data in compliance with legal standards.',
         url: 'https://citywitty.com/privacy',
         siteName: 'CityWitty',
         images: [
@@ -34,9 +32,9 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Privacy Policy | CityWitty Privilege Card',
+        title: 'Privacy Policy | CityWitty',
         description:
-            'Understand how CityWitty protects merchant and user data. Full details in our Privacy Policy.',
+            'Understand how CityWitty protects your data. Full details in our Privacy Policy.',
         images: ['https://citywitty.com/citywittynew.jpg'],
     },
     alternates: {
@@ -52,70 +50,73 @@ export default function PrivacyPolicyPage() {
             <section className="py-20">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
                     <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-                        Privacy Policy – Merchant Registration
+                        Privacy Policy
                     </h1>
 
                     <p className="text-gray-700 mb-6">
-                        CityWitty is committed to protecting the privacy and confidentiality of all merchant partners. This Privacy Policy explains how we collect, use, store, and protect the information provided during merchant registration and participation on our platform. By registering as a merchant, you consent to the practices described below.
+                        CityWitty is committed to protecting your privacy and ensuring you have a positive experience on our platform. This Privacy Policy explains how we collect, use, store, and protect your personal information when you browse merchants, access deals, and use our services. By using CityWitty, you consent to the practices described below.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Information We Collect</h2>
                     <p className="text-gray-700 mb-4">
-                        We collect personal and business information to ensure proper onboarding, compliance, and service delivery:
+                        We collect personal information to provide you with a personalized and seamless experience:
                     </p>
                     <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li><strong>Business Details:</strong> Business name, type, category, years in operation, and physical address.</li>
-                        <li><strong>Legal Information:</strong> GST number, PAN number, and other government-issued registration details.</li>
-                        <li><strong>Contact Information:</strong> Owner/manager name, phone number, WhatsApp number, and email address.</li>
-                        <li><strong>Online Presence:</strong> Business website, social media handles (Instagram, Facebook, etc.).</li>
-                        <li><strong>Transactional Data:</strong> Payment details related to commission, revenue, or fees for platform services.</li>
+                        <li><strong>Account Information:</strong> Name, email address, phone number, and password when you create an account.</li>
+                        <li><strong>Location Data:</strong> Your city and preferred location to show you relevant local merchants and deals.</li>
+                        <li><strong>Transaction Information:</strong> Details of merchants you visit, deals you access, and purchases you make.</li>
+                        <li><strong>Device Information:</strong> Device type, browser type, IP address, and usage patterns to improve our service.</li>
+                        <li><strong>Communication Data:</strong> Messages and feedback you send us through our platform.</li>
                     </ul>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. How We Use Your Information</h2>
                     <p className="text-gray-700 mb-6">
-                        Merchant information is used to:
+                        Your information is used to:
                     </p>
                     <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li>Verify eligibility and authenticity of businesses.</li>
-                        <li>Display accurate business details on CityWitty’s platform.</li>
-                        <li>Process payments securely and manage merchant accounts.</li>
-                        <li>Provide relevant updates, notifications, and promotional content.</li>
-                        <li>Comply with legal, tax, and regulatory obligations.</li>
+                        <li>Create and manage your account.</li>
+                        <li>Show you relevant merchants and deals in your area.</li>
+                        <li>Send you notifications about new offers and updates.</li>
+                        <li>Process your transactions and provide customer support.</li>
+                        <li>Improve our platform through analytics and user behavior insights.</li>
+                        <li>Comply with legal and regulatory requirements.</li>
                     </ul>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Data Security and Protection</h2>
                     <p className="text-gray-700 mb-6">
-                        CityWitty employs strict technical and organizational measures to safeguard merchant information against unauthorized access, alteration, disclosure, or destruction:
+                        CityWitty employs strict technical and organizational measures to safeguard your personal information against unauthorized access, alteration, disclosure, or destruction:
                     </p>
                     <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li>Encryption of sensitive data.</li>
+                        <li>Encryption of sensitive data in transit and at rest.</li>
                         <li>Secure storage and access control policies.</li>
                         <li>Regular security audits and system updates.</li>
+                        <li>Compliance with industry security standards.</li>
                     </ul>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Sharing of Information</h2>
                     <p className="text-gray-700 mb-6">
-                        We do not sell or rent merchant data to third parties. Information may be shared with:
+                        We do not sell your personal data to third parties. Your information may be shared with:
                     </p>
                     <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                        <li>Payment service providers for processing transactions.</li>
+                        <li>Payment processors to process your transactions securely.</li>
+                        <li>Merchants you interact with to facilitate deals and services.</li>
                         <li>Legal authorities when required by law or regulation.</li>
-                        <li>Trusted service partners assisting in business operations.</li>
+                        <li>Service providers who assist us in operating our platform.</li>
                     </ul>
 
-                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Merchant Rights</h2>
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Your Rights</h2>
                     <p className="text-gray-700 mb-6">
-                        Merchants have the right to access, correct, or delete their personal information. Requests can be sent to our support team at <a href="mailto:contact@citywitty.com" className="text-blue-600 underline">contact@citywitty.com</a>.
+                        You have the right to access, correct, update, or delete your personal information at any time. You can also opt-out of promotional communications. Requests can be sent to our support team at <a href="mailto:support@citywitty.com" className="text-blue-600 underline">support@citywitty.com</a>.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Updates to Privacy Policy</h2>
                     <p className="text-gray-700 mb-6">
-                        CityWitty may update this Privacy Policy periodically. Merchants are encouraged to review this page regularly. Significant changes will be communicated via email or platform notifications.
+                        CityWitty may update this Privacy Policy periodically. Users are encouraged to review this page regularly. Significant changes will be communicated via email or platform notifications.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Contact Us</h2>
                     <p className="text-gray-700">
-                        For questions or concerns about this Privacy Policy or merchant data handling, contact our support team at <a href="mailto:contact@citywitty.com" className="text-blue-600 underline">contact@citywitty.com</a>.
+                        For questions or concerns about this Privacy Policy or your data, contact our support team at <a href="mailto:support@citywitty.com" className="text-blue-600 underline">support@citywitty.com</a>.
                     </p>
                 </div>
             </section>
