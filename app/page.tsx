@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "CityWitty - Premium Discount Card Platform",
     description:
       "Unlock exclusive offers with CityWitty. Partnered with top merchants across categories like restaurants, hotels, shopping, salons, and entertainment.",
-    url: "https://citywitty.com",
+    url: "https://www.citywitty.com/",
     siteName: "CityWitty",
     images: [
       {
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   publisher: "CityWitty",
   metadataBase: new URL("https://citywitty.com"),
   alternates: {
-    canonical: "https://citywitty.com",
+    canonical: "https://www.citywitty.com/",
   },
   category: "Discount Platform",
   other: {
@@ -80,6 +80,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Header />
       <HeroSection />
+
       <CWStore />
       {/* <MerchantCarousel /> */}
 
@@ -89,6 +90,35 @@ export default function HomePage() {
       <CallToActionSection />
       <FeaturedMerchantsServer />
       <TestimonialsCarousel />
+      <section className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">CityWitty - Premium Discount Card Platform</h1>
+
+          <p className="text-lg text-gray-700 mb-6">
+            Welcome to CityWitty, India's premier premium discount card platform. Our mission is to help you save money on everyday purchases by providing exclusive discounts and special offers from thousands of verified merchants across the country.
+          </p>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Exclusive Deals & Discounts</h2>
+          <p className="text-gray-700 mb-6">
+            CityWitty offers unbeatable deals up to 70% off across multiple categories. Browse our <a href="/merchants" className="text-blue-600 hover:underline">merchant partners</a> for exclusive offers in fashion, dining, restaurants, travel, hotels, wellness, salons, and entertainment. Find <a href="/merchants" className="text-blue-600 hover:underline">restaurant offers</a>, hotel discounts, shopping deals, salon services, and entertainment packages tailored for you.
+          </p>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Why Choose CityWitty?</h2>
+          <p className="text-gray-700 mb-6">
+            Our premium discount card is designed for savvy shoppers who want to maximize their savings. With CityWitty Card, you <a href="/get-card" className="text-blue-600 hover:underline">get instant access</a> to exclusive deals from partner brands across India's major cities. Join thousands of active members who are already enjoying incredible savings with our discount card platform.
+          </p>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Strategic Merchant Partnerships</h2>
+          <p className="text-gray-700 mb-6">
+            CityWitty combines cutting-edge technology with strategic merchant partnerships to bring you the best discount card experience. We work with top merchants in hotels, restaurants, shopping centers, beauty salons, travel agencies, and entertainment venues to ensure you get premium offers that matter. Check out our <a href="/merchants" className="text-blue-600 hover:underline">merchant listings</a> to explore opportunities in your city.
+          </p>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mt-8 mb-4">Start Saving Today</h2>
+          <p className="text-gray-700">
+            Experience the power of the CityWitty premium card. <a href="/register" className="text-blue-600 hover:underline">Get started today</a> and enjoy instant access to exclusive offers, partner deals, and member-only discounts. Whether you're interested in dining discounts, shopping offers, hotel deals, salon services, or entertainment packages, CityWitty delivers value at every transaction. Learn more about <a href="/about" className="text-blue-600 hover:underline">how CityWitty works</a> and unlock a world of premium discounts.
+          </p>
+        </div>
+      </section>
       <Footer />
     </main>
   );
