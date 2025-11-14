@@ -166,7 +166,7 @@ const team = [
 const stats = [
   { icon: Users, label: "Happy Customers", value: "50,000+" },
   { icon: Award, label: "Partner Merchants", value: "1,000+" },
-  { icon: Globe, label: "Cities Covered", value: "20+" },
+  { icon: Globe, label: "Cities Will be Covered", value: "20+" },
   { icon: TrendingUp, label: "Total Savings", value: "₹10 Cr+" },
 ];
 

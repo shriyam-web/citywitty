@@ -1,182 +1,119 @@
-'use client';
-
-import { useState, useMemo } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { MapPin, Search } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import allCitiesRaw from '@/data/allCities.json';
-
-type CityRecord = {
-  name: string;
-  state: string;
-  merchants: number;
-};
+import { CitiesAllExpandable } from './cities-all-expandable';
 
 const TOP_CITIES = [
   'Delhi',
   'Mumbai',
   'Lucknow',
-  'Agra',
-  'Prayagraj (Allahabad)',
-  'Kolkata',
   'Noida',
   'Greater Noida',
+  'Ahmedabad',
+  'Kolkata',
+  'Bangalore',
 ];
 
-const TOP_CITY_SET = new Set(TOP_CITIES);
+const IMPORTANT_CITIES = [
+  'Delhi',
+  'Lucknow',
+  'Noida',
+  'Greater Noida',
+  'Agra',
+  'Prayagraj (Allahabad)',
+];
 
-const ALL_CITIES: CityRecord[] = allCitiesRaw.map((city: string) => ({
-  name: city,
-  state: '',
-  merchants: 0,
-}));
-
-const HIGHLIGHT_CITIES = ALL_CITIES.filter((city) => TOP_CITY_SET.has(city.name));
-const OTHER_CITIES = ALL_CITIES.filter((city) => !TOP_CITY_SET.has(city.name));
+const ALL_CITIES = allCitiesRaw as string[];
 
 export function CitiesPresence() {
-  const [visibleCount, setVisibleCount] = useState(24);
-  const [search, setSearch] = useState('');
-
-  const filteredCities = useMemo(() => {
-    if (!search) return OTHER_CITIES;
-    const term = search.toLowerCase();
-    return OTHER_CITIES.filter((city) =>
-      city.name.toLowerCase().includes(term)
-    );
-  }, [search]);
-
-  const displayedCities = useMemo(
-    () => filteredCities.slice(0, visibleCount),
-    [filteredCities, visibleCount]
-  );
-
-  const hasMoreCities = !search && visibleCount < OTHER_CITIES.length;
+  const topCities = ALL_CITIES.filter((city) => TOP_CITIES.includes(city));
+  const otherCitiesSample = ALL_CITIES.filter((city) => !TOP_CITIES.includes(city)).slice(0, 12);
 
   return (
-    <section className="py-20 relative bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <section className="py-12 md:py-16 bg-gradient-to-r from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            CityWitty Across India
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+            Available Across India
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Proudly connecting customers & merchants across{' '}
-            <span className="font-semibold text-blue-600">
-              {ALL_CITIES.length}+
-            </span>{' '}
-            cities 🎉
+          <p className="text-sm md:text-base text-gray-600">
+            Expanding in <span className="font-semibold text-blue-600">{ALL_CITIES.length}+ cities</span> and growing every day
           </p>
         </div>
 
-        {/* Highlighted Top Cities */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {HIGHLIGHT_CITIES.map((city, index) => (
-            <div
-              key={`${city.name}-${index}`}
-              className={`p-6 rounded-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer ${index < 4
-                ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-xl'
-                : 'bg-white shadow-md hover:shadow-xl border border-gray-100'
-                }`}
-            >
-              <div className="flex items-center space-x-2 mb-3">
-                <MapPin
-                  className={`h-5 w-5 ${index < 4 ? 'text-white' : 'text-blue-600'
-                    }`}
-                />
-                <h3
-                  className={`text-lg font-semibold ${index < 4 ? 'text-white' : 'text-gray-900'
-                    }`}
-                >
-                  {city.name}
-                </h3>
-              </div>
-              {city.state && (
-                <p
-                  className={`text-sm mb-3 ${index < 4 ? 'text-blue-100' : 'text-gray-600'
-                    }`}
-                >
-                  {city.state}
-                </p>
-              )}
-              {/* <Badge
-                variant="secondary"
-                className={
-                  index < 4
-                    ? 'bg-white/20 text-white border-white/30'
-                    : 'bg-blue-100 text-blue-700'
-                }
-              > */}
-              {/* {city.merchants || 'Coming soon'} */}
-              {/* </Badge> */}
-            </div>
-          ))}
-        </div>
-
-        {/* Search + Other Cities */}
-        <div className="bg-white rounded-3xl p-10 shadow-xl border border-gray-100">
-          <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Find Your City
-          </h3>
-
-          {/* Search Box */}
-          <div className="flex justify-center mb-10">
-            <div className="relative w-full max-w-md">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search your city..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Cities Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {displayedCities.map((city, index) => (
+        {/* Top Cities Grid - Compact */}
+        <div className="mb-10">
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Major Cities</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-3">
+            {topCities.map((city) => (
               <div
-                key={`${city.name}-${index}`}
-                className="text-center p-4 bg-gray-50 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer"
+                key={city}
+                className={`rounded-lg p-3 text-center hover:shadow-md transition-all cursor-pointer transform hover:scale-105 border ${IMPORTANT_CITIES.includes(city)
+                  ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white border-blue-400'
+                  : 'bg-gradient-to-br from-amber-400 to-orange-500 text-white border-amber-300'
+                  }`}
               >
-                <div className="text-base font-semibold text-gray-900">
-                  {city.name}
-                </div>
-                <div className="text-xs text-gray-500">
-                  {/* {city.merchants || 'Coming soon'} */}
-                </div>
+                <MapPin className="h-4 w-4 mx-auto mb-1 opacity-90" />
+                <div className="text-xs sm:text-sm font-semibold truncate">{city}</div>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Load More */}
-          {hasMoreCities && (
-            <div className="text-center mt-8">
-              <button
-                onClick={() => setVisibleCount(visibleCount + 24)}
-                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
-              >
-                Load More Cities
-              </button>
-            </div>
-          )}
+        {/* Other Cities - Expandable */}
+        <CitiesAllExpandable
+          allCities={ALL_CITIES}
+          topCities={TOP_CITIES}
+          sampleCities={otherCitiesSample}
+        />
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-8">
+          <div className="text-center p-4 rounded-lg bg-white border border-gray-100">
+            <div className="text-2xl md:text-3xl font-bold text-blue-600">{ALL_CITIES.length}+</div>
+            <div className="text-xs md:text-sm text-gray-600 mt-1">Cities Will be Covered</div>
+          </div>
+          <div className="text-center p-4 rounded-lg bg-white border border-gray-100">
+            <div className="text-2xl md:text-3xl font-bold text-purple-600">24/7</div>
+            <div className="text-xs md:text-sm text-gray-600 mt-1">Available</div>
+          </div>
+          <div className="text-center p-4 rounded-lg bg-white border border-gray-100 col-span-2 md:col-span-1">
+            <div className="text-2xl md:text-3xl font-bold text-green-600">100%</div>
+            <div className="text-xs md:text-sm text-gray-600 mt-1">Coverage</div>
+          </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
-          <p className="text-gray-600 text-lg">
-            Can’t find your city? Help CityWitty expand! 🚀 <br />
-            Write to us at{' '}
-            <a
-              href="mailto:expand@citywitty.com"
-              className="text-blue-600 font-medium hover:underline"
-            >
-              expand@citywitty.com
-            </a>
+        <div className="text-center mt-8">
+          <p className="text-xs md:text-sm text-gray-600 mb-3">
+            Missing your city? Help us expand to your location
           </p>
+          <a
+            href="mailto:expand@citywitty.com"
+            className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Suggest Your City
+          </a>
         </div>
       </div>
-    </section >
+
+      {/* Schema Markup for Local SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'LocalBusiness',
+            name: 'CityWitty',
+            areaServed: ALL_CITIES.map((city) => ({
+              '@type': 'City',
+              name: city,
+              areaServed: 'IN'
+            })),
+            description: `CityWitty operates across ${ALL_CITIES.length}+ cities in India, connecting customers with merchants in ${TOP_CITIES.join(', ')} and many more locations.`
+          })
+        }}
+      />
+    </section>
   );
 }
