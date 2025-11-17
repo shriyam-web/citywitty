@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongodb";
 import Partner from "@/models/partner/partner";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
     try {
@@ -53,6 +54,8 @@ export async function POST(request: Request) {
         merchant.averageRating = parseFloat(averageRating.toFixed(2));
 
         await merchant.save();
+
+        revalidatePath(`/merchants/${merchant.merchantSlug}`);
 
         return NextResponse.json(
             {
@@ -116,6 +119,8 @@ export async function PUT(request: Request) {
 
         await merchant.save();
 
+        revalidatePath(`/merchants/${merchant.merchantSlug}`);
+
         return NextResponse.json(
             {
                 message: "Review updated successfully",
@@ -172,6 +177,8 @@ export async function DELETE(request: Request) {
         }
 
         await merchant.save();
+
+        revalidatePath(`/merchants/${merchant.merchantSlug}`);
 
         return NextResponse.json(
             {

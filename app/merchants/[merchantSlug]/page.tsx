@@ -30,8 +30,8 @@ import dbConnect from '@/lib/mongodb';
 import Partner from '@/models/partner/partner';
 import type { IPartner } from '@/models/partner/partner/partner.interface';
 
-// Revalidate page every 3600 seconds (1 hour) for ISR
-export const revalidate = 3600;
+// Disable ISR for instant updates - fetch fresh data on every request
+export const revalidate = 0;
 
 /**
  * Generate metadata for SEO

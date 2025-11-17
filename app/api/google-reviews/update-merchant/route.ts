@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/mongodb';
 import Partner from '@/models/partner/partner/partner.schema';
 
@@ -79,6 +80,8 @@ export async function POST(request: NextRequest) {
     };
 
     await merchant.save();
+
+    revalidatePath(`/merchants/${merchant.merchantSlug}`);
 
     return NextResponse.json({
       success: true,
