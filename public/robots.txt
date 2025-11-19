@@ -1,50 +1,35 @@
-# Robots.txt for CityWitty
-# Helps search engines crawl and index the site efficiently
+# Robots.txt for CityWitty (Next.js)
+# Clean, secure, anti-spam version
 
 User-agent: *
 Allow: /
-Allow: /merchants
-Allow: /merchants/*
-Allow: /api/sitemap.xml
 
-# Disallow sensitive areas
+# ❌ Block spam parameters
+Disallow: /*e=
+Disallow: /*channel=
+Disallow: /*from=
+Disallow: /*id=
+Disallow: /*name=
+Disallow: /*php
+Disallow: /*.php$
+Disallow: /*.php?
+Disallow: /*ref=
+Disallow: /*utm_
+
+# ❌ Block unwanted internal routes
 Disallow: /admin
 Disallow: /admin/
-Disallow: /dashboard/admin
-Disallow: /dashboard/it
-Disallow: /api
+Disallow: /dashboard/
 Disallow: /api/
 Disallow: /*.json$
 
-# Allow specific API endpoints for search engine indexing
+# ❌ Block search indexing (if any)
+Disallow: /search
+Disallow: /*?q=
+
+# Allow sitemap only
+Allow: /sitemap.xml
 Allow: /api/sitemap.xml
 
-# Crawl delay for polite crawling
-Crawl-delay: 1
-
-# Request-rate settings
-Request-rate: 30/1m
-
-# Sitemaps
-Sitemap: https://citywitty.com/sitemap.xml
-Sitemap: https://citywitty.com/merchants
-
-# Specific rules for Google
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-Request-rate: 100/1m
-
-# Specific rules for Bing
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
-Request-rate: 30/1m
-
-# Block bad bots
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: SemrushBot
-User-agent: SemrushBot-SA
-Crawl-delay: 10
+# Sitemap
+Sitemap: https://www.citywitty.com/sitemap.xml

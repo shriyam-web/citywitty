@@ -9,6 +9,7 @@ interface IAdmin extends Document {
   address?: string;
   role?: string;
   lastLogin?: Date;
+  isSuperAdmin?: boolean;   // 🆕 Added field
 }
 
 const AdminSchema: Schema<IAdmin> = new Schema(
@@ -21,17 +22,16 @@ const AdminSchema: Schema<IAdmin> = new Schema(
     address: { type: String, default: "" },
     role: { type: String, default: "admin" },
     lastLogin: { type: Date, default: Date.now },
+
+    // 🆕 New field added
+    isSuperAdmin: { type: Boolean, default: false },
   },
   { timestamps: true, strict: false }
 );
 
-// 👇 Cast mongoose.models.Admin to match the type
+// Cast mongoose.models.Admin to match the type
 const Admin =
   (mongoose.models.Admin as Model<IAdmin>) ||
   mongoose.model<IAdmin>("Admin", AdminSchema);
 
-
 export default Admin;
-
-
-

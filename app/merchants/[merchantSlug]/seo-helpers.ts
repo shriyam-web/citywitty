@@ -21,14 +21,28 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
   const ratingCount = merchant.googleReviews?.userRatingsTotal || merchant.ratings?.length || 0;
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://citywitty.com';
 
-  // Determine appropriate business type
-  const businessType = merchant.category ? 'LocalBusiness' : 'LocalBusiness';
+  // Determine appropriate business type based on category
+  const businessType = getBusinessTypeFromCategory(merchant.category);
 
   const sameAsArray = [];
   if (merchant.website) sameAsArray.push(merchant.website);
   if (merchant.socialLinks?.facebook) sameAsArray.push(merchant.socialLinks.facebook);
   if (merchant.socialLinks?.instagram) sameAsArray.push(merchant.socialLinks.instagram);
+  if (merchant.socialLinks?.youtube) sameAsArray.push(merchant.socialLinks.youtube);
+  if (merchant.socialLinks?.linkedin) sameAsArray.push(merchant.socialLinks.linkedin);
   if (merchant.socialLinks?.twitter) sameAsArray.push(merchant.socialLinks.twitter);
+
+  // Generate services based on category and offers
+  const services = generateServicesFromMerchant(merchant);
+
+  // Determine price range based on merchant data
+  const priceRange = determinePriceRange(merchant);
+
+  // Generate comprehensive service types
+  const serviceTypes = generateServiceTypes(merchant);
+
+  // Generate area served information
+  const areaServed = generateAreaServed(merchant);
 
   return {
     '@context': 'https://schema.org',
@@ -57,6 +71,7 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
       '@type': 'PostalAddress',
       streetAddress: merchant.streetAddress,
       addressLocality: merchant.city,
+      addressRegion: merchant.branchLocations?.[0]?.state || '',
       addressCountry: 'IN',
       postalCode: merchant.branchLocations?.[0]?.pincode || '',
     },
@@ -69,6 +84,7 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
           '@type': 'PostalAddress',
           streetAddress: branch.streetAddress,
           addressLocality: branch.city,
+          addressRegion: branch.state,
           addressCountry: 'IN',
           postalCode: branch.pincode,
         },
@@ -84,7 +100,9 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
       latitude: merchant.latitude,
       longitude: merchant.longitude,
     } : undefined,
-    priceRange: '$$$',
+    priceRange,
+    // Services offered
+    ...(services.length > 0 && { hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Services', itemListElement: services } }),
     // Social media and external profiles
     ...(sameAsArray.length > 0 && { sameAs: sameAsArray }),
     // Ratings and reviews
@@ -103,27 +121,17 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
       openingHoursSpecification: (merchant.businessHours.days || []).length > 0
         ? (merchant.businessHours.days || []).map((day) => ({
           '@type': 'OpeningHoursSpecification',
-          dayOfWeek: day,
+          dayOfWeek: `https://schema.org/${day}`,
           opens: merchant.businessHours?.open || '09:00',
           closes: merchant.businessHours?.close || '18:00',
         }))
         : [{
           '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          dayOfWeek: ['https://schema.org/Monday', 'https://schema.org/Tuesday', 'https://schema.org/Wednesday', 'https://schema.org/Thursday', 'https://schema.org/Friday', 'https://schema.org/Saturday', 'https://schema.org/Sunday'],
           opens: merchant.businessHours.open || '09:00',
           closes: merchant.businessHours.close || '18:00',
         }],
     }),
-    // Special hours for holidays/events - commented out as property doesn't exist
-    // ...(merchant.specialHours && {
-    //   specialOpeningHoursSpecification: merchant.specialHours.map((hours: any) => ({
-    //     '@type': 'OpeningHoursSpecification',
-    //     opens: hours.open,
-    //     closes: hours.close,
-    //     validFrom: hours.validFrom,
-    //     validThrough: hours.validThrough,
-    //   })),
-    // }),
     // Active offers and discounts
     ...(merchant.offlineDiscount && merchant.offlineDiscount.length > 0 && {
       makesOffer: merchant.offlineDiscount
@@ -137,15 +145,25 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
           validFrom: new Date().toISOString().split('T')[0],
           validThrough: new Date(offer.validUpto).toISOString().split('T')[0],
           url: `${baseUrl}/merchants/${merchant.merchantSlug}`,
+          availability: 'https://schema.org/InStock',
         })) || [],
     }),
     // Contact options
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Service',
-      telephone: merchant.phone,
-      availableLanguage: 'en',
-    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'Customer Service',
+        telephone: merchant.phone,
+        availableLanguage: 'en',
+      },
+      ...(merchant.whatsapp ? [{
+        '@type': 'ContactPoint',
+        contactType: 'WhatsApp',
+        telephone: merchant.whatsapp,
+        availableLanguage: 'en',
+        contactOption: 'https://schema.org/TollFree',
+      }] : []),
+    ],
     // Search and discovery
     ...(merchant.branchLocations && merchant.branchLocations.length > 0 && {
       hasMap: `https://maps.google.com/maps/search/${encodeURIComponent(merchant.displayName + ' ' + merchant.city)}`,
@@ -153,12 +171,13 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
     // Action for discovery and engagement
     potentialAction: [
       {
-        '@type': 'ReserveAction',
+        '@type': 'ViewAction',
         target: {
           '@type': 'EntryPoint',
           urlTemplate: `${baseUrl}/merchants/${merchant.merchantSlug}`,
-          actionPlatform: ['DesktopWebPlatform', 'MobileWebPlatform'],
+          actionPlatform: ['https://schema.org/DesktopWebPlatform', 'https://schema.org/MobileWebPlatform'],
         },
+        name: 'View Merchant Details',
       },
       ...(merchant.phone ? [{
         '@type': 'CommunicateAction',
@@ -166,12 +185,33 @@ export function generateLocalBusinessSchema(merchant: Merchant): Record<string, 
           '@type': 'EntryPoint',
           url: `tel:${merchant.phone}`,
         },
+        name: 'Call Merchant',
+      }] : []),
+      ...(merchant.whatsapp ? [{
+        '@type': 'CommunicateAction',
+        target: {
+          '@type': 'EntryPoint',
+          url: `https://wa.me/${merchant.whatsapp.replace(/[^0-9]/g, '')}`,
+        },
+        name: 'WhatsApp Merchant',
       }] : []),
     ],
-    // Additional metadata for freshness and updates - commented out as property doesn't exist
-    // ...(merchant.updatedAt && {
-    //   dateModified: new Date(merchant.updatedAt).toISOString().split('T')[0],
-    // }),
+    // Additional metadata for freshness and updates
+    ...(merchant.joinedSince && {
+      foundingDate: new Date(merchant.joinedSince).toISOString().split('T')[0],
+    }),
+    // Keywords for better categorization
+    ...(merchant.tags && merchant.tags.length > 0 && {
+      keywords: merchant.tags.join(', '),
+    }),
+    // Payment methods accepted
+    ...(merchant.paymentMethodAccepted && merchant.paymentMethodAccepted.length > 0 && {
+      paymentAccepted: merchant.paymentMethodAccepted.join(', '),
+    }),
+    // Area served
+    ...(areaServed && { areaServed }),
+    // Service types
+    ...(serviceTypes.length > 0 && { hasOfferCatalog: serviceTypes }),
   };
 }
 
@@ -466,4 +506,166 @@ export function generateServiceSchema(merchant: Merchant): Record<string, unknow
       validThrough: new Date(offer.validUpto).toISOString().split('T')[0],
     },
   }));
+}
+
+/**
+ * Generate service types for merchant
+ */
+function generateServiceTypes(merchant: Merchant): Record<string, unknown>[] {
+  const services: Record<string, unknown>[] = [];
+
+  // Add main category as service
+  services.push({
+    '@type': 'OfferCatalog',
+    name: merchant.category,
+    itemListElement: [{
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: merchant.category,
+        description: merchant.description || `Professional ${merchant.category} services in ${merchant.city}`,
+      },
+    }],
+  });
+
+  // Add specific services from tags
+  if (merchant.tags && merchant.tags.length > 0) {
+    merchant.tags.slice(0, 5).forEach(tag => {
+      services.push({
+        '@type': 'OfferCatalog',
+        name: tag,
+        itemListElement: [{
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: tag,
+            description: `${tag} services provided by ${merchant.displayName}`,
+          },
+        }],
+      });
+    });
+  }
+
+  return services;
+}
+
+/**
+ * Generate area served information
+ */
+function generateAreaServed(merchant: Merchant): Record<string, unknown> | null {
+  const areas: Record<string, unknown>[] = [];
+
+  // Primary city
+  areas.push({
+    '@type': 'City',
+    name: merchant.city,
+    addressCountry: 'IN',
+  });
+
+  // Add branch locations if available
+  if (merchant.branchLocations && merchant.branchLocations.length > 0) {
+    merchant.branchLocations.forEach(branch => {
+      if (branch.city && branch.city !== merchant.city) {
+        areas.push({
+          '@type': 'City',
+          name: branch.city,
+          addressCountry: 'IN',
+        });
+      }
+    });
+  }
+
+  // If only one area, return it directly
+  if (areas.length === 1) {
+    return areas[0];
+  }
+
+  // If multiple areas, return as array
+  return areas.length > 0 ? areas : null;
+}
+
+/**
+ * Determine price range based on merchant data
+ */
+function determinePriceRange(merchant: Merchant): string {
+  // If merchant has premium/premium seller status, assume higher price range
+  if (merchant.isPremiumSeller || merchant.isTopMerchant) {
+    return '₹₹₹'; // High-end
+  }
+
+  // If merchant has many high ratings, assume established business
+  if (merchant.averageRating && merchant.averageRating >= 4.5) {
+    return '₹₹'; // Moderate to high
+  }
+
+  // Default to moderate
+  return '₹₹';
+}
+
+/**
+ * Generate services from merchant data
+ */
+function generateServicesFromMerchant(merchant: Merchant): Record<string, unknown>[] {
+  const services: Record<string, unknown>[] = [];
+
+  // Add main service
+  services.push({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: merchant.category,
+      description: merchant.description || `${merchant.category} services`,
+    },
+  });
+
+  // Add services from tags
+  if (merchant.tags && merchant.tags.length > 0) {
+    merchant.tags.forEach(tag => {
+      services.push({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: tag,
+          description: `${tag} service offered by ${merchant.displayName}`,
+        },
+      });
+    });
+  }
+
+  return services;
+}
+
+/**
+ * Get business type from category
+ */
+function getBusinessTypeFromCategory(category: string): string {
+  const categoryMap: Record<string, string> = {
+    'restaurant': 'Restaurant',
+    'cafe': 'CafeOrCoffeeShop',
+    'hotel': 'Hotel',
+    'salon': 'BeautySalon',
+    'spa': 'DaySpa',
+    'gym': 'ExerciseGym',
+    'clinic': 'MedicalClinic',
+    'hospital': 'Hospital',
+    'school': 'School',
+    'store': 'Store',
+    'shop': 'Store',
+    'retail': 'Store',
+    'automotive': 'AutoRepair',
+    'repair': 'AutoRepair',
+    'plumbing': 'Plumber',
+    'electrical': 'Electrician',
+    'cleaning': 'CleaningService',
+    'laundry': 'DryCleaningOrLaundry',
+    'pharmacy': 'Pharmacy',
+    'bank': 'BankOrCreditUnion',
+    'real estate': 'RealEstateAgent',
+    'travel': 'TravelAgency',
+    'consulting': 'ProfessionalService',
+    'legal': 'LegalService',
+    'accounting': 'AccountingService',
+  };
+
+  return categoryMap[category.toLowerCase()] || 'LocalBusiness';
 }

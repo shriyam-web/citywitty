@@ -80,11 +80,11 @@ export async function generateMetadata({
             description = merchant.description.split('\n')[0].substring(0, 158);
             if (description.length === 158) description += '...';
         } else {
-            description = `Discover ${displayName}, a premium ${category} in ${city}. `;
-            if (rating) {
-                description += `Rated ${rating.toFixed(1)}/5. `;
+            description = `Discover ${displayName}, a trusted ${category} in ${city}. `;
+            if (rating && rating >= 4.0) {
+                description += `Highly rated ${rating.toFixed(1)}/5 stars. `;
             }
-            description += `Exclusive deals and verified reviews.`;
+            description += `Find exclusive deals, verified reviews, and premium local services.`;
         }
 
         // Include relevant tags in description for better SEO targeting
@@ -104,21 +104,39 @@ export async function generateMetadata({
             `${category} in ${city}`,
             `${city} ${category}`,
             `best ${category} in ${city}`,
+            `top ${category} ${city}`,
+            `${category} near me`,
+            `${category} ${city} area`,
             'local business',
             'local merchant',
+            'local services',
             'best deals',
             'exclusive offers',
             'verified reviews',
+            'customer reviews',
             'local shopping',
+            'premium services',
             ...(merchant.tags || []),
-            ...(rating && rating >= 4.5 ? [`best rated ${category}`, `top ${category}`] : []),
+            ...(rating && rating >= 4.5 ? [`best rated ${category}`, `top ${category}`, `highly rated ${category}`] : []),
+            ...(merchant.isVerified ? [`verified ${category}`, `trusted ${category}`] : []),
+            ...(merchant.isPremiumSeller ? [`premium ${category}`, `quality ${category}`] : []),
             `${displayName} reviews`,
             `${displayName} deals`,
+            `${displayName} contact`,
+            `${displayName} location`,
             `${displayName} ${city}`,
+            `${displayName} phone number`,
+            ...(merchant.paymentMethodAccepted ? merchant.paymentMethodAccepted.map(method => `${category} accepting ${method}`) : []),
         ].filter((k, i, arr) => k && arr.indexOf(k) === i); // Remove duplicates
 
+        // Generate optimized title with establishment year
+        const establishmentYear = merchant.joinedSince ? new Date(merchant.joinedSince).getFullYear() : null;
+        const title = establishmentYear
+            ? `${displayName} - ${category} in ${city} Since ${establishmentYear} | CityWitty Local Deals & Reviews`
+            : `${displayName} - ${category} in ${city} | CityWitty Local Deals & Reviews`;
+
         return {
-            title: `${displayName} - ${category} in ${city} | CityWitty Local Deals & Reviews`,
+            title,
             description,
             keywords: keywords.slice(0, 20).join(', '),
             authors: [{ name: 'CityWitty' }],
@@ -348,6 +366,8 @@ function getActiveStatusBadges(merchant: Merchant) {
         }
     ].filter(badge => merchant[badge.key] === true);
 }
+
+
 
 /**
  * Main Merchant Page Component - Server Component
