@@ -415,7 +415,7 @@ export default async function UsernameMerchantProfilePage({
                         <div className="lg:col-span-1">
                             <div className="sticky top-24 space-y-6">
                                 <ContactInformation merchant={merchant} />
-                                {businessHours && <BusinessHoursSection businessHours={businessHours} />}
+                                {businessHours && <BusinessHoursSection merchant={merchant} {...businessHours} />}
                                 <PaymentMethodsSection paymentMethods={merchant.paymentMethodAccepted || []} />
                             </div>
                         </div>
