@@ -319,6 +319,24 @@ export default async function UsernameMerchantProfilePage({
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://citywitty.com';
     const canonicalUrl = `${baseUrl}/merchants/${merchant.merchantSlug}`;
 
+    const aboutStats = [
+        {
+            label: merchant.googleReviews?.userRatingsTotal
+                ? merchant.googleReviews.userRatingsTotal.toString()
+                : (merchant.ratings?.length || 1).toString(),
+            caption: merchant.googleReviews?.userRatingsTotal ? 'Google Reviews' : 'Reviews'
+        },
+        {
+            label: merchant.googleReviews?.rating
+                ? merchant.googleReviews.rating.toFixed(1)
+                : (merchant.averageRating ?? 5).toFixed(1),
+            caption: merchant.googleReviews?.rating ? 'Google Rating' : 'Rating'
+        },
+        { label: (merchant.branchLocations?.length || 1).toString(), caption: 'Branches' }
+    ];
+
+    const descriptionParagraphs = merchant.description ? merchant.description.split('\n').filter(p => p.trim()) : [];
+
     return (
         <>
             <Header />
@@ -335,7 +353,11 @@ export default async function UsernameMerchantProfilePage({
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
                         <div className="lg:col-span-2 space-y-8">
-                            <AboutSection merchant={merchant} />
+                            <AboutSection
+                                merchant={merchant}
+                                descriptionParagraphs={descriptionParagraphs}
+                                aboutStats={aboutStats}
+                            />
 
                             {offlineProducts && offlineProducts.length > 0 && (
                                 <>
