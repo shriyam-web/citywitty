@@ -416,13 +416,13 @@ export default async function UsernameMerchantProfilePage({
                             <div className="sticky top-24 space-y-6">
                                 <ContactInformation merchant={merchant} />
                                 {businessHours && <BusinessHoursSection businessHours={businessHours} />}
-                                <PaymentMethodsSection merchant={merchant} />
+                                <PaymentMethodsSection paymentMethods={merchant.paymentMethodAccepted || []} />
                             </div>
                         </div>
                     </div>
 
                     <OfflinePurchaseModal />
-                    <SuggestedMerchantsNearYou merchant={merchant} />
+                    <SuggestedMerchantsNearYou city={merchant.city} excludeId={merchant._id} />
                 </div>
             </main>
             <Footer />
