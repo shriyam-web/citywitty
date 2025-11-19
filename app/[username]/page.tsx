@@ -191,7 +191,7 @@ export async function generateMetadata({
                 'max-image-preview': 'large',
                 'max-snippet': -1,
                 'max-video-preview': -1,
-                'googlebot': 'index, follow',
+                'googleBot': 'index, follow',
             },
             openGraph: {
                 title: `${displayName} - Exclusive Deals & Reviews in ${city}`,
