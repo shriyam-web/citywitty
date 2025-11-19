@@ -102,7 +102,10 @@ export async function generateMetadata(
     return {
       title: `${formattedSlug} | CityWitty`,
       description: `Discover ${formattedSlug} on CityWitty - Your local business directory with exclusive deals and discounts.`,
-      robots: 'noindex, nofollow',
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 

@@ -45,7 +45,10 @@ export async function generateMetadata({
         return {
             title: 'Merchant Not Found',
             description: 'The merchant you are looking for does not exist.',
-            robots: 'noindex, nofollow',
+            robots: {
+                index: false,
+                follow: false,
+            },
         };
     }
 
@@ -60,7 +63,10 @@ export async function generateMetadata({
             return {
                 title: 'Merchant Not Found',
                 description: 'The merchant you are looking for does not exist.',
-                robots: 'noindex, nofollow',
+                robots: {
+                    index: false,
+                    follow: false,
+                },
             };
         }
 
