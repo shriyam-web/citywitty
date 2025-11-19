@@ -23,15 +23,6 @@ const nextConfig = {
         destination: '/partner/:path*',
       },
     ];
-  },
-  async redirects() {
-    return [
-      {
-        source: '/m/:username',
-        destination: '/:username',
-        permanent: false,
-      },
-    ];
   }
 };
 
