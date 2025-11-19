@@ -19,7 +19,6 @@ import {
     FAQSection,
     ProductsSection,
     RelatedSearches,
-    OfflinePurchaseModal,
     GoogleReviewsSection,
     BreadcrumbNavigation,
 } from '@/app/merchants/[merchantSlug]/components';
@@ -421,7 +420,7 @@ export default async function UsernameMerchantProfilePage({
                         </div>
                     </div>
 
-                    <OfflinePurchaseModal />
+
                     <SuggestedMerchantsNearYou city={merchant.city} excludeId={merchant._id} />
                 </div>
             </main>
