@@ -390,7 +390,7 @@ export default async function UsernameMerchantProfilePage({
                             {merchant.ratings && merchant.ratings.length > 0 && (
                                 <>
                                     <hr className="my-8" />
-                                    <ReviewsSection merchant={merchant} />
+                                    <ReviewsSection reviews={merchant.ratings} merchantId={merchant._id} />
                                 </>
                             )}
 
