@@ -229,13 +229,12 @@ export async function generateMetadata({
             ...(merchant.updatedAt && {
                 lastModified,
             }),
-            appLinks: [
-                {
+            appLinks: {
+                android: {
+                    package: 'com.google.android.gms',
                     url: canonicalUrl,
-                    app: 'com.google.android.gms',
-                    should_fallback: true,
                 }
-            ],
+            },
         };
     } catch (error) {
         console.error('Error generating metadata:', error);
