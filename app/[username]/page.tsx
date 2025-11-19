@@ -158,7 +158,7 @@ export async function generateMetadata({
             ...(merchant.tags || []),
             ...(rating && rating >= 4.5 ? [`best rated ${category}`, `top ${category}`, `highly rated ${category}`] : []),
             ...(merchant.isVerified ? [`verified ${category}`, `trusted ${category}`] : []),
-            ...(merchant.isPremiumSeller ? [`premium ${category}`, `quality ${category}`] : []),
+            ...(merchant.premiumSeller ? [`premium ${category}`, `quality ${category}`] : []),
             `${displayName} reviews`,
             `${displayName} deals`,
             `${displayName} contact`,
