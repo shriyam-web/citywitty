@@ -126,4 +126,6 @@ const PartnerSchema = new Schema<IPartner>({
 }, { timestamps: true }
 );
 
+PartnerSchema.index({ username: 1 }, { sparse: true });
+
 export default mongoose.models.Partner || mongoose.model<IPartner>('Partner', PartnerSchema);
