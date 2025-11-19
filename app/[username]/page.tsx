@@ -323,7 +323,7 @@ export default async function UsernameMerchantProfilePage({
         <>
             <Header />
             <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-                <MerchantStructuredData merchant={merchant} canonicalUrl={canonicalUrl} />
+                <MerchantStructuredData merchant={merchant} />
 
                 <div className="container mx-auto px-4 py-8 max-w-7xl">
                     <BreadcrumbNavigation
