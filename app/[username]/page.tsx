@@ -409,7 +409,7 @@ export default async function UsernameMerchantProfilePage({
                             )}
 
                             <hr className="my-8" />
-                            <RelatedSearches merchant={merchant} />
+                            <RelatedSearches tags={merchant.relatedSearches || []} />
                         </div>
 
                         <div className="lg:col-span-1">
