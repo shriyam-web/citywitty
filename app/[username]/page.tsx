@@ -326,14 +326,7 @@ export default async function UsernameMerchantProfilePage({
                 <MerchantStructuredData merchant={merchant} />
 
                 <div className="container mx-auto px-4 py-8 max-w-7xl">
-                    <BreadcrumbNavigation
-                        items={[
-                            { label: 'Home', href: '/' },
-                            { label: merchant.city, href: `/merchants?city=${merchant.city}` },
-                            { label: merchant.category, href: `/merchants?category=${merchant.category}` },
-                            { label: merchant.displayName }
-                        ]}
-                    />
+                    <BreadcrumbNavigation merchant={merchant} />
 
                     <div className="mt-8">
                         <BackgroundWatermarkIcons />
