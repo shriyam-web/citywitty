@@ -330,7 +330,7 @@ export default async function UsernameMerchantProfilePage({
 
                     <div className="mt-8">
                         <BackgroundWatermarkIcons />
-                        <MerchantHero merchant={merchant} statusBadges={statusBadges} />
+                        <MerchantHero merchant={merchant} activeStatusBadges={statusBadges} />
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
