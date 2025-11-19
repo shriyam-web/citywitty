@@ -552,7 +552,7 @@ function generateServiceTypes(merchant: Merchant): Record<string, unknown>[] {
 /**
  * Generate area served information
  */
-function generateAreaServed(merchant: Merchant): Record<string, unknown> | null {
+function generateAreaServed(merchant: Merchant): Record<string, unknown> | Record<string, unknown>[] | null {
   const areas: Record<string, unknown>[] = [];
 
   // Primary city
@@ -581,7 +581,10 @@ function generateAreaServed(merchant: Merchant): Record<string, unknown> | null 
   }
 
   // If multiple areas, return as array
-  return areas.length > 0 ? areas : null;
+  if (areas.length > 0) {
+    return areas;
+  }
+  return null;
 }
 
 /**
@@ -589,7 +592,7 @@ function generateAreaServed(merchant: Merchant): Record<string, unknown> | null 
  */
 function determinePriceRange(merchant: Merchant): string {
   // If merchant has premium/premium seller status, assume higher price range
-  if (merchant.isPremiumSeller || merchant.isTopMerchant) {
+  if (merchant.premiumSeller || merchant.topRated) {
     return '₹₹₹'; // High-end
   }
 
