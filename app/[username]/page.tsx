@@ -397,7 +397,7 @@ export default async function UsernameMerchantProfilePage({
                             {merchant.branchLocations && merchant.branchLocations.length > 0 && (
                                 <>
                                     <hr className="my-8" />
-                                    <BranchLocationsMap merchant={merchant} />
+                                    <BranchLocationsMap branches={merchant.branchLocations} />
                                 </>
                             )}
 
