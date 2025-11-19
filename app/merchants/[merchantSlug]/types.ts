@@ -133,4 +133,5 @@ export interface Merchant {
     reviews: any[];
     lastFetched: Date;
   };
+  updatedAt?: Date;
 }
