@@ -15,8 +15,7 @@ Disallow: /*.php$
 Disallow: /*.php?
 Disallow: /*ref=
 Disallow: /*utm_
-Failed to compile.
-
+Disallow: /*?page=
 
 # ❌ Block unwanted internal routes
 Disallow: /admin
