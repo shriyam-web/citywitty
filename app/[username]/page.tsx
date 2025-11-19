@@ -401,7 +401,7 @@ export default async function UsernameMerchantProfilePage({
                                 </>
                             )}
 
-                            {merchant.faq && merchant.faq.length > 0 && (
+                            {merchant.faqs && merchant.faqs.length > 0 && (
                                 <>
                                     <hr className="my-8" />
                                     <FAQSection merchant={merchant} />
