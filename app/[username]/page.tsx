@@ -383,7 +383,7 @@ export default async function UsernameMerchantProfilePage({
                             {merchant.googleReviews?.reviews && merchant.googleReviews.reviews.length > 0 && (
                                 <>
                                     <hr className="my-8" />
-                                    <GoogleReviewsSection merchant={merchant} />
+                                    <GoogleReviewsSection googleReviews={merchant.googleReviews} />
                                 </>
                             )}
 
